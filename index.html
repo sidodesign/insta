@@ -129,7 +129,7 @@ summary{cursor:pointer;font-weight:700;color:var(--acc);font-size:16px;min-heigh
   <div class="who"><button class="btn sm pdonly" data-tab="people">관리</button>
   <button class="btn sm" data-act="logout" title="로그아웃"><span id="meName"></span> · 나가기</button></div>
 </header>
-<div id="login" hidden><form id="lgForm" class="lgbox"><h1 id="lgTitle">인스타그램 기획</h1><p id="lgSet" hidden>처음 시작합니다. 쓰실 이름과 비밀번호를 지금 정해 주세요. 이 사람이 관리자가 됩니다.</p><label>이름<input id="lgName" autocomplete="username" required></label><label><span id="lgPwL">비밀번호</span><input id="lgPw" type="password" autocomplete="current-password" required></label><label id="lgPw2L" hidden>비밀번호 한 번 더<input id="lgPw2" type="password" autocomplete="new-password"></label><p id="lgErr" role="alert"></p><button class="btn pri" id="lgBtn">들어가기</button></form></div>
+<div id="login" hidden><form id="lgForm" class="lgbox"><h1 id="lgTitle">인스타그램 기획</h1><p id="lgSet" hidden>처음 시작합니다. 쓰실 이름과 비밀번호를 지금 정해 주세요. 이 사람이 관리자가 됩니다.</p><label id="lgNameL">이름<input id="lgName" autocomplete="username" required></label><label><span id="lgPwL">비밀번호</span><input id="lgPw" type="password" autocomplete="current-password" required></label><label id="lgPw2L" hidden>비밀번호 한 번 더<input id="lgPw2" type="password" autocomplete="new-password"></label><p id="lgErr" role="alert"></p><button class="btn pri" id="lgBtn">들어가기</button><button type="button" class="btn" id="lgMode">관리자로 들어가기</button></form></div>
 <div class="wrap"><div id="msg"></div><div id="toast"><span id="toastT"></span><button data-act="undo">되돌리기</button></div><div id="app"><div class="empty" style="margin-top:24px">불러오는 중입니다</div></div></div>
 
 <script>
@@ -428,7 +428,7 @@ document.addEventListener('click',function(e){
   if(d.refedit){S.refEdit=d.refedit;return render()}
   if(d.open){S.open=d.open;S.del=false;S.step=0;render();window.scrollTo(0,0);return}
   if(/^t(Add|Say|Ok|Re)$/.test(d.act||''))return talkAct(d.act,d);
-  if(/^p(Add|Off|Pw|PwGo|Role|Open)$/.test(d.act||''))return peopleAct(d.act,d);
+  if(/^p(Add|Off|Pw|PwGo|Role|Open)$|^aMake$/.test(d.act||''))return peopleAct(d.act,d);
   switch(d.act){
     case 'logout':sess(null);location.reload();return;
     case 'back':S.open=null;S.del=false;return render();
@@ -516,6 +516,7 @@ function peopleHtml(){
   if(PEOPLE===null){call('/users').then(function(j){PEOPLE=j.users||[];render()});return '<div class="empty">불러오는 중입니다</div>'}
   var chs=S.channels.slice().sort(byOrder);
   var h='<div class="bar"><h2 class="h1">크리에이터 진행 상황</h2></div>';
+  if(!PEOPLE.some(function(u){return u.name===ADMIN_NAME&&u.role==='pd'}))h='<div class="talk"><h2 style="margin:0 0 6px">관리자 계정 만들기</h2><p class="guide">관리자는 비밀번호만 넣고 들어갑니다. 만들면 지금 계정('+esc(who(S.me))+')은 크리에이터 계정으로 바뀌고, 다시 들어와야 합니다.</p><div class="pnew"><input id="aPw" type="password" autocomplete="new-password" placeholder="관리자 비밀번호 (6자 이상)"><input id="aPw2" type="password" autocomplete="new-password" placeholder="한 번 더"><button class="btn pri" data-act="aMake">만들기</button></div><p id="aMsg" class="guide"></p></div>'+h;
   h+=chs.length?'<div class="pgrid">'+chs.map(progCard).join('')+'</div>':'<div class="empty">아직 크리에이터가 없습니다.</div>';
   h+='<div class="sec"><h2 class="h1">계정</h2></div><div class="panel"><p class="guide">크리에이터 계정은 연결한 크리에이터만 보고 씁니다. 관리자는 전부 봅니다. 이름과 비밀번호는 이 주소와 함께 따로 보내 주세요.</p>';
   PEOPLE.forEach(function(u){var mine=chs.filter(function(c){return c.owner===u.id});
@@ -537,6 +538,10 @@ function peopleAct(a,d){
       if(r==='creator'&&cv==='+new'){var ref=db.collection('channels').doc();write('ch'+ref.id,function(){return ref.set({name:n,order:Date.now(),at:Date.now(),by:S.me,owner:j.id})})}
       else if(r==='creator'&&cv)own(cv,j.id);
       PEOPLE=null;render();note(n+' 계정을 만들었습니다. 이름과 비밀번호를 따로 보내 주세요.')}else if(m)m.textContent=PERR[j.err]||'만들지 못했습니다.'});return}
+  if(a==='aMake'){var am=document.getElementById('aMsg'),p1=document.getElementById('aPw').value,p2=document.getElementById('aPw2').value;
+    if(p1.length<6){am.textContent='비밀번호는 6자 이상으로 해 주세요.';return}if(p1!==p2){am.textContent='두 비밀번호가 다릅니다.';return}
+    call('/users/add',{name:ADMIN_NAME,role:'pd',pw:p1}).then(function(j){if(!j.ok){am.textContent=PERR[j.err]||'만들지 못했습니다.';return}
+      call('/users/set',{id:S.me,role:'creator'}).then(function(){sess(null);admMode(true);showLogin('관리자 계정을 만들었습니다. 관리자 비밀번호로 들어와 주세요.')})});return}
   if(a==='pOff'){call('/users/set',{id:d.id,off:d.off==='1'}).then(function(){PEOPLE=null;render()});return}
   if(a==='pRole'){call('/users/set',{id:d.id,role:d.role}).then(function(j){if(j.ok){PEOPLE=null;render()}else note(PERR[j.err]||'바꾸지 못했습니다.')});return}
   if(a==='pPw'){var row=app.querySelector('[data-act="pPw"][data-id="'+d.id+'"]').parentNode;if(row.querySelector('.pnpw'))return;
@@ -551,7 +556,7 @@ function sess(v){try{if(v===undefined)return JSON.parse(localStorage.getItem(SK)
 function call(path,body){var s=sess();return fetch(API+path,{method:'POST',headers:Object.assign({'content-type':'application/json'},s&&s.token?{authorization:'Bearer '+s.token}:{}),body:JSON.stringify(body||{})}).then(function(r){return r.json().catch(function(){return {err:'net'}}).then(function(j){if(r.status===401){sess(null);showLogin('로그인이 풀렸습니다. 다시 들어와 주세요.')}return j})})}
 var CACHE={},SUBS={},SINCE=0,PULLING=false;
 function emit(col){var m=CACHE[col]||{};var docs=Object.keys(m).map(function(id){return {id:id,data:function(){return m[id]}}});(SUBS[col]||[]).forEach(function(f){f({docs:docs,metadata:{fromCache:false}})})}
-function pull(){if(PULLING)return Promise.resolve();PULLING=true;return call('/pull',{since:SINCE}).then(function(j){PULLING=false;if(!j||j.err){if(j&&j.err==='net')note('서버에 닿지 않습니다. 인터넷 연결을 확인해 주세요.');return}
+function pull(){if(PULLING||!sess())return Promise.resolve();PULLING=true;return call('/pull',{since:SINCE}).then(function(j){PULLING=false;if(!j||j.err){if(j&&j.err==='net')note('서버에 닿지 않습니다. 인터넷 연결을 확인해 주세요.');return}
   Object.assign(S.names,j.names||{});var ch={};(j.docs||[]).forEach(function(d){(CACHE[d.col]=CACHE[d.col]||{})[d.id]=d.data;ch[d.col]=1;if(d.upd>SINCE)SINCE=d.upd});if(j.last>SINCE)SINCE=j.last;if(j.more)setTimeout(pull,50);
   ['channels','items','refs','comments','concepts','talks'].forEach(function(c){if(ch[c]||!S.loaded[c])emit(c)})}).catch(function(){PULLING=false;note('서버에 닿지 않습니다. 인터넷 연결을 확인해 주세요.')})}
 function send(col,id,op,data){(CACHE[col]=CACHE[col]||{});CACHE[col][id]=op==='update'?Object.assign({},CACHE[col][id],data):data;emit(col);
@@ -562,19 +567,23 @@ var db={collection:function(col){return {
   add:function(d){return send(col,newId(),'set',d)},
   onSnapshot:function(f){(SUBS[col]=SUBS[col]||[]).push(f)}}}};
 var user=null;
-function showLogin(why){var g=document.getElementById('login');g.hidden=false;checkSetup();document.getElementById('lgErr').textContent=why||'';var n=document.getElementById('lgName');(n.value?document.getElementById('lgPw'):n).focus()}
-function started(me){S.me=me.id;S.role=me.role;S.names[me.id]=me.name;document.getElementById('login').hidden=true;document.getElementById('meName').textContent=me.name+(me.role==='pd'?' · 관리자':' · 크리에이터');document.body.classList.toggle('is-pd',me.role==='pd');
+function showLogin(why){var g=document.getElementById('login');g.hidden=false;checkSetup();document.getElementById('lgErr').textContent=why||'';var n=document.getElementById('lgName');(n.value||ADM?document.getElementById('lgPw'):n).focus()}
+function started(me){PEOPLE=null;S.me=me.id;S.role=me.role;S.names[me.id]=me.name;document.getElementById('login').hidden=true;document.getElementById('meName').textContent=me.name+(me.role==='pd'?' · 관리자':' · 크리에이터');document.body.classList.toggle('is-pd',me.role==='pd');
   sub('channels','channels');sub('items','items');sub('refs','refs');sub('comments','comments');sub('concepts','concepts');sub('talks','talks');
-  pull();setInterval(function(){if(!document.hidden)pull()},4000);document.addEventListener('visibilitychange',function(){if(!document.hidden)pull()})}
-var SETUP=false;
-function setupMode(on){SETUP=on;document.getElementById('lgSet').hidden=!on;document.getElementById('lgPw2L').hidden=!on;document.getElementById('lgPwL').textContent=on?'비밀번호 정하기 (6자 이상)':'비밀번호';document.getElementById('lgBtn').textContent=on?'시작하기':'들어가기';document.getElementById('lgPw').autocomplete=on?'new-password':'current-password'}
+  pull();if(!started.on){started.on=1;setInterval(function(){if(!document.hidden)pull()},4000);document.addEventListener('visibilitychange',function(){if(!document.hidden)pull()})}}
+var SETUP=false,ADM=false,ADMIN_NAME='관리자';
+function admMode(on){ADM=!!on;try{localStorage.setItem('ip_adm',ADM?'1':'')}catch(e){}var nl=document.getElementById('lgNameL'),n=document.getElementById('lgName');nl.hidden=ADM&&!SETUP;n.required=!(ADM&&!SETUP);
+  document.getElementById('lgMode').hidden=SETUP;document.getElementById('lgMode').textContent=ADM?'크리에이터로 들어가기':'관리자로 들어가기';document.getElementById('lgPwL').textContent=SETUP?'비밀번호 정하기 (6자 이상)':ADM?'관리자 비밀번호':'비밀번호'}
+document.getElementById('lgMode').addEventListener('click',function(){admMode(!ADM);document.getElementById('lgErr').textContent='';document.getElementById(ADM?'lgPw':'lgName').focus()});
+function setupMode(on){SETUP=on;document.getElementById('lgSet').hidden=!on;document.getElementById('lgPw2L').hidden=!on;document.getElementById('lgPwL').textContent=on?'비밀번호 정하기 (6자 이상)':'비밀번호';document.getElementById('lgBtn').textContent=on?'시작하기':'들어가기';admMode(on?false:ADM);document.getElementById('lgPw').autocomplete=on?'new-password':'current-password'}
 function checkSetup(){call('/state',{}).then(function(j){setupMode(!!(j&&j.setup))})}
 document.getElementById('lgForm').addEventListener('submit',function(e){e.preventDefault();var b=document.getElementById('lgBtn');
   if(SETUP){var p1=document.getElementById('lgPw').value,p2=document.getElementById('lgPw2').value;if(p1.length<6){document.getElementById('lgErr').textContent='비밀번호는 6자 이상으로 정해 주세요.';return}if(p1!==p2){document.getElementById('lgErr').textContent='두 비밀번호가 다릅니다. 같게 넣어 주세요.';return}}
   b.disabled=true;
-  call('/login',{name:document.getElementById('lgName').value,pw:document.getElementById('lgPw').value}).then(function(j){b.disabled=false;
+  call('/login',{name:ADM&&!SETUP?ADMIN_NAME:document.getElementById('lgName').value,pw:document.getElementById('lgPw').value}).then(function(j){b.disabled=false;
     if(j&&j.token){sess({token:j.token,me:j.me});document.getElementById('lgPw').value='';document.getElementById('lgPw2').value='';setupMode(false);started(j.me)}
-    else document.getElementById('lgErr').textContent=j&&j.err==='locked'?'여러 번 틀려 잠시 잠겼습니다. '+(j.wait||15)+'분 뒤 다시 해 주세요.':j&&j.err==='net'?'서버에 닿지 않습니다.':'이름 또는 비밀번호가 맞지 않습니다.'})});
+    else document.getElementById('lgErr').textContent=j&&j.err==='locked'?'여러 번 틀려 잠시 잠겼습니다. '+(j.wait||15)+'분 뒤 다시 해 주세요.':j&&j.err==='net'?'서버에 닿지 않습니다.':(ADM?'관리자 비밀번호가 맞지 않습니다.':'이름 또는 비밀번호가 맞지 않습니다.')})});
+try{ADM=localStorage.getItem('ip_adm')==='1'}catch(e){}
 /* ---------- 시작 ---------- */
 head();
 document.getElementById('brand').textContent=document.title=(window.APP_CFG&&APP_CFG.name)||'인스타그램 기획';document.getElementById('lgTitle').textContent=document.title;
