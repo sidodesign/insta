@@ -1,2 +1,2 @@
 // 앱 이름과 저장 서버 주소. 이름을 바꾸려면 여기만 고친다.
-window.APP_CFG = { name: "인스타그램 기획", api: "" };
+window.APP_CFG = { name: "인스타그램 기획", api: "https://insta-plan.sidodesign.workers.dev" };
