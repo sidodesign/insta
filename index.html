@@ -389,7 +389,10 @@ function refForm(){
     '<div class="cols">'+F('숫자는','','<select data-r="sure"><option'+(r.sure!=='추정'?' selected':'')+'>화면에서 확인</option><option'+(r.sure==='추정'?' selected':'')+'>추정</option></select>')+F('확인한 날','',i('checked','예: 11/22'))+'</div>'+
     '<div class="bar" style="margin:0"><button class="btn pri" data-act="refSave">저장</button><button class="btn" data-act="refCancel">취소</button><span class="sp"></span>'+(S.refEdit!=='new'?'<button class="btn sm bad" data-act="refDel">지우기</button>':'')+'</div></div>';
 }
-function chForm(){return '<div class="panel"><h2>크리에이터 추가</h2>'+F('크리에이터 이름','채널 이름이 정해지기 전에는 부르는 이름을 적습니다','<input id="chName" placeholder="예: 임신 준비 채널">')+'<div class="bar" style="margin:0"><button class="btn pri" data-act="chSave">만들기</button><button class="btn" data-act="chCancel">취소</button></div></div>'}
+function chForm(){return '<div class="panel"><h2>크리에이터 추가</h2><p class="guide">크리에이터가 들어올 아이디와 비밀번호를 같이 만듭니다. 만든 뒤 크리에이터 주소와 함께 보내 주세요.</p>'+
+  '<div class="cols">'+F('아이디','크리에이터가 로그인할 때 넣는 이름 (20자 안)','<input id="chId" autocomplete="off" placeholder="예: 김하나">')+F('비밀번호','6자 이상','<input id="chPw" type="password" autocomplete="new-password">')+F('비밀번호 한 번 더','','<input id="chPw2" type="password" autocomplete="new-password">')+'</div>'+
+  F('채널 이름','비워 두면 아이디로 만들고, 나중에 바꿀 수 있습니다','<input id="chName" placeholder="예: 임신 준비 채널">')+'<p id="chMsg" class="guide" style="color:var(--bad);font-weight:700"></p>'+
+  '<div class="bar" style="margin:0"><button class="btn pri" data-act="chSave">아이디 만들고 크리에이터 추가</button><button class="btn" data-act="chCancel">취소</button></div></div>'}
 
 /* ---------- 동작 ---------- */
 function toast(t,undo){S.undo=undo||null;var el=document.getElementById('toast');document.getElementById('toastT').textContent=t;el.querySelector('button').style.display=undo?'':'none';el.style.display='flex';clearTimeout(timers.toast);timers.toast=setTimeout(function(){el.style.display='none';S.undo=null},9000)}
@@ -441,8 +444,11 @@ document.addEventListener('click',function(e){
     case 'back':S.open=null;S.del=false;return render();
     case 'addCh':S.addCh=true;S.open=null;S.refEdit=null;return render();
     case 'chCancel':S.addCh=false;return render();
-    case 'chSave':var n=(document.getElementById('chName').value||'').trim();if(!n)return;var ref=db.collection('channels').doc();S.ch=ref.id;S.addCh=false;if(S.tab==='people'){S.tab='concept';try{sessionStorage.setItem('ws-tab','concept')}catch(x){}}
-      write('ch'+ref.id,function(){return ref.set({name:n,order:Date.now(),at:Date.now(),by:S.me})});return render();
+    case 'chSave':var cid=(document.getElementById('chId').value||'').trim(),cp=document.getElementById('chPw').value,cp2=document.getElementById('chPw2').value,n=(document.getElementById('chName').value||'').trim()||cid,cm=document.getElementById('chMsg');
+      if(!cid){cm.textContent='아이디를 적어 주세요.';return}if(cp.length<6){cm.textContent='비밀번호는 6자 이상으로 해 주세요.';return}if(cp!==cp2){cm.textContent='두 비밀번호가 다릅니다.';return}
+      b.disabled=true;call('/users/add',{name:cid,role:'creator',pw:cp}).then(function(j){b.disabled=false;if(!j.ok){cm.textContent=PERR[j.err]||'만들지 못했습니다.';return}
+        var ref=db.collection('channels').doc();write('ch'+ref.id,function(){return ref.set({name:n,order:Date.now(),at:Date.now(),by:S.me,owner:j.id})});
+        S.addCh=false;PEOPLE=null;S.tab='people';try{sessionStorage.setItem('ws-tab','people')}catch(x){}render();window.scrollTo(0,0);note('크리에이터 '+cid+' 아이디를 만들었습니다. 크리에이터 주소 '+location.origin+location.pathname.replace(/admin\/?(index\.html)?$/,'')+' 와 아이디, 비밀번호를 같이 보내 주세요.')});return;
     case 'newItem':var ir=db.collection('items').doc(),cn=d.corner||'';
       write('items'+ir.id,function(){return ir.set({ch:S.ch,corner:cn,title:'',stage:S.stage==='all'?'기획':S.stage,who:'',due:'',intent:'',story:'',refs:'',point:'',script:'',by:S.me,at:Date.now(),order:Date.now()})}).then(function(){if(!S.ro){S.open=ir.id;S.step=0;render();var t=app.querySelector('[data-f="title"]');if(t)t.focus()}});return;
     case 'del':var id=S.open;S.open=null;upd('items',id,{deleted:true});toast('콘텐츠를 지웠습니다',{col:'items',id:id});return render();
