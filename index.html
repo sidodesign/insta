@@ -82,7 +82,7 @@ a.btn{text-decoration:none;color:var(--ink);display:inline-flex;align-items:cent
 .step.done i{background:var(--okbg);color:var(--ok)}
 .step.on{border-color:var(--acc);background:var(--accbg);color:var(--acc)}.step.on i{background:var(--acc);color:var(--paper)}
 .dots{display:flex;gap:5px;align-items:center}.dots i{width:22px;height:8px;border-radius:4px;background:var(--soft)}.dots i.d{background:var(--ok)}
-.sc{display:grid;grid-template-columns:120px 1fr 1fr 1fr 64px 46px;gap:8px;align-items:start}
+.sc{display:grid;grid-template-columns:110px 1fr 1fr 1fr .7fr 58px 46px;gap:8px;align-items:start}
 .sc textarea{min-height:76px}.sch{font-size:15px;color:var(--sub);font-weight:700}
 @media(max-width:800px){.sc{grid-template-columns:1fr 74px 46px;border-top:1px solid var(--line);padding-top:10px}.sc textarea{grid-column:1/-1;order:3}.sch{display:none}}
 .ed3{display:grid;gap:18px}.edc{display:grid;gap:14px;align-content:start;min-width:0}.edc .panel{margin-top:0}
@@ -98,6 +98,29 @@ a.btn{text-decoration:none;color:var(--ink);display:inline-flex;align-items:cent
 .cols.c2{grid-template-columns:1fr 1fr}
 .aadd{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}.aadd input{flex:1 1 220px;width:auto}
 .row.ag b{color:var(--ok)}.row.ab b{color:var(--warn)}
+.hm{display:grid;gap:18px}.hm .panel{margin-top:0}.hg2{display:grid;gap:18px}.hg3{display:grid;gap:18px}
+@media(min-width:1000px){.hg2{grid-template-columns:1.5fr 1fr;align-items:start}.hg3{grid-template-columns:repeat(3,1fr);align-items:start}}
+.panel.big{border-color:var(--acc);background:var(--accbg)}.bt{font-size:30px;font-weight:900;line-height:1.25}.bs{color:var(--sub);font-size:17px}.hs{color:var(--sub);font-size:16px;font-weight:500}
+.panel h2{margin:0;font-size:21px}.kvb{text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
+.wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}.wd{background:var(--soft);border-radius:12px;padding:10px;min-height:96px;display:grid;gap:6px;align-content:start;font-size:15px;min-width:0}.wd b{font-size:16px}.wd.td{outline:3px solid var(--acc)}.wd.up{background:var(--okbg)}
+.wi{border:0;background:var(--paper);border-radius:8px;padding:6px 8px;font:inherit;font-size:15px;text-align:left;cursor:pointer;color:inherit;overflow-wrap:anywhere}.wi.up{color:var(--ok);font-weight:700}
+@media(max-width:800px){.wk{grid-template-columns:1fr}.wd{min-height:0}}
+.lanes{gap:0}.lane{display:grid;grid-template-columns:220px repeat(4,minmax(0,1fr));gap:10px;padding:14px 0;border-top:2px solid var(--line)}.lane.lh{border:0;padding:0 0 8px;color:var(--sub);font-weight:800;font-size:16px}
+.ln{display:grid;gap:6px;align-content:start;justify-items:start}.ln b{font-size:21px}.ln small{color:var(--sub);font-size:15px}.lc{display:grid;gap:8px;align-content:start;min-width:0}
+.lcard{background:var(--soft);border-radius:12px;padding:10px 12px;display:grid;gap:4px;cursor:pointer;min-width:0}.lcard b{font-size:17px;overflow-wrap:anywhere}.lcard small{color:var(--sub);font-size:15px}.lcard .btn{justify-self:start;margin-top:4px}.lcard .lg{display:none;font-size:14px;font-weight:800;color:var(--acc)}
+.lnew{border:2px dashed var(--line);background:var(--paper);border-radius:12px;padding:10px;font:inherit;font-weight:800;color:var(--acc);cursor:pointer;min-height:48px}
+@media(max-width:900px){.lane{grid-template-columns:1fr}.lane.lh{display:none}.lcard .lg{display:block}.lc:empty{display:none}}
+.svg{display:grid;gap:18px}.svm{display:grid;gap:18px;align-content:start;min-width:0}.svm .panel{margin-top:0}@media(min-width:1000px){.svg{grid-template-columns:300px minmax(0,1fr);align-items:start}}
+.slist{gap:12px}.rowl.on{outline:3px solid var(--acc);background:var(--accbg)}.rowl span{color:var(--sub);font-size:15px;white-space:nowrap}
+.sht{font-size:30px!important;font-weight:900}.shm{display:grid;grid-template-columns:1fr 1fr;gap:10px}.shm div{background:var(--soft);border-radius:12px;padding:10px 14px}.shm small{display:block;color:var(--sub);font-size:15px}
+.shr{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;border-top:2px solid var(--line);padding-top:14px}.shk{display:grid;gap:4px;align-content:start}.shk b{font-size:20px}.shk span{color:var(--acc);font-weight:800}.shb{display:grid;gap:8px}.shl{font-size:26px;font-weight:800;line-height:1.4;white-space:pre-wrap}
+@media(max-width:700px){.shr{grid-template-columns:1fr;gap:6px}.shl{font-size:22px}.shm{grid-template-columns:1fr}.bt{font-size:24px}}
+.how{margin:10px 0 0;padding-left:26px;display:grid;gap:8px;font-size:18px}
+.kg{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}.kg.k2{grid-template-columns:1fr 1fr}
+.kv{background:var(--soft);border:0;border-radius:14px;padding:12px 14px;text-align:left;font:inherit;color:inherit;cursor:pointer;display:grid;gap:4px;align-content:start;min-height:76px}.kv small{color:var(--sub);font-size:15px}.kv b{font-size:19px;white-space:pre-wrap;overflow-wrap:anywhere}.kv.none b{color:var(--sub);font-weight:500}.kv:hover,.kvb:hover{outline:3px solid var(--acc)}
+.hm .kg .kv{background:var(--paper);border:2px solid var(--line)}
+.subnav{margin:14px 0 0}
+@media print{header,.noprint,#msg,#toast{display:none!important}body{background:#fff}.wrap{padding:0;max-width:none}.svg{display:block}.sheet{border:0;padding:0;margin:0 0 24px;break-inside:avoid}}
 .mini{background:var(--soft);border-radius:14px;padding:12px 14px;display:grid;gap:6px}
 .calc{background:var(--soft);border-radius:14px;padding:14px 16px;display:flex;gap:18px;flex-wrap:wrap;align-items:baseline}
 .calc b{font-size:28px;font-weight:900}.calc .ok{color:var(--ok)}
@@ -141,7 +164,7 @@ body.home #chSel,body.home .tabs,body.home header [data-act=addCh]{display:none!
 .card.pg{cursor:pointer}.card.pg:hover{border-color:var(--acc)}.pgo{color:var(--acc);font-weight:700;font-size:17px}
 .plink{background:none;border:0;padding:0;font:inherit;font-size:19px;font-weight:700;color:var(--acc);text-decoration:underline;cursor:pointer;min-height:40px}
 .nowch{font-weight:900;font-size:19px}
-@media(max-width:700px){header{gap:8px;padding-top:8px;padding-bottom:8px}header .brand{font-size:19px;order:1;flex:1 1 auto}.who{order:2}.who .btn{min-height:40px;padding:4px 10px}header select{order:3;flex:1 1 0;max-width:none;min-height:42px}header [data-act=addCh]{order:4}.tabs{order:5;width:100%;margin-left:0}.tabs .btn{flex:1 1 0;padding:8px 4px;min-height:44px}}
+@media(max-width:700px){header{gap:8px;padding-top:8px;padding-bottom:8px}header .brand{font-size:19px;order:1;flex:1 1 auto}.who{order:2}.who .btn{min-height:40px;padding:4px 10px}header select{order:3;flex:1 1 0;max-width:none;min-height:42px}header [data-act=addCh]{order:4}.tabs{order:5;width:100%;margin-left:0}.tabs{flex-wrap:wrap}.tabs .btn{flex:1 0 auto;padding:8px 10px;min-height:44px;white-space:nowrap;font-size:17px}}
 </style>
 
 <header>
@@ -149,10 +172,11 @@ body.home #chSel,body.home .tabs,body.home header [data-act=addCh]{display:none!
   <select id="chSel" aria-label="크리에이터"></select>
   <button class="btn sm pdonly" data-act="addCh">크리에이터 추가</button>
   <div class="tabs">
+    <button class="btn" data-tab="home">오늘</button>
+    <button class="btn" data-tab="board">콘텐츠</button>
+    <button class="btn" data-tab="script">대본</button>
     <button class="btn" data-tab="concept">크리에이터</button>
-    <button class="btn" data-tab="board">진행판</button>
-    <button class="btn" data-tab="refs">레퍼런스</button>
-    <button class="btn" data-tab="acct">계정 분석</button>
+    <button class="btn" data-tab="refs">레퍼런스·분석</button>
   </div>
   <div class="who"><button class="btn sm pdonly" data-tab="people" id="homeBtn">관리 화면</button>
   <button class="btn sm" data-act="logout" title="로그아웃"><span id="meName"></span> · 나가기</button></div>
@@ -164,9 +188,9 @@ body.home #chSel,body.home .tabs,body.home header [data-act=addCh]{display:none!
 (function(){
 var STAGES=['방향성','채널명','기획','대본','영상작업','편집','분석','보완'];
 var FORMS=['썰','정보 정리','브이로그','검증','개그','기타'];
-var S={accts:[],fxEdit:false,rchs:[],rv:'ch',rc:null,rcEdit:null,talks:[],role:'',ch:null,sec:0,tab:'concept',stage:'all',open:null,refEdit:null,pass:false,form:'all',q:'',channels:[],refs:[],items:[],comments:[],concepts:[],group:true,step:0,undo:null,me:null,names:{},loaded:{},ro:false,addCh:false,del:false};
+var S={accts:[],fxEdit:false,rchs:[],rv:'ch',rc:null,rcEdit:null,talks:[],role:'',ch:null,sec:-1,sv:null,tab:'home',stage:'all',open:null,refEdit:null,pass:false,form:'all',q:'',channels:[],refs:[],items:[],comments:[],concepts:[],group:true,step:0,undo:null,me:null,names:{},loaded:{},ro:false,addCh:false,del:false};
 var db=null,user=null,app=document.getElementById('app'),msg=document.getElementById('msg');
-try{var t=sessionStorage.getItem('ws-tab');if(t)S.tab=t;S.ch=localStorage.getItem('ws-ch')||null}catch(e){}
+try{var t=sessionStorage.getItem('ws-tab');if(t&&/^(home|board|script|concept|refs|acct|people)$/.test(t))S.tab=t;S.ch=localStorage.getItem('ws-ch')||null}catch(e){}
 
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function num(v){if(typeof v==='number')return v;var s=String(v||'').replace(/[, ]/g,'');if(!s)return 0;var m=parseFloat(s);if(isNaN(m))return 0;if(/만/.test(s))m*=10000;else if(/천/.test(s))m*=1000;else if(/k$/i.test(s))m*=1000;return Math.round(m)}
@@ -208,7 +232,7 @@ function byOrder(a,b){return (a.order||0)-(b.order||0)||(a.at||0)-(b.at||0)}
 function head(){
   var sel=document.getElementById('chSel');
   sel.innerHTML=S.channels.slice().sort(byOrder).map(function(c){return '<option value="'+esc(c.id)+'"'+(c.id===S.ch?' selected':'')+'>'+esc(c.name)+'</option>'}).join('')||'<option>크리에이터 없음</option>';
-  [].forEach.call(document.querySelectorAll('[data-tab]'),function(b){b.classList.toggle('on',b.dataset.tab===S.tab&&!S.open)});
+  [].forEach.call(document.querySelectorAll('[data-tab]'),function(b){b.classList.toggle('on',(b.dataset.tab===S.tab||(b.dataset.tab==='refs'&&S.tab==='acct'))&&!S.open)});
   var home=S.role==='pd'&&(S.tab==='people'||S.addCh);document.body.classList.toggle('home',home);
   var hb=document.getElementById('homeBtn');if(hb)hb.textContent=home?'관리 화면':'← 관리 화면';
 }
@@ -222,36 +246,154 @@ function render(soft){
   if(!S.channels.length){app.innerHTML=S.role==='pd'?'<div class="empty" style="margin-top:24px">아직 크리에이터가 없습니다.<br><br><button class="btn pri" data-act="addCh">첫 크리에이터 만들기</button></div>':'<div class="empty" style="margin-top:24px">아직 이 계정에 연결된 크리에이터가 없습니다.<br>관리자에게 연결해 달라고 말해 주세요.</div>';return}
   if(S.open){var it=S.items.filter(function(i){return i.id===S.open})[0];if(it){app.innerHTML=editor(it);return}S.open=null}
   if(S.refEdit){app.innerHTML=refForm();return}
-  app.innerHTML=S.tab==='people'?peopleHtml():S.tab==='refs'?refs():S.tab==='acct'?accts():S.tab==='concept'?concept():board();
+  app.innerHTML=S.tab==='people'?peopleHtml():S.tab==='refs'?subNav()+refs():S.tab==='acct'?subNav()+accts():S.tab==='concept'?concept():S.tab==='script'?scripts():S.tab==='board'?board():home();
 }
 /* 입력 중일 때는 화면을 다시 그리지 않고, 상대가 바꾼 다른 칸만 맞춘다 */
 function softSync(){
   if(S.tab==='concept'&&!S.open){var c=curConcept();[].forEach.call(app.querySelectorAll('[data-c]'),function(el){if(el!==document.activeElement&&!el.dataset.dirty){var v=c[el.dataset.c]==null?'':String(c[el.dataset.c]);if(el.value!==v)el.value=v}});var g=document.getElementById('grow');if(g)g.innerHTML=growStats(c);return}
   if(S.open){var it=S.items.filter(function(i){return i.id===S.open})[0];if(!it)return;
-    [].forEach.call(app.querySelectorAll('[data-f]'),function(el){if(el!==document.activeElement&&!el.dataset.dirty){var v=it[el.dataset.f]==null?'':String(it[el.dataset.f]);if(el.value!==v)el.value=v}});
+    [].forEach.call(app.querySelectorAll('[data-f]'),function(el){if(el!==document.activeElement&&!el.dataset.dirty){var v=it[el.dataset.f]==null?'':String(it[el.dataset.f]);if(el.dataset.f==='stage')v=GSTAGE[grp(v)];if(el.value!==v)el.value=v}});
     var sc=it.scenes||[];[].forEach.call(app.querySelectorAll('[data-sc]'),function(el){if(el!==document.activeElement&&!sceneDirty){var a=el.dataset.sc.split(':'),r=sc[+a[0]];if(r){var v=r[a[1]]==null?'':String(r[a[1]]);if(el.value!==v)el.value=v}}});
     var k=document.getElementById('calc');if(k)k.innerHTML=calc(it);
     var c=document.getElementById('cms');if(c)c.innerHTML=cmList(it.id)}
 }
 
+/* ---------- 단계 묶음, 편 번호 ---------- */
+var GROUPS=['기획','대본','촬영·편집','올림·돌아보기'],GSTAGE=['기획','대본','영상작업','분석'],GDO=['기획 하기','대본 쓰기','촬영·편집 하기','올리고 돌아보기'];
+function grp(s){var i=STAGES.indexOf(s);return i<=2?0:i===3?1:i<=5?2:3}
+function chItems(){return S.items.filter(function(i){return i.ch===S.ch})}
+function epMap(items){var m={},by={};items.slice().sort(byOrder).forEach(function(i){if(!i.corner)return;by[i.corner]=(by[i.corner]||0)+1;m[i.id]=by[i.corner]});return m}
+function epName(i,ep){return (ep[i.id]?ep[i.id]+'편 · ':'')+(i.title||'제목 없음')}
+function scFilled(i){return (i.scenes||[]).filter(function(x){return (x.line||x.sub||x.screen||'').trim()})}
+function nextAct(i){var d=stepDone(i),g=grp(i.stage);
+  if(g===0)return !d[0]?'레퍼런스 고르기':!d[1]?'기획 적기':'대본으로 넘기기';
+  if(g===1){var n=scFilled(i).length;return n?'대본 '+(i.scenes||[]).length+'줄 중 '+n+'줄':'대본 쓰기'}
+  if(g===2){var l=(i.scenes||[]).filter(function(x){return (x.screen||'').trim()}),dn=(i.shotDone||[]).length;return l.length?'촬영 '+l.length+'컷 중 '+Math.min(dn,l.length)+'컷':'촬영 준비'}
+  return num(i.views)?'조회 '+fmt(num(i.views))+(i.lesson?' · 배운 점 적음':' · 배운 점 적기'):(i.url||i.posted?'성과 적기':'올리기')}
+function allCorners(items){var cs=corners().slice();items.forEach(function(i){if(i.corner&&cs.indexOf(i.corner)<0)cs.push(i.corner)});return cs}
+function ymd(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+
+/* ---------- 오늘 ---------- */
+function nowItem(items){
+  var c=items.filter(function(i){return !(grp(i.stage)===3&&num(i.views)>0&&i.lesson)});
+  var pr=[1,2,3,0];
+  return c.sort(function(a,b){return (b.title?1:0)-(a.title?1:0)||pr[grp(b.stage)]-pr[grp(a.stage)]||(b.updatedAt||b.at||0)-(a.updatedAt||a.at||0)})[0];
+}
+function home(){
+  var items=chItems(),ep=epMap(items),c=curConcept(),it=nowItem(items),h='<div class="hm">';
+  /* 지금 할 일 */
+  h+='<div class="hg2"><div class="panel big"><span class="badge acc">지금 할 일</span>';
+  if(it){var f=fxOf(it.corner),fx=f[f.length-1];
+    h+='<div class="bt">'+esc((it.corner?it.corner+' ':'')+(ep[it.id]?ep[it.id]+'편':(it.title||'제목 없음')))+' · '+GDO[grp(it.stage)]+'</div><div class="bs">'+(it.corner&&ep[it.id]&&it.title?esc(it.title)+' · ':'')+esc(nextAct(it))+(fx&&fx.hook?'<br>이 코너의 첫 3초: '+esc(fx.hook):'')+'</div><div class="bar" style="margin:0"><button class="btn pri" data-open="'+esc(it.id)+'">이어서 하기</button><button class="btn" data-tab="board">다른 편 고르기</button><button class="btn" data-act="svOpen" data-id="'+esc(it.id)+'">대본 보기</button></div>';
+  }else h+='<div class="bt">첫 콘텐츠를 만들 차례입니다</div><div class="bs">코너를 고르고 1편부터 시작합니다.</div><div class="bar" style="margin:0">'+(S.ro?'':'<button class="btn pri" data-act="newItem">새 콘텐츠</button>')+'<button class="btn" data-tab="concept">크리에이터 먼저 정하기</button></div>';
+  h+='</div>';
+  /* 같이 정할 것 */
+  var ts=(S.talks||[]).filter(function(t){return t.ch===S.ch&&!t.decided}).sort(function(a,b){return (b.at||0)-(a.at||0)});
+  h+='<div class="panel"><h2>같이 정할 것 '+(ts.length?'<span class="badge warn">'+ts.length+'</span>':'')+'</h2>';
+  if(!ts.length)h+='<div style="color:var(--sub)">지금 정할 것이 없습니다. 정할 것은 크리에이터 화면이나 콘텐츠 안에서 올립니다.</div>';
+  ts.slice(0,5).forEach(function(t){var ms=(S.comments||[]).filter(function(m){return m.talk===t.id}).sort(function(a,b){return (a.at||0)-(b.at||0)}),l=ms[ms.length-1];
+    var mine=l&&l.by===S.me,tg=!l?'<span class="badge">의견 없음</span>':mine?'<span class="badge">답 기다림</span>':'<span class="badge acc">내가 답할 차례</span>';
+    h+='<button class="rowl" data-act="goTalk" data-scope="'+esc(t.scope||'')+'"><b>'+esc(t.q)+'</b>'+tg+'</button>'});
+  if(ts.length>5)h+='<div style="color:var(--sub)">외 '+(ts.length-5)+'개</div>';
+  h+='</div></div>';
+  /* 이번 주 */
+  var now=new Date(),mon=new Date(now.getFullYear(),now.getMonth(),now.getDate()-((now.getDay()+6)%7)),td=ymd(now),goal=parseInt(String(c.freq||'').replace(/[^0-9]/g,''),10)||0,up=0,days='';
+  ['월','화','수','목','금','토','일'].forEach(function(n,k){var d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+k),s=ymd(d),x='',posted=false;
+    items.forEach(function(i){if(i.posted===s){posted=true;up++;x+='<button class="wi up" data-open="'+esc(i.id)+'">올림 · '+esc(epName(i,ep))+(num(i.views)?'<br>조회 '+fmt(num(i.views)):'')+'</button>'}
+      else if(i.due===s)x+='<button class="wi" data-open="'+esc(i.id)+'">촬영 · '+esc(epName(i,ep))+'</button>'});
+    days+='<div class="wd'+(s===td?' td':'')+(posted?' up':'')+'"><b>'+n+' '+(d.getMonth()+1)+'/'+d.getDate()+(s===td?' · 오늘':'')+'</b>'+x+'</div>'});
+  h+='<div class="panel"><h2>이번 주 <small class="hs">'+(goal?'목표 주 '+goal+'편 · 올림 '+up+' · 남은 '+Math.max(0,goal-up):'올림 '+up+'편 · 한 주에 몇 편 올릴지 정하면 남은 편수가 나옵니다')+'</small></h2><div class="wk">'+days+'</div><div class="guide">콘텐츠에 촬영 날짜와 게시한 날을 적으면 여기에 뜹니다.'+(goal?'':' <button class="btn sm" data-sec="2" data-go="concept">목표 정하기</button>')+'</div></div>';
+  /* 세 가지 */
+  h+='<div class="hg3">';
+  var ls=items.filter(function(i){return i.lesson}).sort(function(a,b){return String(b.posted||'').localeCompare(String(a.posted||''))||(b.updatedAt||0)-(a.updatedAt||0)})[0];
+  h+='<div class="panel"><h2>지난 영상에서 배운 점</h2>'+(ls?'<div class="hs">'+esc(epName(ls,ep))+(im(ls)?' · 팔로워의 '+im(ls)+'배':'')+'</div><b>'+esc(ls.lesson)+'</b><button class="btn sm" style="justify-self:start" data-open="'+esc(ls.id)+'">열기</button>':'<div style="color:var(--sub)">영상을 올리고 성과와 배운 점을 적으면 여기에 뜹니다. 다음 편을 쓸 때도 같이 보입니다.</div>')+'</div>';
+  var ac=S.accts.filter(function(a){return a.ch===S.ch&&a.kind==='mine'}),ad=ac.filter(function(a){return a.status==='done'&&a.res}).sort(function(a,b){return ((b.res||{}).at||0)-((a.res||{}).at||0)})[0],aw=ac.filter(function(a){return a.status==='req'||a.status==='doing'}).length;
+  h+='<div class="panel"><h2>내 계정 분석</h2>'+(ad?'<div class="hs">@'+esc(ad.account)+' · '+day(ad.res.at)+' 분석</div><b>다음에 할 것: '+esc(ad.res.next||'-')+'</b>':aw?'<div style="color:var(--sub)">분석 요청 '+aw+'개가 기다리는 중입니다. 하루 한 번 모아서 합니다.</div>':'<div style="color:var(--sub)">인스타 아이디를 올리면 잘된 이유, 아쉬운 이유, 다음에 할 것을 채워 드립니다.</div>')+'<button class="btn sm" style="justify-self:start" data-sub="acct">계정 분석 열기</button></div>';
+  var rr=(it?recRefs(it):[])[0];if(!rr){var v=S.refs.filter(function(r){return r.ch===S.ch}).sort(function(a,b){return (b.views||0)-(a.views||0)})[0];if(v)rr={r:v}}
+  h+='<div class="panel"><h2>지금 참고할 영상</h2>'+(rr?'<div class="hs">@'+esc(rr.r.account)+(rr.r.views?' · '+fmt(rr.r.views):'')+(rr.r.form?' · '+esc(rr.r.form):'')+'</div><b>'+esc(rr.r.learn||rr.r.hook||rr.r.video||'')+'</b>'+(safeUrl(rr.r.url)?'<a class="btn sm" style="justify-self:start" href="'+esc(rr.r.url)+'" target="_blank" rel="noopener">영상 열기</a>':''):'<div style="color:var(--sub)">레퍼런스에 영상을 넣으면 지금 할 일에 맞는 것을 골라 드립니다.</div>')+'</div>';
+  return h+'</div></div>';
+}
+
+/* ---------- 콘텐츠: 코너마다 한 줄 ---------- */
+function lcard(i,ep){var g=grp(i.stage);
+  return '<div class="lcard click" data-open="'+esc(i.id)+'" tabindex="0" role="button"><span class="lg">'+GROUPS[g]+'</span><b>'+esc(epName(i,ep))+'</b><small>'+esc(nextAct(i))+(i.due?' · 촬영 '+esc(i.due.slice(5).replace('-','/')):'')+'</small>'+(g<3&&!S.ro?'<button class="btn sm" data-next="'+esc(i.id)+'" title="다음 단계로 넘기기">다음: '+GROUPS[g+1]+'</button>':'')+'</div>'}
 function board(){
-  var items=S.items.filter(function(i){return i.ch===S.ch});
-  var cnt={};items.forEach(function(i){cnt[i.stage]=(cnt[i.stage]||0)+1});
-  var h='<div class="bar"><button class="chip'+(S.stage==='all'?' on':'')+'" data-stage="all">전체<b>'+items.length+'</b></button>';
-  STAGES.forEach(function(s){h+='<button class="chip'+(S.stage===s?' on':'')+'" data-stage="'+s+'">'+s+'<b>'+(cnt[s]||0)+'</b></button>'});
-  h+='<span class="sp"></span><button class="btn pri" data-act="newItem">새 콘텐츠</button></div>';
-  var list=items.filter(function(i){return S.stage==='all'||i.stage===S.stage}).sort(function(a,b){return STAGES.indexOf(a.stage)-STAGES.indexOf(b.stage)||(a.order||0)-(b.order||0)||(a.at||0)-(b.at||0)});
-  if(!list.length)return h+'<div class="empty">여기에는 아직 콘텐츠가 없습니다.</div>';
-  h+='<div class="grid">';
-  list.forEach(function(i){
-    var n=S.comments.filter(function(c){return c.item===i.id}).length,nx=STAGES[STAGES.indexOf(i.stage)+1];
-    h+='<div class="card click" data-open="'+esc(i.id)+'" tabindex="0" role="button"><div class="meta"><span class="badge acc">'+esc(i.stage||'기획')+'</span>'+(i.corner?'<span class="badge">'+esc(i.corner)+'</span>':'')+(i.who?'<span class="badge">'+esc(i.who)+'</span>':'')+(i.due?'<span>'+esc(i.due)+' 까지</span>':'')+'</div><h3>'+esc(i.title||'제목 없음')+'</h3>'+
-      (i.intent?'<div style="color:var(--sub);font-size:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">'+esc(i.intent)+'</div>':'')+
-      '<div class="meta"><span class="dots" title="레퍼런스, 기획, 대본, 촬영, 성과">'+stepDone(i).map(function(d){return '<i'+(d?' class="d"':'')+'></i>'}).join('')+'</span>'+(num(i.views)?'<span>조회 '+fmt(num(i.views))+'</span>':'')+'<span>의견 '+n+'</span><span class="sp" style="margin-left:auto"></span>'+(nx&&!S.ro?'<button class="btn sm" data-next="'+esc(i.id)+'">다음: '+nx+'</button>':'')+'</div></div>';
-  });
+  var items=chItems(),ep=epMap(items),cs=allCorners(items),left=items.filter(function(i){return !i.corner});
+  var h='<div class="bar"><h2 class="h1">콘텐츠</h2><span class="hs">코너마다 한 줄. 1편, 2편으로 쌓습니다.</span><span class="sp"></span>'+(S.ro?'':'<button class="btn" data-sec="2" data-go="concept">코너 추가·고치기</button>')+'</div>';
+  if(!cs.length&&!left.length)return h+'<div class="empty">아직 코너와 콘텐츠가 없습니다.<br><br>'+(S.ro?'':'<button class="btn pri" data-sec="2" data-go="concept">코너부터 정하기</button> <button class="btn" data-act="newItem">코너 없이 새 콘텐츠</button>')+'</div>';
+  h+='<div class="panel lanes" style="margin-top:0"><div class="lane lh"><div>코너</div>'+GROUPS.map(function(g){return '<div>'+g+'</div>'}).join('')+'</div>';
+  var lane=function(cn,list){
+    var ms=list.map(im).filter(Boolean),m=med(ms),f=fxOf(cn),fx=f[f.length-1];
+    var s='<div class="lane"><div class="ln"><b>'+esc(cn||'코너 없음')+'</b>'+(ms.length?'<span class="badge '+(m>=10?'ok':'')+'">팔로워의 '+m+'배 · '+ms.length+'편</span>':'<span class="badge">아직 숫자 없음</span>')+(cn?'<small>틀: '+esc(fx&&fx.hook?fx.hook:'아직 없음')+'</small>':'<small>콘텐츠를 열어 코너를 골라 주세요</small>')+'</div>';
+    for(var g=0;g<4;g++){s+='<div class="lc">'+list.filter(function(i){return grp(i.stage)===g}).sort(byOrder).map(function(i){return lcard(i,ep)}).join('')+(g===0&&!S.ro?'<button class="lnew" data-act="newItem" data-corner="'+esc(cn)+'">＋ '+(cn?(list.length+1)+'편':'새 콘텐츠')+'</button>':'')+'</div>'}
+    return s+'</div>'};
+  cs.forEach(function(cn){h+=lane(cn,items.filter(function(i){return i.corner===cn}))});
+  if(left.length||!cs.length)h+=lane('',left);
   return h+'</div>';
 }
 
+/* ---------- 대본 ---------- */
+var SUBG={'썰':{sub:'말하는 문장을 한 줄씩, 화면 아래쪽 가운데. 나이와 숫자만 색을 다르게',sfx:'장면이 바뀔 때만 짧게 한 번',bgm:'잔잔한 곡을 작게. 말소리가 먼저 들리게'},
+  '정보 정리':{sub:'번호(1, 2, 3)를 크게. 한 화면에 한 가지만',sfx:'번호가 뜰 때 한 번',bgm:'밝고 박자가 일정한 곡'},
+  '브이로그':{sub:'말투가 살아 있는 짧은 자막. 첫 화면에 날짜나 "n일차"',sfx:'따르는 소리, 써는 소리처럼 현장 소리 살리기',bgm:'가사 없는 잔잔한 곡'},
+  '검증':{sub:'첫 화면에 질문을 크게. 끝에 답을 O, X로',sfx:'답이 나오는 순간 한 번',bgm:'궁금하게 만드는 곡을 작게'},
+  '개그':{sub:'진지한 자막 + 반대되는 웃긴 장면. 자막은 짧게',sfx:'지거나 넘어지는 순간 한 번',bgm:'유행하는 소리가 있으면 그것'}};
+var PARTG=[['첫 3초','영상이 시작하자마자 떠 있게. 제목처럼 크게 한 줄, 15자 안쪽. 말과 같은 문장으로'],['가운데','말하는 대로 한 줄씩 바뀌게. 한 줄 12~16자. 중요한 낱말 하나만 색을 다르게'],['마무리','부탁하는 말(저장, 댓글, 다음 편)을 크게. 2초 넘게 멈춰서 보여 주기']];
+var SHOW=['코너 틀과 지난 편에서 배운 점을 먼저 봅니다.','첫 3초부터 씁니다. 화면, 말, 자막을 한 줄에 같이.','가운데는 컷을 1~2초로 짧게. 한 줄에 한 장면.','끝에는 저장, 댓글, 다음 편 중 하나를 부탁합니다.','효과음은 꼭 필요한 곳만, 배경음악은 한 곡으로 정합니다.','촬영 목록대로 찍고 체크합니다.','올리고 7일 뒤 숫자와 배운 점을 적습니다. 다음 편에 미리 뜹니다.'];
+function subTips(it){
+  var fm=cForm(it.corner),g=SUBG[fm],h='';
+  if(g)h+='<div class="row"><span>자막</span><div><b>'+g.sub+'</b></div></div><div class="row"><span>효과음</span><div>'+g.sfx+'</div></div><div class="row"><span>배경음악</span><div>'+g.bgm+'</div></div>';
+  else h+='<div style="color:var(--sub)">코너를 고르면 그 형식에 맞는 자막, 효과음, 배경음악 쓰는 법이 뜹니다.</div>';
+  h+='<div class="f"><label>장면마다 자막 넣는 법</label>'+PARTG.map(function(x){return '<div class="row"><span>'+x[0]+'</span><div>'+x[1]+'</div></div>'}).join('')+'</div>';
+  var ex=S.rchs.filter(function(r){return r.ch===S.ch&&/자막/.test(r.tone||'')&&mult(r)>=5}).sort(function(a,b){return mult(b)-mult(a)}).slice(0,3);
+  if(ex.length)h+='<div class="f"><label>잘되는 곳의 자막<small>조사한 계정</small></label>'+ex.map(function(r){return '<div class="cm"><small>@'+esc(r.account)+' · 팔로워의 '+mult(r)+'배</small>'+esc(r.tone)+'</div>'}).join('')+'</div>';
+  return h+'<div class="guide">추천은 조사한 계정에서 뽑은 것입니다. 우리 영상 성과가 쌓이면 그쪽을 먼저 따릅니다.</div>';
+}
+function scText(it,ep){var t=epName(it,ep||{})+(it.corner?' ('+it.corner+')':'')+'\n';
+  if(it.bgm)t+='배경음악: '+it.bgm+'\n';if(it.subStyle)t+='자막 방식: '+it.subStyle+'\n';
+  scenesOf(it).forEach(function(x){t+='\n['+(x.k||'장면')+(x.sec?' · '+x.sec+'초':'')+']\n'+(x.screen?'촬영: '+x.screen+'\n':'')+(x.line?'말: '+x.line+'\n':'')+(x.sub?'자막: '+x.sub+'\n':'')+(x.sfx?'효과음: '+x.sfx+'\n':'')});return t}
+function sheet(it,ep){
+  var sc=scenesOf(it),has=scFilled(it).length>0,tot=0,f=fxOf(it.corner),fx=f[f.length-1];sc.forEach(function(x){tot+=num(x.sec)});
+  var h='<div class="panel sheet"><div class="bar noprint" style="margin:0"><span class="badge acc">'+GROUPS[grp(it.stage)]+'</span><span class="sp"></span>'+(S.ro?'':'<button class="btn sm" data-open="'+esc(it.id)+'">고치기</button>')+(has?'<button class="btn sm" data-act="scCopy" data-id="'+esc(it.id)+'">전체 복사</button><button class="btn sm pri" data-act="print">인쇄</button>':'')+'</div>'+
+    '<h2 class="sht">'+esc(epName(it,ep))+'</h2><div class="hs">'+(it.corner?esc(it.corner)+' · ':'')+'전체 '+tot+'초'+(it.due?' · 촬영 '+esc(it.due):'')+(it.place?' · '+esc(it.place):'')+'</div>';
+  if(!has){h+='<div class="empty">아직 대본이 없습니다.'+(fx?'<br>이 코너의 틀: 첫 3초 '+esc(fx.hook||'-')+' / 끝 '+esc(fx.end||'-'):'')+'<br><br>'+(S.ro?'':'<button class="btn pri" data-act="scFill" data-id="'+esc(it.id)+'">틀로 초안 채우기</button>')+'</div>';return h+'</div>'}
+  h+='<div class="shm"><div><small>배경음악</small><b>'+esc(it.bgm||'아직 안 정함')+'</b></div><div><small>자막 방식</small><b>'+esc(it.subStyle||'아직 안 정함')+'</b></div></div>';
+  sc.forEach(function(x,i){h+='<div class="shr"><div class="shk"><b>'+esc(x.k||(i+1)+'번')+'</b>'+(x.sec?'<span>'+esc(x.sec)+'초</span>':'')+'</div><div class="shb">'+
+    (x.line?'<div class="shl">'+esc(x.line)+'</div>':'')+(x.sub?'<div class="row"><span>자막</span><div><b>'+esc(x.sub)+'</b></div></div>':'')+(x.screen?'<div class="row"><span>촬영</span><div>'+esc(x.screen)+'</div></div>':'')+(x.sfx?'<div class="row"><span>효과음</span><div>'+esc(x.sfx)+'</div></div>':'')+
+    (!(x.line||x.sub||x.screen||x.sfx)?'<div class="noprint" style="color:var(--sub)">아직 비어 있습니다.'+(fx?' 이 코너의 틀: '+esc((i===0?fx.hook:i===sc.length-1?fx.end:fx.mid)||'-'):'')+'</div>':'')+'</div></div>'});
+  if(it.prep)h+='<div class="row"><span>준비물</span><div>'+esc(it.prep)+'</div></div>';
+  return h+'</div>';
+}
+function scripts(){
+  var items=chItems(),ep=epMap(items),cs=allCorners(items).concat(['']),cur=S.sv==='all'?null:items.filter(function(i){return i.id===S.sv})[0];
+  if(!cur&&S.sv!=='all'){cur=nowItem(items.filter(function(i){return scFilled(i).length}))||nowItem(items)}
+  var h='<div class="bar noprint"><h2 class="h1">대본</h2><span class="hs">누르면 큰 글씨 한 장으로 봅니다. 촬영할 때 이 화면을 켜 두세요.</span></div>';
+  if(!items.length)return h+'<div class="empty">아직 콘텐츠가 없습니다.<br><br>'+(S.ro?'':'<button class="btn pri" data-act="newItem">새 콘텐츠</button>')+'</div>';
+  h+='<div class="svg"><div class="panel slist noprint" style="margin-top:0"><button class="rowl'+(S.sv==='all'?' on':'')+'" data-act="svOpen" data-id="all"><b>쓴 대본 전체 보기</b></button>';
+  cs.forEach(function(cn){var l=items.filter(function(i){return (i.corner||'')===cn}).sort(byOrder);if(!l.length)return;
+    h+='<div class="f"><label>'+esc(cn||'코너 없음')+'</label>'+l.map(function(i){var n=scFilled(i).length;return '<button class="rowl'+(cur&&cur.id===i.id?' on':'')+'" data-act="svOpen" data-id="'+esc(i.id)+'"><b>'+esc(epName(i,ep))+'</b><span>'+(n?n+'줄':'없음')+'</span></button>'}).join('')+'</div>'});
+  h+='</div><div class="svm">';
+  if(S.sv==='all'){var w=items.filter(function(i){return scFilled(i).length}).sort(byOrder);h+=w.length?w.map(function(i){return sheet(i,ep)}).join(''):'<div class="empty">쓴 대본이 아직 없습니다.</div>'}
+  else if(cur){h+=sheet(cur,ep)+'<div class="panel noprint"><h2>자막, 효과음, 배경음악 쓰는 법 <span class="badge">'+esc(cForm(cur.corner)||'형식 없음')+'</span></h2>'+subTips(cur)+'</div>'}
+  h+='<details class="panel noprint"'+(S.ro?'':' open')+'><summary><b style="font-size:20px">대본은 이 순서로 진행합니다</b></summary><ol class="how">'+SHOW.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ol></details>';
+  return h+'</div></div>';
+}
+
+/* ---------- 크리에이터 한 장 ---------- */
+function tile(sec,label,val,big){return '<button class="kv'+(big?' kb':'')+(val?'':' none')+'" data-sec="'+sec+'"><small>'+label+'</small><b>'+esc(val||'아직 없음 · 눌러서 적기')+'</b></button>'}
+function conceptSheet(){
+  var c=curConcept(),cs=corners(),ts=(S.talks||[]).filter(function(t){return t.ch===S.ch&&!t.decided&&/^c\d/.test(t.scope||'')}).length;
+  var h='<div class="bar"><h2 class="h1">'+esc(chName())+'</h2><span class="hs">누른 칸만 열려서 고칩니다.</span><span class="sp"></span>'+(ts?'<span class="badge warn">같이 정할 것 '+ts+'</span>':'')+'</div><div class="hm">';
+  h+='<button class="panel big kvb" data-sec="0"><span class="badge acc">모든 영상 첫 문장 (이름표)</span><div class="bt">'+esc(c.tag||'아직 없음 · 눌러서 정하기')+'</div><div class="bs">정해 두면 대본 초안의 첫 줄에 들어갑니다.</div></button>';
+  h+='<div class="kg">'+tile(0,'한 줄 소개',c.one)+tile(1,'가장 좁힌 자리',c.l3)+tile(0,'보여 주는 것과 안 보여 주는 것',c.show)+tile(0,'말투와 분위기',c.tone)+tile(0,'누구인가',c.speaker)+tile(1,'누가 보나',c.target)+tile(1,'다른 계정과 다른 점',c.diff)+tile(0,'하지 않는 것',c.dont)+'</div>';
+  h+='<div class="hg2"><div class="panel"><h2>코너와 올리는 리듬</h2>'+tile(2,'코너',cs.join(' · '))+'<div class="kg k2">'+tile(2,'한 주에 몇 편',c.freq)+tile(2,'요일과 시간',c.slot)+'</div></div>';
+  h+='<div class="panel"><h2>숫자</h2><div id="grow">'+growStats(c)+'</div><div class="kg k2">'+tile(3,'지금 팔로워',c.folNow)+tile(3,'목표 팔로워',c.folGoal)+'</div></div></div>';
+  var top=S.rchs.filter(function(r){return r.ch===S.ch&&mult(r)>0}).sort(function(a,b){return mult(b)-mult(a)}).slice(0,3);
+  h+='<div class="panel"><h2>닮고 싶은 곳 <small class="hs">팔로워보다 조회가 많은 순서</small></h2>'+(top.length?top.map(function(r){return '<div class="rowl" style="cursor:default"><b>@'+esc(r.account)+' · 팔로워 '+fmt(r.followers)+(r.take?' · '+esc(r.take):'')+'</b><span class="badge '+(mult(r)>=10?'ok':'')+'">'+mult(r)+'배</span></div>'}).join(''):'<div style="color:var(--sub)">레퍼런스에 채널을 넣으면 여기에 뜹니다.</div>')+'<button class="btn sm" style="justify-self:start" data-tab="refs">레퍼런스 열기</button></div>';
+  return h+'</div>';
+}
+
+function subNav(){return (S.rc||S.rcEdit)?'':'<div class="bar subnav"><button class="chip'+(S.tab==='refs'?' on':'')+'" data-sub="refs">레퍼런스</button><button class="chip'+(S.tab==='acct'?' on':'')+'" data-sub="acct">계정 분석</button></div>'}
 function F(label,hint,inner){return '<div class="f"><label>'+label+(hint?'<small>'+hint+'</small>':'')+'</label>'+inner+'</div>'}
 function ta(f,it,ph,rows){return '<textarea data-f="'+f+'" placeholder="'+esc(ph||'')+'"'+(rows?' style="min-height:'+rows+'px"':'')+(S.ro?' readonly':'')+'>'+esc(it[f]||'')+'</textarea>'}
 function cmList(id){
@@ -312,7 +454,7 @@ function editor(it){
   var h='<div class="bar"><button class="btn" data-act="back">목록으로</button><span class="saved" id="saved"></span><span class="sp"></span>'+(S.ro?'':'<button class="btn sm bad" data-act="del">지우기</button>')+'</div>';
   h+='<div class="panel edh" style="margin-top:0"><input class="title-in" data-f="title" placeholder="콘텐츠 제목" value="'+esc(it.title||'')+'"'+ro+'>'+
     '<div class="edm"><label>코너<select data-f="corner"'+(S.ro?' disabled':'')+'><option value="">고르기</option>'+cs.map(function(x){return '<option'+(x===it.corner?' selected':'')+'>'+esc(x)+'</option>'}).join('')+'</select></label>'+
-    '<label>단계<select data-f="stage"'+(S.ro?' disabled':'')+'>'+STAGES.map(function(x){return '<option'+(x===it.stage?' selected':'')+'>'+x+'</option>'}).join('')+'</select></label>'+
+    '<label>단계<select data-f="stage"'+(S.ro?' disabled':'')+'>'+GROUPS.map(function(x,gi){return '<option value="'+GSTAGE[gi]+'"'+(grp(it.stage)===gi?' selected':'')+'>'+x+'</option>'}).join('')+'</select></label>'+
     '<label>담당'+inp('who',it,'이름')+'</label><label>촬영 날짜'+inp('due',it,'','date')+'</label></div>'+
     '<div class="prg">'+STEPS.map(function(n,i){return '<span class="'+(done[i]?'d':'')+'">'+(done[i]?'✓ ':'')+n+'</span>'}).join('')+'</div></div>';
   h+='<div class="ed3">';
@@ -332,10 +474,11 @@ function editor(it){
   h+='<div class="edc"><div class="lab">② 쓰기</div><div class="panel diffc"><h2>차별화 한 가지</h2>'+(c.l3||c.diff?'<div class="guide">이 크리에이터의 자리: '+esc(c.l3||c.diff)+'</div>':'')+ta('gap',it,'고른 레퍼런스에는 없고 이 영상에만 있는 것',64)+'</div>';
   h+='<div class="panel"><h2>기획</h2><div class="cols">'+F('기획의도','왜 만들고 누가 보나',ta('intent',it,'',70))+F('포인트','이 영상만의 한 가지',ta('point',it,'',70))+'</div>'+F('저장하거나 공유할 이유','글 첫 줄에 쓸 말',ta('cta',it,'',56))+(it.story||!S.ro?'<details'+(it.story?' open':'')+'><summary>스토리 메모</summary>'+ta('story',it,'전체 흐름을 글로 적고 싶을 때',80)+'</details>':'')+'</div>';
   var sc=scenesOf(it),tot=0,fx=fxOf(it.corner),f=fx[fx.length-1];sc.forEach(function(x){tot+=num(x.sec)});
-  h+='<div class="panel"><h2>대본<small style="font-weight:500;color:var(--sub);font-size:15px;margin-left:8px">줄마다 화면, 말, 자막을 따로</small></h2><div class="sc sch"><span>장면</span><span>화면</span><span>말</span><span>자막</span><span>초</span><span></span></div><div id="scs" style="display:grid;gap:10px">';
+  h+='<div class="panel"><h2>대본<small style="font-weight:500;color:var(--sub);font-size:15px;margin-left:8px">줄마다 화면, 말, 자막을 따로</small></h2><div class="sc sch"><span>장면</span><span>촬영 (화면)</span><span>말</span><span>자막</span><span>효과음</span><span>초</span><span></span></div><div id="scs" style="display:grid;gap:10px">';
   sc.forEach(function(x,i){var hint=f?(i===0?f.hook:i===sc.length-1?f.end:f.mid):'';
-    h+='<div class="sc"><div class="sck"><input data-sc="'+i+':k" value="'+esc(x.k||'')+'" placeholder="장면"'+ro+'>'+(hint?'<small>공식: '+esc(hint)+'</small>':'')+'</div><textarea data-sc="'+i+':screen" placeholder="화면"'+ro+'>'+esc(x.screen||'')+'</textarea><textarea data-sc="'+i+':line" placeholder="말"'+ro+'>'+esc(x.line||'')+'</textarea><textarea data-sc="'+i+':sub" placeholder="자막"'+ro+'>'+esc(x.sub||'')+'</textarea><input class="scs" data-sc="'+i+':sec" inputmode="numeric" value="'+esc(x.sec||'')+'" placeholder="초"'+ro+'>'+(S.ro?'<span class="scx"></span>':'<button class="btn sm scx" data-scdel="'+i+'" aria-label="장면 지우기">×</button>')+'</div>'});
-  h+='</div><div class="bar" style="margin:0">'+(S.ro?'':'<button class="btn" data-act="scAdd">장면 추가</button>')+'<span class="sp"></span><b id="tot">전체 '+tot+'초</b></div>'+
+    h+='<div class="sc"><div class="sck"><input data-sc="'+i+':k" value="'+esc(x.k||'')+'" placeholder="장면"'+ro+'>'+(hint?'<small>공식: '+esc(hint)+'</small>':'')+'</div><textarea data-sc="'+i+':screen" placeholder="촬영 (화면)"'+ro+'>'+esc(x.screen||'')+'</textarea><textarea data-sc="'+i+':line" placeholder="말"'+ro+'>'+esc(x.line||'')+'</textarea><textarea data-sc="'+i+':sub" placeholder="자막"'+ro+'>'+esc(x.sub||'')+'</textarea><textarea data-sc="'+i+':sfx" placeholder="효과음"'+ro+'>'+esc(x.sfx||'')+'</textarea><input class="scs" data-sc="'+i+':sec" inputmode="numeric" value="'+esc(x.sec||'')+'" placeholder="초"'+ro+'>'+(S.ro?'<span class="scx"></span>':'<button class="btn sm scx" data-scdel="'+i+'" aria-label="장면 지우기">×</button>')+'</div>'});
+  h+='</div><div class="bar" style="margin:0">'+(S.ro?'':'<button class="btn" data-act="scAdd">장면 추가</button>')+'<span class="sp"></span><button class="btn sm" data-act="svOpen" data-id="'+esc(it.id)+'">큰 글씨로 보기</button><b id="tot">전체 '+tot+'초</b></div>'+
+    '<div class="cols">'+F('배경음악','한 곡으로',inp('bgm',it,'예: 잔잔한 피아노, 작게'))+F('자막 방식','위치, 크기, 색',inp('subStyle',it,'예: 한 줄씩, 아래 가운데, 숫자만 노란색'))+'</div><details><summary>자막, 효과음, 배경음악 쓰는 법</summary><div style="display:grid;gap:8px;margin-top:10px">'+subTips(it)+'</div></details>'+
     '<div class="f"><label>대본 점검<small>적을수록 채워집니다</small></label><div id="chk">'+edChecks(it)+'</div></div>'+(it.script||!S.ro?'<details'+(it.script?' open':'')+'><summary>대본 메모</summary>'+ta('script',it,'',70)+'</details>':'')+'</div></div>';
   /* ③ 찍고 돌아보기 */
   h+='<div class="edc"><div class="lab">③ 찍고 돌아보기</div><div class="panel"><h2>촬영 목록<small style="font-weight:500;color:var(--sub);font-size:15px;margin-left:8px">대본에서 자동</small></h2><div id="shots" style="display:grid;gap:6px">'+shotList(it)+'</div>'+F('장소','',inp('place',it,''))+F('준비물','',ta('prep',it,'',60))+'</div>';
@@ -504,8 +647,9 @@ function growStats(c){
   return h;
 }
 function concept(){
+  if(S.sec==null||S.sec<0)return conceptSheet();
   var c=curConcept(),sec=S.sec||0,done=secDone(c),its=S.items.filter(function(i){return i.ch===S.ch});
-  var h='<div class="bar"><h2 class="h1">'+esc(chName())+'</h2><span class="saved" id="saved"></span></div>';
+  var h='<div class="bar"><button class="btn" data-sec="-1">한 장으로</button><h2 class="h1">'+esc(chName())+'</h2><span class="saved" id="saved"></span></div>';
   h+='<div class="steps" style="margin-top:6px">'+SECS.map(function(n,i){return '<button class="step'+(i===sec?' on':'')+(done[i]?' done':'')+'" data-sec="'+i+'"><i>'+(done[i]&&i!==sec?'✓':(i+1))+'</i>'+n+'</button>'}).join('')+'</div>';
   h+=talksHtml('c'+sec,'c'+sec);
   h+='<div class="two"><div class="panel" style="margin-top:0"><p class="guide">'+SGUIDE[sec]+'</p>';
@@ -583,7 +727,7 @@ function chForm(){return '<div class="panel"><h2>크리에이터 추가</h2><p c
 function toast(t,undo){S.undo=undo||null;var el=document.getElementById('toast');document.getElementById('toastT').textContent=t;el.querySelector('button').style.display=undo?'':'none';el.style.display='flex';clearTimeout(timers.toast);timers.toast=setTimeout(function(){el.style.display='none';S.undo=null},9000)}
 function readScenes(){var rows=[];[].forEach.call(app.querySelectorAll('[data-sc]'),function(el){var a=el.dataset.sc.split(':');(rows[+a[0]]=rows[+a[0]]||{})[a[1]]=el.value});return rows}
 function saveScenes(rows,now){var id=S.open;if(!id||S.ro)return;sceneDirty=true;clearTimeout(timers.sc);var go=function(){var s=document.getElementById('saved');if(s)s.textContent='저장 중';return upd('items',id,{scenes:rows}).then(function(){sceneDirty=false;var s=document.getElementById('saved');if(s&&!S.ro)s.textContent='저장됨'})};if(now)return go();timers.sc=setTimeout(go,700)}
-function setTab(t){S.tab=t;S.open=null;S.refEdit=null;S.addCh=false;S.del=false;try{sessionStorage.setItem('ws-tab',t)}catch(e){}render()}
+function setTab(t){if(t==='concept')S.sec=-1;S.tab=t;S.open=null;S.refEdit=null;S.addCh=false;S.del=false;try{sessionStorage.setItem('ws-tab',t)}catch(e){}render()}
 var timers={};
 function saveField(el){
   var id=S.open,f=el.dataset.f,v=el.value;if(!id||S.ro)return;
@@ -614,15 +758,16 @@ document.addEventListener('change',function(e){var el=e.target;
 });
 document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.dataset&&e.target.dataset.open){e.preventDefault();e.target.click()}});
 document.addEventListener('click',function(e){
-  var b=e.target.closest('[data-sec],[data-tab],[data-act],[data-stage],[data-form],[data-next],[data-refedit],[data-open],[data-step],[data-unref],[data-scdel]');if(!b)return;var d=b.dataset;
-  if(d.sec!==undefined){S.sec=+d.sec;render();return}
+  var b=e.target.closest('[data-sec],[data-tab],[data-act],[data-stage],[data-form],[data-next],[data-refedit],[data-open],[data-step],[data-unref],[data-scdel],[data-sub]');if(!b)return;var d=b.dataset;
+  if(d.sub)return setTab(d.sub);
+  if(d.sec!==undefined){S.sec=+d.sec;if(d.go){S.tab=d.go;S.open=null;try{sessionStorage.setItem('ws-tab',d.go)}catch(x){}}render();window.scrollTo(0,0);return}
   if(d.step!==undefined){S.step=+d.step;render();return}
   if(d.unref){var iu=S.items.filter(function(i){return i.id===S.open})[0];if(iu)upd('items',iu.id,{refIds:(iu.refIds||[]).filter(function(x){return x!==d.unref})}).then(function(){render()});return}
   if(d.scdel!==undefined){var rw=readScenes();rw.splice(+d.scdel,1);saveScenes(rw,true).then(function(){render()});return}
   if(d.tab)return setTab(d.tab);
   if(d.stage){S.stage=d.stage;return render()}
   if(d.form){S.form=d.form;return render()}
-  if(d.next){e.stopPropagation();var it=S.items.filter(function(i){return i.id===d.next})[0];if(it){var nx=STAGES[STAGES.indexOf(it.stage)+1];if(nx)upd('items',it.id,{stage:nx})}return}
+  if(d.next){e.stopPropagation();var it=S.items.filter(function(i){return i.id===d.next})[0];if(it){var g=grp(it.stage);if(g<3)upd('items',it.id,{stage:GSTAGE[g+1]})}return}
   if(d.refedit){S.refEdit=d.refedit;return render()}
   if(d.open){S.open=d.open;S.del=false;S.step=0;S.fxEdit=false;render();window.scrollTo(0,0);return}
   if(/^t(Add|Say|Ok|Re)$/.test(d.act||''))return talkAct(d.act,d);
@@ -647,8 +792,19 @@ document.addEventListener('click',function(e){
       b.disabled=true;call('/users/add',{name:cid,role:'creator',pw:cp}).then(function(j){b.disabled=false;if(!j.ok){cm.textContent=PERR[j.err]||'만들지 못했습니다.';return}
         var ref=db.collection('channels').doc();write('ch'+ref.id,function(){return ref.set({name:n,order:Date.now(),at:Date.now(),by:S.me,owner:j.id})});
         S.addCh=false;PEOPLE=null;S.tab='people';try{sessionStorage.setItem('ws-tab','people')}catch(x){}render();window.scrollTo(0,0);note('크리에이터 '+cid+' 아이디를 만들었습니다. 크리에이터 주소 '+location.origin+location.pathname.replace(/admin\/?(index\.html)?$/,'')+' 와 아이디, 비밀번호를 같이 보내 주세요.')});return;
+    case 'goTalk':var scp=d.scope||'',mc=/^c(\d)/.exec(scp);if(/^i:/.test(scp)){S.open=scp.slice(2);S.fxEdit=false}else{S.tab='concept';S.sec=mc?+mc[1]:0;S.open=null}render();window.scrollTo(0,0);return;
+    case 'svOpen':S.sv=d.id;return setTab('script');
+    case 'print':window.print();return;
+    case 'scCopy':var ic=S.items.filter(function(i){return i.id===d.id})[0];if(!ic)return;var tx=scText(ic,epMap(chItems())),okc=function(){note('대본을 복사했습니다. 붙여 넣으시면 됩니다.');setTimeout(function(){note('')},2500)};
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(tx).then(okc,function(){note('복사하지 못했습니다. 인쇄를 써 주세요.')});
+      else{var tar=document.createElement('textarea');tar.value=tx;document.body.appendChild(tar);tar.select();try{document.execCommand('copy');okc()}catch(x){note('복사하지 못했습니다.')}document.body.removeChild(tar)}return;
+    case 'scFill':var isf=S.items.filter(function(i){return i.id===d.id})[0];if(!isf||S.ro||scFilled(isf).length)return;
+      var prv=chItems().filter(function(i){return i.id!==isf.id&&isf.corner&&i.corner===isf.corner&&scFilled(i).length}).sort(byOrder).pop(),tg=String(curConcept().tag||'').trim();if(/미정|후보/.test(tg))tg='';
+      var rows=prv?prv.scenes.map(function(x){return {k:x.k||'',screen:'',line:'',sub:'',sfx:'',sec:x.sec||''}}):[{k:'첫 3초',screen:'',line:'',sub:'',sfx:'',sec:'3'},{k:'가운데',screen:'',line:'',sub:'',sfx:'',sec:'15'},{k:'마무리',screen:'',line:'',sub:'',sfx:'',sec:'4'}];
+      if(rows[0]&&tg)rows[0].line=tg;var gs=SUBG[cForm(isf.corner)],dd={scenes:rows};if(gs&&!isf.subStyle)dd.subStyle=gs.sub;if(prv&&prv.bgm&&!isf.bgm)dd.bgm=prv.bgm;if(grp(isf.stage)===0)dd.stage='대본';
+      upd('items',isf.id,dd).then(function(){S.open=isf.id;S.fxEdit=false;render();window.scrollTo(0,0)});return;
     case 'newItem':var ir=db.collection('items').doc(),cn=d.corner||'';
-      write('items'+ir.id,function(){return ir.set({ch:S.ch,corner:cn,title:'',stage:S.stage==='all'?'기획':S.stage,who:'',due:'',intent:'',story:'',refs:'',point:'',script:'',by:S.me,at:Date.now(),order:Date.now()})}).then(function(){if(!S.ro){S.open=ir.id;S.step=0;render();var t=app.querySelector('[data-f="title"]');if(t)t.focus()}});return;
+      write('items'+ir.id,function(){return ir.set({ch:S.ch,corner:cn,title:'',stage:'기획',who:'',due:'',intent:'',story:'',refs:'',point:'',script:'',by:S.me,at:Date.now(),order:Date.now()})}).then(function(){if(!S.ro){S.open=ir.id;S.step=0;render();var t=app.querySelector('[data-f="title"]');if(t)t.focus()}});return;
     case 'del':var id=S.open;S.open=null;upd('items',id,{deleted:true});toast('콘텐츠를 지웠습니다',{col:'items',id:id});return render();
     case 'undo':if(S.undo){var u=S.undo;upd(u.col,u.id,{deleted:false});S.undo=null;document.getElementById('toast').style.display='none'}return;
     case 'scAdd':var ra=readScenes();ra.push({k:'',screen:'',line:'',sec:''});saveScenes(ra,true).then(function(){render()});return;
@@ -719,7 +875,8 @@ function progCard(c){
   var posted=its.filter(function(i){return num(i.views)>0}),best=posted.reduce(function(m,i){return Math.max(m,num(i.views))},0);
   var la=lastAct(c.id),old=la&&Date.now()-la>7*864e5;
   var h='<div class="card pg" data-act="pOpen" data-id="'+esc(c.id)+'" tabindex="0" role="button"><div class="pgh"><h3>'+esc(c.name)+'</h3><span class="badge'+(c.owner?' acc':'')+'">'+(c.owner?esc(who(c.owner))+' 계정':'계정 연결 안 됨')+'</span></div>';
-  h+='<div class="pgst">'+STAGES.map(function(s){return '<span'+(cnt[s]?' class="on"':'')+'>'+s+' <b>'+(cnt[s]||0)+'</b></span>'}).join('')+'</div>';
+  var gc=[0,0,0,0];its.forEach(function(i){gc[grp(i.stage)]++});
+  h+='<div class="pgst">'+GROUPS.map(function(s,gi){return '<span'+(gc[gi]?' class="on"':'')+'>'+s+' <b>'+gc[gi]+'</b></span>'}).join('')+'</div>';
   h+='<div class="pgn"><div><small>콘텐츠</small><b>'+its.length+'</b></div><div><small>올린 영상</small><b>'+posted.length+'</b></div><div><small>최고 조회</small><b>'+(best?fmt(best):'-')+'</b></div><div><small>팔로워</small><b>'+(cc.folNow?fmt(num(cc.folNow)):'-')+(cc.folGoal?' / '+fmt(num(cc.folGoal)):'')+'</b></div><div><small>정할 것</small><b'+(open?' class="warn"':'')+'>'+open+'</b></div><div><small>마지막 작업</small><b'+(old?' class="warn"':'')+'>'+ago(la)+'</b></div></div>';
   return h+'<div class="pgo">눌러서 작업 화면 보기 →</div></div>';
 }
@@ -746,7 +903,7 @@ var PERR={dup:'같은 이름이 이미 있습니다.',pw:'비밀번호는 6자 �
 function own(chId,uid){var c=S.channels.filter(function(x){return x.id===chId})[0];if(!c)return;upd('channels',chId,{owner:uid})}
 function peopleAct(a,d){
   var m=document.getElementById('pMsg');
-  if(a==='pOpen'){S.ch=d.id;try{localStorage.setItem('ws-ch',d.id)}catch(e){}return setTab('concept')}
+  if(a==='pOpen'){S.ch=d.id;try{localStorage.setItem('ws-ch',d.id)}catch(e){}return setTab('home')}
   if(a==='pAdd'){var n=document.getElementById('pName').value.trim(),p=document.getElementById('pPwIn').value,r=document.getElementById('pRole').value,cv=document.getElementById('pCh').value;
     call('/users/add',{name:n,role:r,pw:p}).then(function(j){if(j.ok){
       if(r==='creator'&&cv==='+new'){var ref=db.collection('channels').doc();write('ch'+ref.id,function(){return ref.set({name:n,order:Date.now(),at:Date.now(),by:S.me,owner:j.id})})}
