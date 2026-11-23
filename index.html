@@ -114,6 +114,15 @@ summary{cursor:pointer;font-weight:700;color:var(--acc);font-size:16px;min-heigh
 .pgst{display:flex;flex-wrap:wrap;gap:6px}.pgst span{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:15px;color:var(--sub)}.pgst span.on{border-color:var(--acc);color:var(--acc);font-weight:700}
 .pgn{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.pgn small{display:block;color:var(--sub);font-size:14px}.pgn b{font-size:20px}.pgn b.warn{color:var(--warn)}
 .prow select{flex:0 1 220px;width:auto}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper)}.seg button{border:0;background:none;font:inherit;font-weight:700;font-size:18px;padding:10px 18px;min-height:48px;cursor:pointer;color:var(--sub)}.seg button.on{background:var(--acc);color:var(--paper)}
+.acct{color:var(--ink);font-size:20px}.cc{font-size:17px;font-weight:700}.feat{display:flex;flex-wrap:wrap;gap:6px}.feat span{background:var(--soft);border-radius:999px;padding:4px 12px;font-size:15px}.feat span.todo{background:var(--warnbg);color:var(--warn);font-weight:700}
+.lnk{background:none;border:0;padding:0;font:inherit;font-weight:700;color:var(--acc);cursor:pointer;font-size:16px}
+.ovg{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:16px}.ovg .panel{margin:0;display:grid;gap:10px;align-content:start}.ovg h3{margin:12px 0 0;font-size:19px}
+.sum.s3{grid-template-columns:repeat(3,1fr)}
+.brow{display:grid;grid-template-columns:110px 1fr 36px;gap:10px;align-items:center;font-size:17px}.brow b{text-align:right}.brow small{grid-column:2/4;color:var(--sub);font-size:14px;margin-top:-6px}.bbar{background:var(--soft);border-radius:999px;height:14px;overflow:hidden}.bbar i{display:block;height:100%;background:var(--acc);border-radius:999px}
+.orow{display:grid;grid-template-columns:auto auto 1fr;gap:10px;align-items:baseline;text-align:left;background:var(--soft);border:0;border-radius:12px;padding:10px 12px;font:inherit;cursor:pointer}.orow span{color:var(--ok);font-weight:900}.orow small{color:var(--sub);font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:6px}.fgrid div{background:var(--soft);border-radius:12px;padding:10px 12px}.fgrid small{display:block;color:var(--sub);font-size:14px}.fgrid b{font-size:17px}.fgrid b.empty0{color:var(--sub);font-weight:400}
+@media(max-width:700px){.ovg{grid-template-columns:1fr}.seg button{padding:8px 12px;font-size:17px}.sum.s3 b{font-size:24px}}
 body.home #chSel,body.home .tabs,body.home header [data-act=addCh]{display:none!important}
 .sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:6px 0 8px}.sum div{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 16px}.sum small{display:block;color:var(--sub);font-size:15px}.sum b{font-size:30px;font-weight:900}.sum b.warn{color:var(--warn)}
 .card.pg{cursor:pointer}.card.pg:hover{border-color:var(--acc)}.pgo{color:var(--acc);font-weight:700;font-size:17px}
@@ -129,7 +138,7 @@ body.home #chSel,body.home .tabs,body.home header [data-act=addCh]{display:none!
   <div class="tabs">
     <button class="btn" data-tab="concept">크리에이터</button>
     <button class="btn" data-tab="board">진행판</button>
-    <button class="btn" data-tab="refs">인플루언서</button>
+    <button class="btn" data-tab="refs">레퍼런스</button>
   </div>
   <div class="who"><button class="btn sm pdonly" data-tab="people" id="homeBtn">관리 화면</button>
   <button class="btn sm" data-act="logout" title="로그아웃"><span id="meName"></span> · 나가기</button></div>
@@ -141,7 +150,7 @@ body.home #chSel,body.home .tabs,body.home header [data-act=addCh]{display:none!
 (function(){
 var STAGES=['방향성','채널명','기획','대본','영상작업','편집','분석','보완'];
 var FORMS=['썰','정보 정리','브이로그','검증','개그','기타'];
-var S={talks:[],role:'',ch:null,sec:0,tab:'concept',stage:'all',open:null,refEdit:null,pass:false,form:'all',q:'',channels:[],refs:[],items:[],comments:[],concepts:[],group:true,step:0,undo:null,me:null,names:{},loaded:{},ro:false,addCh:false,del:false};
+var S={rchs:[],rv:'ch',rc:null,rcEdit:null,talks:[],role:'',ch:null,sec:0,tab:'concept',stage:'all',open:null,refEdit:null,pass:false,form:'all',q:'',channels:[],refs:[],items:[],comments:[],concepts:[],group:true,step:0,undo:null,me:null,names:{},loaded:{},ro:false,addCh:false,del:false};
 var db=null,user=null,app=document.getElementById('app'),msg=document.getElementById('msg');
 try{var t=sessionStorage.getItem('ws-tab');if(t)S.tab=t;S.ch=localStorage.getItem('ws-ch')||null}catch(e){}
 
@@ -163,6 +172,7 @@ function upd(col,id,data){data.updatedAt=Date.now();return write(col+id,function
 function sub(col,key){
   db.collection(col).onSnapshot(function(snap){
     S[key]=snap.docs.map(function(d){var o=Object.assign({},d.data());o.id=d.id;return o}).filter(function(o){return !o.deleted});
+    if(key==='refs'){S.rchs=S.refs.filter(function(o){return o.kind==='ch'});S.refs=S.refs.filter(function(o){return o.kind!=='ch'})}
     if(!snap.metadata.fromCache||snap.docs.length)S.loaded[key]=true;
     if(!snap.metadata.fromCache){S.loaded[key]=true}
     names();onData(key);
@@ -285,7 +295,99 @@ function editor(it){
   return h;
 }
 
+
+/* ---------- 레퍼런스: 채널 / 콘텐츠 / 한눈에 ---------- */
+var RCATS=['같은 분야','가까운 분야','형식만 참고'];
+var RFACE=['얼굴 나옴','얼굴 없음','손·물건만','목소리만'];
+function akey(a){return String(a||'').replace(/^@/,'').trim().toLowerCase()}
+function rcList(){var m={},out=[];
+  S.rchs.filter(function(c){return c.ch===S.ch}).forEach(function(c){var k=akey(c.account);if(!k||m[k])return;m[k]=Object.assign({key:k,vids:[]},c);out.push(m[k])});
+  S.refs.filter(function(r){return r.ch===S.ch}).forEach(function(r){var k=akey(r.account);if(!k)return;if(!m[k]){m[k]={key:k,account:r.account,vids:[],derived:true};out.push(m[k])}m[k].vids.push(r)});
+  out.forEach(function(c){c.fol=num(c.followers)||Math.max.apply(null,[0].concat(c.vids.map(function(v){return num(v.followers)})));c.med=num(c.median)||Math.max.apply(null,[0].concat(c.vids.map(function(v){return num(v.median)})));c.x=c.fol&&c.med?Math.round(c.med/c.fol*10)/10:0;
+    if(!c.concept)c.concept=(c.vids.filter(function(v){return v.concept})[0]||{}).concept||''});
+  return out.sort(function(a,b){return b.x-a.x})}
+function vx(v,c){var md=num(v.median)||(c&&c.med)||0;return md&&num(v.views)?Math.round(num(v.views)/md*10)/10:0}
+function tally(a){var t={};a.forEach(function(x){if(x)t[x]=(t[x]||0)+1});return Object.keys(t).sort(function(x,y){return t[y]-t[x]}).map(function(k){return [k,t[k]]})}
+function barRow(label,n,max,sub){return '<div class="brow"><span>'+esc(label)+'</span><div class="bbar"><i style="width:'+(max?Math.round(n/max*100):0)+'%"></i></div><b>'+n+'</b>'+(sub?'<small>'+sub+'</small>':'')+'</div>'}
 function refs(){
+  if(S.rcEdit)return rcForm();
+  if(S.rc){var c=rcList().filter(function(x){return x.key===S.rc})[0];if(c)return rcDetail(c);S.rc=null}
+  var cs=rcList(),vs=S.refs.filter(function(r){return r.ch===S.ch});
+  var h='<div class="bar"><div class="seg">'+[['ch','채널별 '+cs.length],['over','한눈에'],['ct','콘텐츠 '+vs.length]].map(function(x){return '<button class="'+((S.rv||'ch')===x[0]?'on':'')+'" data-act="rv" data-v="'+x[0]+'">'+x[1]+'</button>'}).join('')+'</div><span class="sp"></span>'+(S.ro?'':'<button class="btn" data-act="rcNew">채널 추가</button><button class="btn pri" data-act="newRef">콘텐츠 추가</button>')+'</div>';
+  if(!cs.length)return h+'<div class="empty">아직 레퍼런스가 없습니다. 참고할 채널을 추가해 주세요.</div>';
+  if(!S.rv||S.rv==='ch')return h+rcGrid(cs);
+  if(S.rv==='ct')return h+ctGrid(vs,cs);
+  return h+refOver(cs,vs);
+}
+function rcCard(c){var top=c.vids.slice().sort(function(a,b){return num(b.views)-num(a.views)})[0];
+  return '<div class="card click rc" data-act="rcOpen" data-k="'+esc(c.key)+'" tabindex="0" role="button"><div class="meta"><b class="acct">@'+esc(c.account)+'</b>'+(c.x>=10?'<span class="badge ok">10배 통과</span>':c.x?'<span class="badge">10배 미달</span>':'')+'</div>'+
+    (c.concept?'<div class="cc">'+esc(c.concept)+'</div>':'')+
+    '<div class="nums"><div><small>팔로워</small><b>'+(c.fol?fmt(c.fol):'-')+'</b></div><div><small>평균 조회</small><b>'+(c.med?fmt(c.med):'-')+'</b></div><div class="x'+(c.x>=10?'':' no')+'"><small>배수</small><b>'+(c.x||'-')+(c.x?'배':'')+'</b></div></div>'+
+    '<div class="feat">'+[c.face,c.tone,c.freq].filter(Boolean).map(function(f){return '<span>'+esc(f)+'</span>'}).join('')+(c.derived||!(c.face||c.tone||c.freq)?'<span class="todo">채널 특징 적기 전</span>':'')+'</div>'+
+    (c.take?'<div class="row"><span>가져올 점</span><div><b>'+esc(c.take)+'</b></div></div>':'')+
+    '<div class="meta"><span>콘텐츠 '+c.vids.length+'개</span>'+(top&&top.video?'<span>· 대표 「'+esc(String(top.video||'').slice(0,22))+'」</span>':'')+'</div></div>'}
+function rcGrid(cs){var h='';
+  RCATS.concat(['']).forEach(function(cat){var g=cs.filter(function(c){return cat?c.cat===cat:RCATS.indexOf(c.cat)<0});if(!g.length)return;
+    h+='<div class="sec"><h2 class="h1">'+esc(cat||'분류 전')+'</h2><span class="badge">'+g.length+'곳</span><span class="badge ok">10배 통과 '+g.filter(function(c){return c.x>=10}).length+'</span></div><div class="grid">'+g.map(rcCard).join('')+'</div>'});
+  return h}
+function ctCard(v,c){var x=vx(v,c),u=safeUrl(v.url);
+  return '<div class="card"><div class="meta">'+(v.form?'<span class="badge acc">'+esc(v.form)+'</span>':'')+'<button class="lnk" data-act="rcOpen" data-k="'+esc(akey(v.account))+'">@'+esc(v.account)+'</button>'+(x>=2?'<span class="badge warn">평균의 '+x+'배</span>':'')+'</div>'+
+    '<h3>'+esc(v.video||'제목 없음')+'</h3><div class="meta"><span>조회 <b style="color:var(--acc)">'+(num(v.views)?fmt(num(v.views)):'-')+'</b></span></div>'+
+    (v.hook?'<div class="row"><span>첫 3초</span><div>'+esc(v.hook)+'</div></div>':'')+
+    (v.learn?'<div class="row"><span>가져올 점</span><div><b>'+esc(v.learn)+'</b></div></div>':'')+
+    ((v.flow||v.end||v.why||v.shoot)?'<details><summary>장면 · 촬영 · 왜 잘됐나</summary><div style="display:grid;gap:8px;margin-top:10px">'+(v.flow?'<div class="row"><span>구성</span><div>'+esc(v.flow)+'</div></div>':'')+(v.end?'<div class="row"><span>마무리</span><div>'+esc(v.end)+'</div></div>':'')+(v.shoot?'<div class="row"><span>촬영</span><div>'+esc(v.shoot)+'</div></div>':'')+((v.beats&&v.beats.length)?'<div class="row"><span>장면별</span><div>'+v.beats.map(function(b){return '<div style="margin-bottom:6px"><b>'+esc(b.t||'')+'</b> '+esc([b.screen,b.say&&('말: '+b.say),b.sub&&('자막: '+b.sub)].filter(Boolean).join(' · '))+'</div>'}).join('')+'</div></div>':'')+(v.why?'<div class="row"><span>왜 잘됐나</span><div>'+esc(v.why)+'</div></div>':'')+'</div></details>':'')+
+    '<div class="meta">'+(u?'<a class="btn sm" href="'+esc(u)+'" target="_blank" rel="noopener">영상 열기</a>':'')+(S.ro?'':'<button class="btn sm" data-refedit="'+esc(v.id)+'">고치기</button>')+'</div></div>'}
+function ctGrid(vs,cs){var cm={};cs.forEach(function(c){cm[c.key]=c});var used={};vs.forEach(function(v){used[v.form||'']=1});var h='';
+  FORMS.concat(Object.keys(used).filter(function(f){return f&&FORMS.indexOf(f)<0}),['']).forEach(function(f){var g=vs.filter(function(v){return (v.form||'')===f});if(!g.length)return;
+    g.sort(function(a,b){return vx(b,cm[akey(b.account)])-vx(a,cm[akey(a.account)])});
+    h+='<div class="sec"><h2 class="h1">'+esc(f||'유형 미정')+'</h2><span class="badge">'+g.length+'개</span></div><div class="grid">'+g.map(function(v){return ctCard(v,cm[akey(v.account)])}).join('')+'</div>'});
+  return h}
+function refOver(cs,vs){var cm={};cs.forEach(function(c){cm[c.key]=c});
+  var pass=cs.filter(function(c){return c.x>=10}),cats=tally(cs.map(function(c){return c.cat||'분류 전'})),forms=tally(vs.map(function(v){return v.form||'유형 미정'}));
+  var h='<div class="ovg"><div class="panel"><h2>채널 특징</h2><div class="sum s3"><div><small>채널</small><b>'+cs.length+'</b></div><div><small>10배 통과</small><b>'+pass.length+'</b></div><div><small>특징 적은 곳</small><b>'+cs.filter(function(c){return c.face||c.tone}).length+'</b></div></div>';
+  h+='<h3>분류</h3>'+cats.map(function(t){return barRow(t[0],t[1],cs.length)}).join('');
+  var fc=tally(cs.map(function(c){return c.face})),tn=tally(cs.map(function(c){return c.tone}));
+  h+='<h3>잘되는 채널의 공통점</h3>'+(fc.length||tn.length?'<div class="feat">'+fc.concat(tn).slice(0,8).map(function(t){return '<span>'+esc(t[0])+' <b>'+t[1]+'</b></span>'}).join('')+'</div>':'<p class="guide">채널마다 \'누가 나오나 · 말투\'를 적으면 여기에 모입니다.</p>');
+  h+='<h3>배수가 높은 채널</h3>'+cs.filter(function(c){return c.x}).slice(0,3).map(function(c){return '<button class="orow" data-act="rcOpen" data-k="'+esc(c.key)+'"><b>@'+esc(c.account)+'</b><span>'+c.x+'배</span><small>'+esc(c.concept||'')+'</small></button>'}).join('')+'</div>';
+  h+='<div class="panel"><h2>콘텐츠 특징</h2><div class="sum s3"><div><small>콘텐츠</small><b>'+vs.length+'</b></div><div><small>평균의 2배 넘게 터진 것</small><b>'+vs.filter(function(v){return vx(v,cm[akey(v.account)])>=2}).length+'</b></div><div><small>첫 3초 적은 것</small><b>'+vs.filter(function(v){return v.hook}).length+'</b></div></div>';
+  h+='<h3>유형</h3>'+forms.map(function(t){var g=vs.filter(function(v){return (v.form||'유형 미정')===t[0]}),xs=g.map(function(v){return vx(v,cm[akey(v.account)])}).filter(Boolean);return barRow(t[0],t[1],vs.length,xs.length?'평균의 '+med(xs)+'배':'')}).join('');
+  var hooks=vs.filter(function(v){return v.hook}).sort(function(a,b){return vx(b,cm[akey(b.account)])-vx(a,cm[akey(a.account)])}).slice(0,3);
+  h+='<h3>잘된 첫 3초</h3>'+(hooks.length?hooks.map(function(v){return '<div class="cm"><small>@'+esc(v.account)+(v.form?' · '+esc(v.form):'')+'</small><b>'+esc(v.hook)+'</b></div>'}).join(''):'<p class="guide">콘텐츠에 첫 3초를 적으면 여기에 모입니다.</p>');
+  var learns=vs.filter(function(v){return v.learn}).slice(0,5);
+  h+='<h3>가져올 점</h3>'+learns.map(function(v){return '<div class="cm"><small>@'+esc(v.account)+'</small><b>'+esc(v.learn)+'</b></div>'}).join('')+'</div></div>';
+  return h}
+function rcDetail(c){var vs=c.vids.slice().sort(function(a,b){return num(b.views)-num(a.views)}),u=safeUrl(c.url);
+  var h='<div class="bar"><button class="btn" data-act="rcBack">← 레퍼런스</button><span class="sp"></span>'+(S.ro?'':'<button class="btn" data-act="rcEdit">채널 특징 고치기</button><button class="btn pri" data-act="newRef" data-acct="'+esc(c.account)+'">이 채널 콘텐츠 추가</button>')+'</div>';
+  h+='<div class="panel"><div class="meta"><b class="acct" style="font-size:26px">@'+esc(c.account)+'</b>'+(c.cat?'<span class="badge acc">'+esc(c.cat)+'</span>':'')+(c.x>=10?'<span class="badge ok">10배 통과</span>':'')+(u?'<a class="btn sm" href="'+esc(u)+'" target="_blank" rel="noopener">채널 열기</a>':'')+'</div>'+
+    '<div class="nums" style="max-width:560px"><div><small>팔로워</small><b>'+(c.fol?fmt(c.fol):'-')+'</b></div><div><small>평균 조회</small><b>'+(c.med?fmt(c.med):'-')+'</b></div><div class="x'+(c.x>=10?'':' no')+'"><small>배수</small><b>'+(c.x||'-')+(c.x?'배':'')+'</b></div></div>'+
+    '<div class="fgrid">'+[['콘셉트',c.concept],['누가 나오나',c.face],['말투',c.tone],['올리는 주기',c.freq],['잘하는 것',c.strong],['가져올 점',c.take]].map(function(x){return '<div><small>'+x[0]+'</small><b'+(x[1]?'':' class="empty0"')+'>'+esc(x[1]||'아직 안 적음')+'</b></div>'}).join('')+'</div></div>';
+  h+='<div class="sec"><h2 class="h1">이 채널의 콘텐츠</h2><span class="badge">'+vs.length+'개</span></div>'+(vs.length?'<div class="grid">'+vs.map(function(v){return ctCard(v,c)}).join('')+'</div>':'<div class="empty">아직 적은 콘텐츠가 없습니다.</div>');
+  return h}
+function rcForm(){var c=S.rcEdit==='new'?{}:(rcList().filter(function(x){return x.key===S.rcEdit})[0]||{});
+  function i(k,ph,v){return '<input data-rc="'+k+'" placeholder="'+esc(ph||'')+'" value="'+esc(v!=null?v:(c[k]==null?'':c[k]))+'">'}
+  function pick(k,opts){return '<select data-rc="'+k+'"><option value="">고르기</option>'+opts.map(function(o){return '<option'+(c[k]===o?' selected':'')+'>'+esc(o)+'</option>'}).join('')+'</select>'}
+  return '<div class="panel"><h2>'+(S.rcEdit==='new'?'레퍼런스 채널 추가':'@'+esc(c.account)+' 채널 특징')+'</h2>'+
+    '<div class="cols">'+F('계정','',i('account','아이디'))+F('분류','우리와 얼마나 가까운가',pick('cat',RCATS))+F('채널 주소','',i('url','https://'))+'</div>'+
+    '<div class="cols">'+F('팔로워','',i('followers','예: 1640',c.fol||''))+F('평균 조회','최근 릴스 12개의 가운데 값',i('median','예: 4.4만',c.med||''))+F('올리는 주기','',i('freq','예: 주 3회'))+'</div>'+
+    F('콘셉트','누가 무엇을 하는 채널인지 한 줄',i('concept',''))+
+    '<div class="cols">'+F('누가 나오나','',pick('face',RFACE))+F('말투','',i('tone','예: 나레이션, 반말 썰'))+'</div>'+
+    '<div class="cols">'+F('잘하는 것','이 채널이 남보다 잘하는 한 가지','<textarea data-rc="strong" style="min-height:70px">'+esc(c.strong||'')+'</textarea>')+F('가져올 점','우리 크리에이터에 맞게 바꿔 쓸 것','<textarea data-rc="take" style="min-height:70px">'+esc(c.take||'')+'</textarea>')+'</div>'+
+    '<div class="bar" style="margin:0"><button class="btn pri" data-act="rcSave">저장</button><button class="btn" data-act="rcCancel">취소</button></div></div>'}
+function rcAct(a,d){
+  if(a==='rv'){S.rv=d.v;return render()}
+  if(a==='rcOpen'){S.rc=d.k;window.scrollTo(0,0);return render()}
+  if(a==='rcBack'){S.rc=null;return render()}
+  if(a==='rcNew'){S.rcEdit='new';return render()}
+  if(a==='rcEdit'){S.rcEdit=S.rc;return render()}
+  if(a==='rcCancel'){S.rcEdit=null;return render()}
+  if(a==='rcSave'){var o={};[].forEach.call(app.querySelectorAll('[data-rc]'),function(el){o[el.dataset.rc]=el.value.trim()});
+    o.account=(o.account||'').replace(/^@/,'');if(!o.account)return;o.followers=num(o.followers);o.median=num(o.median);o.updatedAt=Date.now();
+    var k=akey(o.account),ex=S.rchs.filter(function(x){return x.ch===S.ch&&akey(x.account)===k})[0];
+    if(ex)write('refs'+ex.id,function(){return db.collection('refs').doc(ex.id).update(o)});
+    else{o.kind='ch';o.ch=S.ch;o.by=S.me;o.at=Date.now();write('rcnew',function(){return db.collection('refs').add(o)})}
+    S.rcEdit=null;S.rc=k;return render()}
+}
+function refsOld(){
   var all=S.refs.filter(function(r){return r.ch===S.ch});
   var l=all.filter(function(r){return (!S.pass||mult(r)>=10)&&(S.form==='all'||r.form===S.form)&&(!S.q||((r.account||'')+(r.video||'')+(r.why||'')+(r.learn||'')).toLowerCase().indexOf(S.q.toLowerCase())>=0)}).sort(function(a,b){return mult(b)-mult(a)});
   var used={};all.forEach(function(r){if(r.form)used[r.form]=1});var FL=FORMS.concat(Object.keys(used).filter(function(f){return FORMS.indexOf(f)<0}));
@@ -376,9 +478,9 @@ function refCard(r){var m=mult(r),u=safeUrl(r.url);
     '<div class="meta">'+(u?'<a class="btn sm" href="'+esc(u)+'" target="_blank" rel="noopener">영상 열기</a>':'')+(S.ro?'':'<button class="btn sm" data-refedit="'+esc(r.id)+'">고치기</button>')+'<span style="margin-left:auto;font-size:14px">'+(r.checked?esc(r.checked)+' 확인':'')+'</span></div></div>';
 }
 function refForm(){
-  var r=S.refEdit==='new'?{}:(S.refs.filter(function(x){return x.id===S.refEdit})[0]||{});
+  var r=S.refEdit==='new'?{account:S.refAcct||''}:(S.refs.filter(function(x){return x.id===S.refEdit})[0]||{});
   function i(k,ph,v){return '<input data-r="'+k+'" placeholder="'+esc(ph||'')+'" value="'+esc(v==null?(r[k]==null?'':r[k]):v)+'">'}
-  return '<div class="panel"><h2>'+(S.refEdit==='new'?'인플루언서 추가':'인플루언서 고치기')+'</h2>'+
+  return '<div class="panel"><h2>'+(S.refEdit==='new'?'레퍼런스 콘텐츠 추가':'레퍼런스 콘텐츠 고치기')+'</h2>'+
     '<div class="cols">'+F('계정','',i('account','아이디'))+F('팔로워','',i('followers','예: 1640'))+F('평균 조회','최근 릴스 12개의 가운데 값',i('median','예: 4.4만'))+'</div>'+
     '<div class="cols">'+F('잘된 영상','',i('video','영상 제목이나 첫 문장'))+F('그 영상 조회','',i('views','예: 68.6만'))+F('유형','','<input data-r="form" list="formL" placeholder="고르거나 새로 적기" value="'+esc(r.form||'')+'"><datalist id="formL">'+FORMS.concat(S.refs.map(function(x){return x.form}).filter(function(f,i,a){return f&&FORMS.indexOf(f)<0&&a.indexOf(f)===i})).map(function(f){return '<option value="'+esc(f)+'">'}).join('')+'</datalist>')+'</div>'+
     F('영상 주소','',i('url','https://'))+
@@ -439,6 +541,7 @@ document.addEventListener('click',function(e){
   if(d.open){S.open=d.open;S.del=false;S.step=0;render();window.scrollTo(0,0);return}
   if(/^t(Add|Say|Ok|Re)$/.test(d.act||''))return talkAct(d.act,d);
   if(/^p(Add|Off|Pw|PwGo|Role|Open)$|^aMake$/.test(d.act||''))return peopleAct(d.act,d);
+  if(/^(rv|rc[A-Z]\w*)$/.test(d.act||''))return rcAct(d.act,d);
   switch(d.act){
     case 'logout':sess(null);location.reload();return;
     case 'back':S.open=null;S.del=false;return render();
@@ -458,9 +561,9 @@ document.addEventListener('click',function(e){
       write('cmnew',function(){return db.collection('comments').add({item:item,text:tx,by:S.me,at:Date.now()})});return;
     case 'pass':S.pass=!S.pass;return render();
     case 'group':S.group=!S.group;return render();
-    case 'newRef':S.refEdit='new';return render();
+    case 'newRef':S.refEdit='new';S.refAcct=d.acct||'';return render();
     case 'refCancel':S.refEdit=null;return render();
-    case 'refDel':var rid=S.refEdit;S.refEdit=null;upd('refs',rid,{deleted:true});toast('인플루언서를 지웠습니다',{col:'refs',id:rid});return render();
+    case 'refDel':var rid=S.refEdit;S.refEdit=null;upd('refs',rid,{deleted:true});toast('레퍼런스 콘텐츠를 지웠습니다',{col:'refs',id:rid});return render();
     case 'refSave':var o={};[].forEach.call(app.querySelectorAll('[data-r]'),function(el){o[el.dataset.r]=el.value.trim()});
       if(!o.account)return;o.account=o.account.replace(/^@/,'');o.followers=num(o.followers);o.median=num(o.median);o.views=num(o.views);o.updatedAt=Date.now();
       var re=S.refEdit;S.refEdit=null;
