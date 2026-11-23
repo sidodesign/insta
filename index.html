@@ -82,9 +82,22 @@ a.btn{text-decoration:none;color:var(--ink);display:inline-flex;align-items:cent
 .step.done i{background:var(--okbg);color:var(--ok)}
 .step.on{border-color:var(--acc);background:var(--accbg);color:var(--acc)}.step.on i{background:var(--acc);color:var(--paper)}
 .dots{display:flex;gap:5px;align-items:center}.dots i{width:22px;height:8px;border-radius:4px;background:var(--soft)}.dots i.d{background:var(--ok)}
-.sc{display:grid;grid-template-columns:120px 1fr 1.4fr 84px 50px;gap:8px;align-items:start}
+.sc{display:grid;grid-template-columns:120px 1fr 1fr 1fr 64px 46px;gap:8px;align-items:start}
 .sc textarea{min-height:76px}.sch{font-size:15px;color:var(--sub);font-weight:700}
-@media(max-width:800px){.sc{grid-template-columns:1fr 84px 50px;border-top:1px solid var(--line);padding-top:10px}.sc textarea{grid-column:1/-1}.sch{display:none}}
+@media(max-width:800px){.sc{grid-template-columns:1fr 74px 46px;border-top:1px solid var(--line);padding-top:10px}.sc textarea{grid-column:1/-1;order:3}.sch{display:none}}
+.ed3{display:grid;gap:18px}.edc{display:grid;gap:14px;align-content:start;min-width:0}.edc .panel{margin-top:0}
+@media(min-width:1200px){.ed3{grid-template-columns:minmax(280px,.9fr) minmax(0,2.5fr) minmax(270px,.85fr);align-items:start}}
+.lab{justify-self:start;background:var(--ink);color:var(--paper);border-radius:10px;padding:3px 12px;font-weight:900;font-size:16px}
+.edh{gap:12px}.edm{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.edm label{display:grid;gap:4px;font-weight:700;font-size:15px;color:var(--sub)}
+.prg{display:flex;gap:6px;flex-wrap:wrap}.prg span{background:var(--soft);border-radius:999px;padding:3px 12px;font-size:15px;color:var(--sub);font-weight:700}.prg .d{background:var(--okbg);color:var(--ok)}
+.panel.fxc{border-color:var(--acc);background:var(--accbg)}.panel h2{margin:0;font-size:21px}
+.panel.diffc{border-color:var(--warn);background:var(--warnbg)}
+.ed3 textarea{field-sizing:content;max-height:420px;width:100%;min-width:0;box-sizing:border-box}.edc .panel,.edc .panel>*,.edc .f,.edc .cols>*{min-width:0}.ed3 .sc textarea{min-height:96px}.sck{display:grid;gap:4px}.sck small{color:var(--acc);font-size:14px;line-height:1.35}
+.chk{display:grid;gap:6px}.chk div{display:flex;gap:8px;align-items:center;color:var(--sub);font-size:16px}.chk i{font-style:normal;flex:0 0 24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-weight:900;font-size:14px}.chk .y{color:var(--ink)}.chk .y i{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+.shot{display:flex;gap:10px;align-items:flex-start;background:var(--soft);border-radius:12px;padding:8px 12px;cursor:pointer}.shot input{width:22px;height:22px;flex:0 0 22px;margin-top:3px}.shot small{display:block;color:var(--sub);font-size:14px}.shot input:checked+span{color:var(--sub);text-decoration:line-through}
+.cols.c2{grid-template-columns:1fr 1fr}
+.aadd{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}.aadd input{flex:1 1 220px;width:auto}
+.row.ag b{color:var(--ok)}.row.ab b{color:var(--warn)}
 .mini{background:var(--soft);border-radius:14px;padding:12px 14px;display:grid;gap:6px}
 .calc{background:var(--soft);border-radius:14px;padding:14px 16px;display:flex;gap:18px;flex-wrap:wrap;align-items:baseline}
 .calc b{font-size:28px;font-weight:900}.calc .ok{color:var(--ok)}
@@ -139,6 +152,7 @@ body.home #chSel,body.home .tabs,body.home header [data-act=addCh]{display:none!
     <button class="btn" data-tab="concept">크리에이터</button>
     <button class="btn" data-tab="board">진행판</button>
     <button class="btn" data-tab="refs">레퍼런스</button>
+    <button class="btn" data-tab="acct">계정 분석</button>
   </div>
   <div class="who"><button class="btn sm pdonly" data-tab="people" id="homeBtn">관리 화면</button>
   <button class="btn sm" data-act="logout" title="로그아웃"><span id="meName"></span> · 나가기</button></div>
@@ -150,7 +164,7 @@ body.home #chSel,body.home .tabs,body.home header [data-act=addCh]{display:none!
 (function(){
 var STAGES=['방향성','채널명','기획','대본','영상작업','편집','분석','보완'];
 var FORMS=['썰','정보 정리','브이로그','검증','개그','기타'];
-var S={rchs:[],rv:'ch',rc:null,rcEdit:null,talks:[],role:'',ch:null,sec:0,tab:'concept',stage:'all',open:null,refEdit:null,pass:false,form:'all',q:'',channels:[],refs:[],items:[],comments:[],concepts:[],group:true,step:0,undo:null,me:null,names:{},loaded:{},ro:false,addCh:false,del:false};
+var S={accts:[],fxEdit:false,rchs:[],rv:'ch',rc:null,rcEdit:null,talks:[],role:'',ch:null,sec:0,tab:'concept',stage:'all',open:null,refEdit:null,pass:false,form:'all',q:'',channels:[],refs:[],items:[],comments:[],concepts:[],group:true,step:0,undo:null,me:null,names:{},loaded:{},ro:false,addCh:false,del:false};
 var db=null,user=null,app=document.getElementById('app'),msg=document.getElementById('msg');
 try{var t=sessionStorage.getItem('ws-tab');if(t)S.tab=t;S.ch=localStorage.getItem('ws-ch')||null}catch(e){}
 
@@ -208,7 +222,7 @@ function render(soft){
   if(!S.channels.length){app.innerHTML=S.role==='pd'?'<div class="empty" style="margin-top:24px">아직 크리에이터가 없습니다.<br><br><button class="btn pri" data-act="addCh">첫 크리에이터 만들기</button></div>':'<div class="empty" style="margin-top:24px">아직 이 계정에 연결된 크리에이터가 없습니다.<br>관리자에게 연결해 달라고 말해 주세요.</div>';return}
   if(S.open){var it=S.items.filter(function(i){return i.id===S.open})[0];if(it){app.innerHTML=editor(it);return}S.open=null}
   if(S.refEdit){app.innerHTML=refForm();return}
-  app.innerHTML=S.tab==='people'?peopleHtml():S.tab==='refs'?refs():S.tab==='concept'?concept():board();
+  app.innerHTML=S.tab==='people'?peopleHtml():S.tab==='refs'?refs():S.tab==='acct'?accts():S.tab==='concept'?concept():board();
 }
 /* 입력 중일 때는 화면을 다시 그리지 않고, 상대가 바꾼 다른 칸만 맞춘다 */
 function softSync(){
@@ -248,53 +262,122 @@ function cmList(id){
 var STEPS=['레퍼런스','기획','대본','촬영·게시','성과'];
 var GUIDE=['잘된 영상을 고르고, 그대로 따라 하지 않을 한 가지를 정합니다.','누가 왜 보는지, 저장하거나 공유할 이유를 적습니다.','첫 3초를 먼저 쓰고, 마무리가 첫 3초의 약속과 맞는지 봅니다.','찍을 사람, 날짜, 장소, 준비물을 정하고 올린 주소를 남깁니다.','숫자를 적으면 배수가 나옵니다. 배운 점은 콘셉트 탭에 모입니다.'];
 var sceneDirty=false;
-function stepDone(it){return [!!((it.refIds&&it.refIds.length)||it.refs),!!(it.intent||it.story),!!((it.scenes||[]).some(function(x){return x.line||x.screen})||it.script),!!(it.url||it.place||it.posted),num(it.views)>0]}
+function stepDone(it){return [!!((it.refIds&&it.refIds.length)||it.refs),!!(it.intent||it.story),!!((it.scenes||[]).some(function(x){return x.line||x.screen||x.sub})||it.script),!!(it.url||it.place||it.posted),num(it.views)>0]}
 function scenesOf(it){return (it.scenes&&it.scenes.length)?it.scenes:[{k:'첫 3초',screen:'',line:'',sec:''},{k:'가운데',screen:'',line:'',sec:''},{k:'마무리',screen:'',line:'',sec:''}]}
 function inp(f,it,ph,type){return '<input'+(type?' type="'+type+'"':'')+' data-f="'+f+'" placeholder="'+esc(ph||'')+'" value="'+esc(it[f]==null?'':it[f])+'"'+(S.ro?' readonly':'')+'>'}
 function calc(it){var v=num(it.views),f=num(it.fol),m=v&&f?Math.round(v/f*10)/10:0,sv=num(it.saves),sh=num(it.shares);
   return '<span><small>조회 ÷ 팔로워</small><br><b class="'+(m>=10?'ok':'')+'">'+(m?m+'배':'-')+'</b></span>'+(m?'<span class="badge '+(m>=10?'ok':'')+'">'+(m>=10?'10배 통과':'10배 미달')+'</span>':'')+
     (v&&(sv||sh)?'<span><small>조회 1,000회당 저장과 공유</small><br><b>'+Math.round((sv+sh)/v*1000*10)/10+'</b></span>':'')}
-function editor(it){
-  var st=S.step,done=stepDone(it);
-  var h='<div class="bar"><button class="btn" data-act="back">목록으로</button><span class="saved" id="saved"></span><span class="sp"></span>'+(S.ro?'':'<button class="btn sm bad" data-act="del">지우기</button>')+'</div>';
-  h+='<div class="two"><div><div class="panel" style="margin-top:0">'+
-    '<input class="title-in" data-f="title" placeholder="콘텐츠 제목" value="'+esc(it.title||'')+'"'+(S.ro?' readonly':'')+'>'+
-    '<div class="cols">'+F('단계','','<select data-f="stage"'+(S.ro?' disabled':'')+'>'+STAGES.map(function(x){return '<option'+(x===it.stage?' selected':'')+'>'+x+'</option>'}).join('')+'</select>')+
-      F('코너','편성에서 정한 코너','<input data-f="corner" list="cnl" placeholder="코너 이름" value="'+esc(it.corner||'')+'"'+(S.ro?' readonly':'')+'><datalist id="cnl">'+corners().map(function(x){return '<option value="'+esc(x)+'">'}).join('')+'</datalist>')+F('담당','',inp('who',it,'이름'))+F('날짜','',inp('due',it,'','date'))+'</div></div>';
-  h+=talksHtml('i:'+it.id,'item');
-  h+='<div class="steps">'+STEPS.map(function(n,i){return '<button class="step'+(i===st?' on':'')+(done[i]?' done':'')+'" data-step="'+i+'"><i>'+(done[i]&&i!==st?'✓':(i+1))+'</i>'+n+'</button>'}).join('')+'</div>';
-  h+='<div class="panel" style="margin-top:0"><p class="guide">'+GUIDE[st]+'</p>';
-  if(st===0){
-    var ids=it.refIds||[],rf=S.refs.filter(function(r){return r.ch===it.ch&&ids.indexOf(r.id)<0}).sort(function(a,b){return mult(b)-mult(a)});
-    ids.forEach(function(id){var r=S.refs.filter(function(x){return x.id===id})[0];if(!r)return;var m=mult(r),u=safeUrl(r.url);
-      h+='<div class="mini"><div class="meta"><b style="color:var(--ink);font-size:19px">@'+esc(r.account)+'</b>'+(m?'<span class="badge '+(m>=10?'ok':'')+'">'+m+'배</span>':'')+(r.form?'<span class="badge acc">'+esc(r.form)+'</span>':'')+'</div>'+
-        (r.video?'<b>'+esc(r.video)+(r.views?' <span style="color:var(--acc)">'+fmt(r.views)+'</span>':'')+'</b>':'')+
-        (r.hook?'<div class="row"><span>첫 3초</span><div>'+esc(r.hook)+'</div></div>':'')+(r.flow?'<div class="row"><span>구성</span><div>'+esc(r.flow)+'</div></div>':'')+(r.end?'<div class="row"><span>마무리</span><div>'+esc(r.end)+'</div></div>':'')+
-        (r.learn?'<div class="row"><span>가져올 점</span><div><b>'+esc(r.learn)+'</b></div></div>':'')+
-        '<div class="meta">'+(u?'<a class="btn sm" href="'+esc(u)+'" target="_blank" rel="noopener">영상 열기</a>':'')+(S.ro?'':'<button class="btn sm" data-unref="'+esc(id)+'">빼기</button>')+'</div></div>'});
-    if(!ids.length)h+='<div class="empty" style="padding:20px">아직 고른 영상이 없습니다.</div>';
-    if(rf.length&&!S.ro)h+='<select id="pick"><option value="">인플루언서 목록에서 영상 고르기</option>'+rf.map(function(r){return '<option value="'+esc(r.id)+'">@'+esc(r.account)+(r.video?' · '+esc(r.video.slice(0,28)):'')+(mult(r)?' · '+mult(r)+'배':'')+'</option>'}).join('')+'</select>';
-    h+=F('다르게 할 한 가지','고른 영상에 없는 것',ta('gap',it,'',80))+F('레퍼런스 메모','',ta('refs',it,'목록에 없는 영상 주소나 메모',80));
-  }else if(st===1){
-    h+=F('기획의도','왜 만드는지, 누가 보는지',ta('intent',it,'',90))+F('스토리','구성 및 흐름',ta('story',it,'첫 3초 / 가운데 / 마무리',130))+F('포인트','이 영상만의 한 가지',ta('point',it,'',80))+F('저장하거나 공유할 이유','글 첫 줄에 쓸 말',ta('cta',it,'',80));
-  }else if(st===2){
-    var sc=scenesOf(it),tot=0;sc.forEach(function(x){tot+=num(x.sec)});
-    h+='<div class="sc sch"><span>장면</span><span>화면</span><span>자막과 나레이션</span><span>초</span><span></span></div><div id="scs" style="display:grid;gap:10px">';
-    sc.forEach(function(x,i){var ro=S.ro?' readonly':'';
-      h+='<div class="sc"><input data-sc="'+i+':k" value="'+esc(x.k||'')+'" placeholder="장면"'+ro+'><textarea data-sc="'+i+':screen" placeholder="화면"'+ro+'>'+esc(x.screen||'')+'</textarea><textarea data-sc="'+i+':line" placeholder="자막과 나레이션"'+ro+'>'+esc(x.line||'')+'</textarea><input data-sc="'+i+':sec" inputmode="numeric" value="'+esc(x.sec||'')+'" placeholder="초"'+ro+'>'+(S.ro?'<span></span>':'<button class="btn sm" data-scdel="'+i+'" aria-label="장면 지우기">×</button>')+'</div>'});
-    h+='</div><div class="bar" style="margin:0">'+(S.ro?'':'<button class="btn" data-act="scAdd">장면 추가</button>')+'<span class="sp"></span><b id="tot">전체 '+tot+'초</b></div>';
-    if(it.script||!S.ro)h+=F('대본 메모','',ta('script',it,'',80));
-  }else if(st===3){
-    h+='<div class="cols">'+F('장소','',inp('place',it,''))+F('게시한 날','',inp('posted',it,'','date'))+'</div>'+F('준비물','',ta('prep',it,'',80))+F('게시 주소','',inp('url',it,'https://'))+(safeUrl(it.url)?'<a class="btn sm" style="justify-self:start" href="'+esc(it.url)+'" target="_blank" rel="noopener">올린 영상 열기</a>':'');
-  }else{
-    h+='<div class="cols">'+F('조회','',inp('views',it,'예: 1.2만'))+F('게시 때 팔로워','',inp('fol',it,'예: 350'))+F('좋아요','',inp('likes',it,''))+'</div><div class="cols">'+F('댓글','',inp('cmts',it,''))+F('저장','',inp('saves',it,''))+F('공유','',inp('shares',it,''))+'</div><div class="calc" id="calc">'+calc(it)+'</div>'+F('잘된 점과 다음에 고칠 점','',ta('lesson',it,'',90));
+/* ---------- 콘텐츠 작업판: 보고 시작 → 쓰기 → 찍고 돌아보기 ---------- */
+function cForm(cn){cn=cn||'';return /썰/.test(cn)?'썰':/검증|미신/.test(cn)?'검증':/브이로그|일상/.test(cn)?'브이로그':/개그|웃/.test(cn)?'개그':/꿀팁|정보|리뷰|주스|정리/.test(cn)?'정보 정리':''}
+function fxOf(cn){var a=(curConcept().fx||{})[cn];return a&&a.length?a:[]}
+function recRefs(it){
+  var ids=it.refIds||[],cx={},fm=cForm(it.corner);rcList().forEach(function(c){cx[c.key]=c.x});
+  return S.refs.filter(function(r){return r.ch===it.ch&&ids.indexOf(r.id)<0}).map(function(r){var x=cx[akey(r.account)]||mult(r);
+    return {r:r,x:x,fit:!!(fm&&r.form===fm),s:(fm&&r.form===fm?100:0)+(x>=10?50:0)+Math.min(40,x)+(r.hook?5:0)}}).sort(function(a,b){return b.s-a.s});
+}
+function refMini(r,x,picked,fit){var u=safeUrl(r.url);
+  return '<div class="mini"><div class="meta"><b style="color:var(--ink);font-size:18px">@'+esc(r.account)+'</b>'+(x?'<span class="badge '+(x>=10?'ok':'')+'">'+x+'배</span>':'')+(r.form?'<span class="badge acc">'+esc(r.form)+'</span>':'')+(fit?'<span class="badge warn">같은 형식</span>':'')+'</div>'+
+    (r.video?'<b>'+esc(String(r.video).slice(0,40))+(r.views?' <span style="color:var(--acc)">'+fmt(r.views)+'</span>':'')+'</b>':'')+
+    (r.hook?'<div class="row"><span>첫 3초</span><div>'+esc(r.hook)+'</div></div>':'')+(picked&&r.end?'<div class="row"><span>끝</span><div>'+esc(r.end)+'</div></div>':'')+
+    (r.learn?'<div class="row"><span>가져올 점</span><div><b>'+esc(r.learn)+'</b></div></div>':'')+
+    '<div class="meta">'+(u?'<a class="btn sm" href="'+esc(u)+'" target="_blank" rel="noopener">영상 열기</a>':'')+(S.ro?'':(picked?'<button class="btn sm" data-unref="'+esc(r.id)+'">빼기</button>':'<button class="btn sm pri" data-act="pickRef" data-id="'+esc(r.id)+'">고르기</button>'))+'</div></div>'}
+function fxCard(it){
+  var cn=it.corner||'',a=fxOf(cn),f=a[a.length-1],pd=S.role==='pd'&&!S.ro;
+  var h='<div class="panel fxc"><h2>'+(cn?esc(cn)+' 공식':'코너 공식')+(f?' <span class="badge acc">'+f.v+'판 · '+day(f.at)+'</span>':'')+'</h2>';
+  if(!cn)return h+'<div style="color:var(--sub)">위에서 코너를 고르면 그 코너의 공식이 여기에 뜹니다.</div></div>';
+  if(S.fxEdit&&pd){
+    h+='<div class="f"><label>첫 3초</label><textarea id="fxHook" style="min-height:60px">'+esc(f?f.hook:'')+'</textarea></div><div class="f"><label>가운데</label><textarea id="fxMid" style="min-height:60px">'+esc(f?f.mid:'')+'</textarea></div><div class="f"><label>끝</label><textarea id="fxEnd" style="min-height:60px">'+esc(f?f.end:'')+'</textarea></div>'+
+      '<div class="f"><label>바꾼 이유<small>어느 영상에서 무엇을 배웠는지</small></label><textarea id="fxWhy" style="min-height:60px"></textarea></div><div class="bar" style="margin:0"><button class="btn" data-act="fxCancel">취소</button><span class="sp"></span><button class="btn pri" data-act="fxSave">'+(a.length+1)+'판으로 저장</button></div><div class="guide">이전 판은 지워지지 않고 남습니다.</div></div>';
+    return h;
   }
-  h+='<div class="bar" style="margin:0">'+(st>0?'<button class="btn" data-step="'+(st-1)+'">이전</button>':'')+'<span class="sp"></span>'+(st<4?'<button class="btn pri" data-step="'+(st+1)+'">다음: '+STEPS[st+1]+'</button>':'')+'</div></div></div>';
-  h+='<div class="panel" style="margin-top:0"><h2>의견</h2><div id="cms" style="display:grid;gap:8px">'+cmList(it.id)+'</div>'+
+  if(!f)h+='<div style="color:var(--sub)">아직 이 코너의 공식이 없습니다.'+(pd?'':' 관리자가 정하면 여기에 뜹니다.')+'</div>';
+  else{h+='<div class="row"><span>첫 3초</span><div><b>'+esc(f.hook||'-')+'</b></div></div><div class="row"><span>가운데</span><div><b>'+esc(f.mid||'-')+'</b></div></div><div class="row"><span>끝</span><div><b>'+esc(f.end||'-')+'</b></div></div>'+(f.why?'<div class="guide">바꾼 이유: '+esc(f.why)+'</div>':'');
+    if(a.length>1)h+='<details><summary>이전 판 '+(a.length-1)+'개</summary>'+a.slice(0,-1).reverse().map(function(o){return '<div class="cm" style="margin-top:8px"><small>'+o.v+'판 · '+day(o.at)+'</small>첫 3초: '+esc(o.hook||'-')+'<br>가운데: '+esc(o.mid||'-')+'<br>끝: '+esc(o.end||'-')+(o.why?'<br><small>바꾼 이유: '+esc(o.why)+'</small>':'')+'</div>'}).join('')+'</details>'}
+  var ls=S.items.filter(function(i){return i.ch===it.ch&&i.corner===cn&&i.lesson&&i.id!==it.id}).sort(function(x,y){return im(y)-im(x)}).slice(0,3);
+  if(ls.length){h+='<div class="f"><label>우리 영상에서 배운 점<small>다음 판 후보</small></label>';ls.forEach(function(i){var m=im(i);h+='<div class="cm"><small>'+esc(i.title||'제목 없음')+(m?' · '+m+'배':'')+'</small>'+esc(i.lesson)+'</div>'});h+='</div>'}
+  if(pd)h+='<button class="btn sm" style="justify-self:start" data-act="fxEdit">'+(f?'공식 고치기 (새 판)':'공식 만들기')+'</button>';
+  return h+'</div>';
+}
+function edChecks(it){
+  var sc=it.scenes||[],first=sc[0]||{},last=sc[sc.length-1]||{},tot=0;sc.forEach(function(x){tot+=num(x.sec)});
+  var c=[[!!((it.refIds||[]).length),'레퍼런스를 골랐다'],[!!it.gap,'차별화 한 가지를 적었다'],[!!(first.screen&&(first.line||first.sub)),'첫 3초에 화면과 말(또는 자막)이 있다'],[!!(sc.length>1&&(last.line||last.sub||last.screen))||!!it.cta,'끝에 저장, 공유, 다음 편으로 이어지는 말이 있다'],[tot>0&&tot<=60,'전체 길이를 적었고 60초 이하다'+(tot?' (지금 '+tot+'초)':'')]];
+  return '<div class="chk">'+c.map(function(x){return '<div class="'+(x[0]?'y':'')+'"><i>'+(x[0]?'✓':'')+'</i>'+x[1]+'</div>'}).join('')+'</div>';
+}
+function shotList(it){var dn=it.shotDone||[],l=scenesOf(it).filter(function(x){return (x.screen||'').trim()});
+  if(!l.length)return '<div style="color:var(--sub)">대본의 "화면" 칸을 적으면 찍을 장면이 여기에 모입니다.</div>';
+  return l.map(function(x){var t=x.screen.trim();return '<label class="shot"><input type="checkbox" data-shot="'+esc(t)+'"'+(dn.indexOf(t)>=0?' checked':'')+(S.ro?' disabled':'')+'><span>'+(x.k?'<small>'+esc(x.k)+'</small>':'')+esc(t)+'</span></label>'}).join('')}
+function editor(it){
+  var done=stepDone(it),ro=S.ro?' readonly':'',cs=corners();if(it.corner&&cs.indexOf(it.corner)<0)cs=cs.concat([it.corner]);
+  var h='<div class="bar"><button class="btn" data-act="back">목록으로</button><span class="saved" id="saved"></span><span class="sp"></span>'+(S.ro?'':'<button class="btn sm bad" data-act="del">지우기</button>')+'</div>';
+  h+='<div class="panel edh" style="margin-top:0"><input class="title-in" data-f="title" placeholder="콘텐츠 제목" value="'+esc(it.title||'')+'"'+ro+'>'+
+    '<div class="edm"><label>코너<select data-f="corner"'+(S.ro?' disabled':'')+'><option value="">고르기</option>'+cs.map(function(x){return '<option'+(x===it.corner?' selected':'')+'>'+esc(x)+'</option>'}).join('')+'</select></label>'+
+    '<label>단계<select data-f="stage"'+(S.ro?' disabled':'')+'>'+STAGES.map(function(x){return '<option'+(x===it.stage?' selected':'')+'>'+x+'</option>'}).join('')+'</select></label>'+
+    '<label>담당'+inp('who',it,'이름')+'</label><label>촬영 날짜'+inp('due',it,'','date')+'</label></div>'+
+    '<div class="prg">'+STEPS.map(function(n,i){return '<span class="'+(done[i]?'d':'')+'">'+(done[i]?'✓ ':'')+n+'</span>'}).join('')+'</div></div>';
+  h+='<div class="ed3">';
+  /* ① 보고 시작 */
+  h+='<div class="edc"><div class="lab">① 보고 시작</div>'+fxCard(it);
+  var ids=it.refIds||[],cx={};rcList().forEach(function(c){cx[c.key]=c.x});
+  h+='<div class="panel"><h2>레퍼런스</h2>';
+  ids.forEach(function(id){var r=S.refs.filter(function(x){return x.id===id})[0];if(r)h+=refMini(r,cx[akey(r.account)]||mult(r),true)});
+  var rec=recRefs(it);
+  if(!S.ro&&rec.length){h+='<div class="f"><label>추천<small>'+(cForm(it.corner)?'같은 형식과 10배 통과 먼저':'10배 통과 먼저')+'</small></label></div>';rec.slice(0,ids.length?2:3).forEach(function(o){h+=refMini(o.r,o.x,false,o.fit)});
+    if(rec.length>3)h+='<select id="pick"><option value="">전체 '+rec.length+'개에서 고르기</option>'+rec.map(function(o){var r=o.r;return '<option value="'+esc(r.id)+'">@'+esc(r.account)+(r.video?' · '+esc(String(r.video).slice(0,24)):'')+(o.x?' · '+o.x+'배':'')+'</option>'}).join('')+'</select>'}
+  if(!ids.length&&!rec.length)h+='<div style="color:var(--sub)">레퍼런스 탭에 콘텐츠를 넣으면 여기에 추천이 뜹니다.</div>';
+  if(it.refs||!S.ro)h+='<details'+(it.refs?' open':'')+'><summary>목록에 없는 영상 메모</summary>'+ta('refs',it,'영상 주소나 메모',70)+'</details>';
+  h+='</div></div>';
+  /* ② 쓰기 */
+  var c=curConcept();
+  h+='<div class="edc"><div class="lab">② 쓰기</div><div class="panel diffc"><h2>차별화 한 가지</h2>'+(c.l3||c.diff?'<div class="guide">이 크리에이터의 자리: '+esc(c.l3||c.diff)+'</div>':'')+ta('gap',it,'고른 레퍼런스에는 없고 이 영상에만 있는 것',64)+'</div>';
+  h+='<div class="panel"><h2>기획</h2><div class="cols">'+F('기획의도','왜 만들고 누가 보나',ta('intent',it,'',70))+F('포인트','이 영상만의 한 가지',ta('point',it,'',70))+'</div>'+F('저장하거나 공유할 이유','글 첫 줄에 쓸 말',ta('cta',it,'',56))+(it.story||!S.ro?'<details'+(it.story?' open':'')+'><summary>스토리 메모</summary>'+ta('story',it,'전체 흐름을 글로 적고 싶을 때',80)+'</details>':'')+'</div>';
+  var sc=scenesOf(it),tot=0,fx=fxOf(it.corner),f=fx[fx.length-1];sc.forEach(function(x){tot+=num(x.sec)});
+  h+='<div class="panel"><h2>대본<small style="font-weight:500;color:var(--sub);font-size:15px;margin-left:8px">줄마다 화면, 말, 자막을 따로</small></h2><div class="sc sch"><span>장면</span><span>화면</span><span>말</span><span>자막</span><span>초</span><span></span></div><div id="scs" style="display:grid;gap:10px">';
+  sc.forEach(function(x,i){var hint=f?(i===0?f.hook:i===sc.length-1?f.end:f.mid):'';
+    h+='<div class="sc"><div class="sck"><input data-sc="'+i+':k" value="'+esc(x.k||'')+'" placeholder="장면"'+ro+'>'+(hint?'<small>공식: '+esc(hint)+'</small>':'')+'</div><textarea data-sc="'+i+':screen" placeholder="화면"'+ro+'>'+esc(x.screen||'')+'</textarea><textarea data-sc="'+i+':line" placeholder="말"'+ro+'>'+esc(x.line||'')+'</textarea><textarea data-sc="'+i+':sub" placeholder="자막"'+ro+'>'+esc(x.sub||'')+'</textarea><input class="scs" data-sc="'+i+':sec" inputmode="numeric" value="'+esc(x.sec||'')+'" placeholder="초"'+ro+'>'+(S.ro?'<span class="scx"></span>':'<button class="btn sm scx" data-scdel="'+i+'" aria-label="장면 지우기">×</button>')+'</div>'});
+  h+='</div><div class="bar" style="margin:0">'+(S.ro?'':'<button class="btn" data-act="scAdd">장면 추가</button>')+'<span class="sp"></span><b id="tot">전체 '+tot+'초</b></div>'+
+    '<div class="f"><label>대본 점검<small>적을수록 채워집니다</small></label><div id="chk">'+edChecks(it)+'</div></div>'+(it.script||!S.ro?'<details'+(it.script?' open':'')+'><summary>대본 메모</summary>'+ta('script',it,'',70)+'</details>':'')+'</div></div>';
+  /* ③ 찍고 돌아보기 */
+  h+='<div class="edc"><div class="lab">③ 찍고 돌아보기</div><div class="panel"><h2>촬영 목록<small style="font-weight:500;color:var(--sub);font-size:15px;margin-left:8px">대본에서 자동</small></h2><div id="shots" style="display:grid;gap:6px">'+shotList(it)+'</div>'+F('장소','',inp('place',it,''))+F('준비물','',ta('prep',it,'',60))+'</div>';
+  h+='<div class="panel"><h2>게시</h2>'+F('게시한 날','',inp('posted',it,'','date'))+F('게시 주소','',inp('url',it,'https://'))+(safeUrl(it.url)?'<a class="btn sm" style="justify-self:start" href="'+esc(it.url)+'" target="_blank" rel="noopener">올린 영상 열기</a>':'')+'</div>';
+  h+='<div class="panel"><h2>성과<small style="font-weight:500;color:var(--sub);font-size:15px;margin-left:8px">올린 뒤 7일</small></h2><div class="cols c2">'+F('조회','',inp('views',it,'예: 1.2만'))+F('게시 때 팔로워','',inp('fol',it,'예: 350'))+F('좋아요','',inp('likes',it,''))+F('댓글','',inp('cmts',it,''))+F('저장','',inp('saves',it,''))+F('공유','',inp('shares',it,''))+'</div><div class="calc" id="calc">'+calc(it)+'</div>'+F('배운 점','잘된 점과 다음에 고칠 점',ta('lesson',it,'',80))+'<div class="guide">배운 점은 이 코너 공식의 다음 판 후보로 올라갑니다.</div></div></div>';
+  h+='</div>';
+  h+='<div class="two" style="margin-top:18px"><div>'+talksHtml('i:'+it.id,'item')+'</div><div class="panel" style="margin-top:0"><h2>의견</h2><div id="cms" style="display:grid;gap:8px">'+cmList(it.id)+'</div>'+
     (S.ro?'':'<textarea id="cmIn" placeholder="의견 남기기" style="min-height:80px"></textarea><button class="btn pri" data-act="cmAdd">의견 올리기</button>')+'</div></div>';
   return h;
 }
 
+/* ---------- 계정 분석: 아이디를 올리면 Claude가 보고 좋은 이유와 아쉬운 이유를 채운다 ---------- */
+var ASTAT={req:['요청함','warn'],doing:['분석 중','acc'],done:['완료','ok'],fail:['못 봄','']};
+function acctCard(a){var r=a.res||{},st=ASTAT[a.status]||ASTAT.req,x=r.fol&&r.med?Math.round(r.med/r.fol*10)/10:0;
+  var h='<div class="card"><div class="meta"><b class="acct">@'+esc(a.account)+'</b><span class="badge '+st[1]+'">'+st[0]+'</span>'+(a.status==='done'&&r.at?'<span>'+day(r.at)+' 분석</span>':a.reqAt?'<span>'+day(a.reqAt)+' 요청</span>':'')+'</div>';
+  if(a.status==='fail')h+='<div style="color:var(--sub)">'+esc(r.err||'계정을 볼 수 없었습니다. 비공개이거나 아이디가 다를 수 있습니다.')+'</div>';
+  else if(a.status!=='done')h+='<div style="color:var(--sub)">'+(a.status==='doing'?'지금 보고 있습니다.':'요청이 저장되었습니다. 다음 분석 때 채워집니다.')+(a.res?' 아래는 지난번 결과입니다.':'')+'</div>';
+  if(a.res&&a.status!=='fail'){
+    h+='<div class="nums"><div><small>팔로워</small><b>'+(r.fol?fmt(r.fol):'-')+'</b></div><div><small>평균 조회</small><b>'+(r.med?fmt(r.med):'-')+'</b></div><div class="x'+(x>=10?'':' no')+'"><small>배수</small><b>'+(x?x+'배':'-')+'</b></div></div>'+
+      (r.good?'<div class="row ag"><span>좋은 이유</span><div><b>'+esc(r.good)+'</b></div></div>':'')+(r.bad?'<div class="row ab"><span>아쉬운 이유</span><div><b>'+esc(r.bad)+'</b></div></div>':'')+(r.next?'<div class="row an"><span>다음에 쓸 것</span><div><b>'+esc(r.next)+'</b></div></div>':'');
+    if(r.vids&&r.vids.length)h+='<details><summary>영상별로 보기 '+r.vids.length+'편</summary>'+r.vids.map(function(v){var u=safeUrl(v.url);return '<div class="cm" style="margin-top:8px"><small>'+(v.views?'조회 '+fmt(num(v.views)):'')+(v.x?' · 평소의 '+v.x+'배':'')+'</small><b>'+esc(v.title||'제목 없음')+'</b>'+(v.good?'<div>좋은 점: '+esc(v.good)+'</div>':'')+(v.bad?'<div>아쉬운 점: '+esc(v.bad)+'</div>':'')+(u?'<a class="btn sm" style="margin-top:6px" href="'+esc(u)+'" target="_blank" rel="noopener">영상 열기</a>':'')+'</div>'}).join('')+'</details>';
+  }
+  h+='<div class="meta"><a class="btn sm" href="https://www.instagram.com/'+encodeURIComponent(a.account)+'/" target="_blank" rel="noopener">인스타에서 열기</a>'+(S.ro?'':(a.status==='done'||a.status==='fail'?'<button class="btn sm" data-act="aReq" data-id="'+esc(a.id)+'">다시 분석 요청</button>':'')+'<span class="sp" style="margin-left:auto"></span><button class="btn sm bad" data-act="aDel" data-id="'+esc(a.id)+'">지우기</button>')+'</div></div>';
+  return h;
+}
+function accts(){
+  var all=S.accts.filter(function(a){return a.ch===S.ch}).sort(function(a,b){return (a.at||0)-(b.at||0)}),mine=all.filter(function(a){return a.kind==='mine'}),rf=all.filter(function(a){return a.kind!=='mine'});
+  var add=function(k,ph){return S.ro?'':'<div class="aadd"><input id="aIn_'+k+'" placeholder="'+ph+'" autocapitalize="off" autocomplete="off"><button class="btn pri" data-act="aAdd" data-k="'+k+'">분석 요청</button></div>'};
+  var h='<div class="bar"><h2 class="h1">계정 분석</h2></div><div class="note" style="margin-bottom:14px">인스타 아이디를 올리면 영상을 보고 좋은 이유, 아쉬운 이유, 다음에 쓸 것을 채워 드립니다. 분석은 하루 한 번 모아서 합니다. 비공개 계정은 볼 수 없습니다.</div>';
+  h+='<div class="rcsec"><h2>내 계정 <span>'+mine.length+' / 3</span></h2></div>'+(mine.length<3?add('mine','내 인스타 아이디'):'')+(mine.length?'<div class="grid">'+mine.map(acctCard).join('')+'</div>':'<div class="empty">운영하는 계정 아이디를 넣어 주세요. 3개까지 됩니다.</div>');
+  h+='<div class="rcsec" style="margin-top:26px"><h2>참고할 계정 <span>'+rf.length+'</span></h2></div>'+add('ref','참고하고 싶은 계정 아이디')+(rf.length?'<div class="grid">'+rf.map(acctCard).join('')+'</div>':'<div class="empty">따라 배우고 싶은 계정을 넣으면 10배 기준으로 판정하고, 잘된 영상을 장면별로 뜯어 레퍼런스에 넣어 드립니다.</div>');
+  return h+'<div class="guide" style="margin-top:16px">저장 수와 공유 수는 계정 주인만 볼 수 있습니다. 올린 영상의 성과 칸에 직접 적어 주시면 분석이 더 정확해집니다.</div>';
+}
+function acctAct(a,d){
+  if(a==='aAdd'){var el=document.getElementById('aIn_'+d.k),v=(el.value||'').trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i,'').replace(/^@/,'').replace(/[\/?#].*$/,'');
+    if(!/^[A-Za-z0-9._]{1,30}$/.test(v)){note('인스타 아이디만 적어 주세요. 예: seha.day');return}
+    if(S.accts.some(function(x){return x.ch===S.ch&&akey(x.account)===akey(v)})){note('이미 올린 아이디입니다.');return}
+    if(d.k==='mine'&&S.accts.filter(function(x){return x.ch===S.ch&&x.kind==='mine'}).length>=3){note('내 계정은 3개까지 됩니다.');return}
+    note('');var ref=db.collection('accts').doc();write('acct'+ref.id,function(){return ref.set({ch:S.ch,account:v,kind:d.k==='mine'?'mine':'ref',status:'req',reqAt:Date.now(),at:Date.now(),by:S.me})});return}
+  if(a==='aReq')return upd('accts',d.id,{status:'req',reqAt:Date.now()});
+  if(a==='aDel'){upd('accts',d.id,{deleted:true});toast('계정을 지웠습니다',{col:'accts',id:d.id});return}
+}
 
 /* ---------- 레퍼런스: 채널 / 콘텐츠 / 한눈에 ---------- */
 var RCATS=['같은 분야','가까운 분야','형식만 참고'];
@@ -518,12 +601,15 @@ function saveConcept(el){
 document.addEventListener('input',function(e){var el=e.target;
   if(el.dataset&&el.dataset.f){saveField(el);var k=document.getElementById('calc');if(k){var it0=Object.assign({},S.items.filter(function(i){return i.id===S.open})[0]||{});[].forEach.call(app.querySelectorAll('[data-f]'),function(x){it0[x.dataset.f]=x.value});k.innerHTML=calc(it0)}}
   if(el.dataset&&el.dataset.sc){var rows=readScenes();saveScenes(rows);var t=0;rows.forEach(function(x){t+=num(x.sec)});var te=document.getElementById('tot');if(te)te.textContent='전체 '+t+'초'}
+  if(el.dataset&&(el.dataset.sc||el.dataset.f)&&S.open){var itc=Object.assign({},S.items.filter(function(i){return i.id===S.open})[0]||{});[].forEach.call(app.querySelectorAll('[data-f]'),function(x){itc[x.dataset.f]=x.value});itc.scenes=readScenes();var ck=document.getElementById('chk');if(ck)ck.innerHTML=edChecks(itc);var sh=document.getElementById('shots');if(sh&&el.dataset.sc)sh.innerHTML=shotList(itc)}
   if(el.id==='q'){S.q=el.value;var pos=el.selectionStart;app.innerHTML=refs();var n=document.getElementById('q');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(x){}}}
   if(el.dataset&&el.dataset.c)saveConcept(el);
 });
 document.addEventListener('change',function(e){var el=e.target;
   if(el.id==='chSel'){S.ch=el.value;try{localStorage.setItem('ws-ch',S.ch)}catch(x){}S.open=null;S.refEdit=null;S.stage='all';render()}
   if(el.dataset&&el.dataset.own){var uid=el.dataset.own;if(el.value)own(el.value,uid);else S.channels.forEach(function(c){if(c.owner===uid)upd('channels',c.id,{owner:''})});note('맡은 크리에이터를 바꿨습니다.');setTimeout(function(){render()},50)}
+  if(el.dataset&&el.dataset.f==='corner'&&S.open&&!S.ro){S.fxEdit=false;upd('items',S.open,{corner:el.value}).then(function(){el.blur();render()})}
+  if(el.dataset&&el.dataset.shot!==undefined&&S.open&&!S.ro){var ish=S.items.filter(function(i){return i.id===S.open})[0];if(ish){var dn=(ish.shotDone||[]).filter(function(x){return x!==el.dataset.shot});if(el.checked)dn.push(el.dataset.shot);upd('items',ish.id,{shotDone:dn})}}
   if(el.id==='pick'&&el.value){var it=S.items.filter(function(i){return i.id===S.open})[0];if(it){var ids=(it.refIds||[]).concat([el.value]);upd('items',it.id,{refIds:ids}).then(function(){render()})}el.blur()}
 });
 document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.dataset&&e.target.dataset.open){e.preventDefault();e.target.click()}});
@@ -538,13 +624,22 @@ document.addEventListener('click',function(e){
   if(d.form){S.form=d.form;return render()}
   if(d.next){e.stopPropagation();var it=S.items.filter(function(i){return i.id===d.next})[0];if(it){var nx=STAGES[STAGES.indexOf(it.stage)+1];if(nx)upd('items',it.id,{stage:nx})}return}
   if(d.refedit){S.refEdit=d.refedit;return render()}
-  if(d.open){S.open=d.open;S.del=false;S.step=0;render();window.scrollTo(0,0);return}
+  if(d.open){S.open=d.open;S.del=false;S.step=0;S.fxEdit=false;render();window.scrollTo(0,0);return}
   if(/^t(Add|Say|Ok|Re)$/.test(d.act||''))return talkAct(d.act,d);
   if(/^p(Add|Off|Pw|PwGo|Role|Open)$|^aMake$/.test(d.act||''))return peopleAct(d.act,d);
   if(/^(rv|rc[A-Z]\w*)$/.test(d.act||''))return rcAct(d.act,d);
+  if(/^a(Add|Req|Del)$/.test(d.act||''))return acctAct(d.act,d);
   switch(d.act){
     case 'logout':sess(null);location.reload();return;
-    case 'back':S.open=null;S.del=false;return render();
+    case 'back':S.open=null;S.del=false;S.fxEdit=false;return render();
+    case 'pickRef':var ipk=S.items.filter(function(i){return i.id===S.open})[0];if(ipk&&(ipk.refIds||[]).indexOf(d.id)<0)upd('items',ipk.id,{refIds:(ipk.refIds||[]).concat([d.id])}).then(function(){render()});return;
+    case 'fxEdit':S.fxEdit=true;return render();
+    case 'fxCancel':S.fxEdit=false;return render();
+    case 'fxSave':var ifx=S.items.filter(function(i){return i.id===S.open})[0];if(!ifx||!ifx.corner||S.role!=='pd')return;
+      var g=function(i){return (document.getElementById(i).value||'').trim()},nf={hook:g('fxHook'),mid:g('fxMid'),end:g('fxEnd'),why:g('fxWhy'),at:Date.now(),by:S.me};
+      if(!nf.hook&&!nf.mid&&!nf.end){note('첫 3초, 가운데, 끝 가운데 하나는 적어 주세요.');return}
+      var cc=curConcept(),fxo=JSON.parse(JSON.stringify(cc.fx||{})),arr=fxo[ifx.corner]||[];nf.v=arr.length+1;arr.push(nf);fxo[ifx.corner]=arr;var chx=S.ch;S.fxEdit=false;note('');
+      write('concepts'+chx,function(){var rf=db.collection('concepts').doc(chx),dd={fx:fxo,updatedAt:Date.now()};return S.concepts.some(function(c){return c.id===chx})?rf.update(dd):rf.set(dd)}).then(function(){render()});return;
     case 'addCh':S.addCh=true;S.open=null;S.refEdit=null;return render();
     case 'chCancel':S.addCh=false;return render();
     case 'chSave':var cid=(document.getElementById('chId').value||'').trim(),cp=document.getElementById('chPw').value,cp2=document.getElementById('chPw2').value,n=(document.getElementById('chName').value||'').trim()||cid,cm=document.getElementById('chMsg');
@@ -678,7 +773,7 @@ var CACHE={},SUBS={},SINCE=0,PULLING=false;
 function emit(col){var m=CACHE[col]||{};var docs=Object.keys(m).map(function(id){return {id:id,data:function(){return m[id]}}});(SUBS[col]||[]).forEach(function(f){f({docs:docs,metadata:{fromCache:false}})})}
 function pull(){if(PULLING||!sess())return Promise.resolve();PULLING=true;return call('/pull',{since:SINCE}).then(function(j){PULLING=false;if(!j||j.err){if(j&&j.err==='net')note('서버에 닿지 않습니다. 인터넷 연결을 확인해 주세요.');return}
   Object.assign(S.names,j.names||{});var ch={};(j.docs||[]).forEach(function(d){(CACHE[d.col]=CACHE[d.col]||{})[d.id]=d.data;ch[d.col]=1;if(d.upd>SINCE)SINCE=d.upd});if(j.last>SINCE)SINCE=j.last;if(j.more)setTimeout(pull,50);
-  ['channels','items','refs','comments','concepts','talks'].forEach(function(c){if(ch[c]||!S.loaded[c])emit(c)})}).catch(function(){PULLING=false;note('서버에 닿지 않습니다. 인터넷 연결을 확인해 주세요.')})}
+  ['channels','items','refs','comments','concepts','talks','accts'].forEach(function(c){if(ch[c]||!S.loaded[c])emit(c)})}).catch(function(){PULLING=false;note('서버에 닿지 않습니다. 인터넷 연결을 확인해 주세요.')})}
 function send(col,id,op,data){(CACHE[col]=CACHE[col]||{});CACHE[col][id]=op==='update'?Object.assign({},CACHE[col][id],data):data;emit(col);
   return call('/write',{list:[{col:col,id:id,op:op,data:data}]}).then(function(j){var o=j&&j.out&&j.out[0];if(!o||!o.ok){var e=new Error('save');e.code=j&&j.err;throw e}})}
 function newId(){var a=new Uint8Array(10);crypto.getRandomValues(a);return Array.prototype.map.call(a,function(x){return 'abcdefghijklmnopqrstuvwxyz0123456789'[x%36]}).join('')}
@@ -692,7 +787,7 @@ function started(me){
   if(ADMIN_PAGE&&me.role!=='pd'){sess(null);showLogin('이 주소는 관리자만 들어옵니다. 크리에이터는 크리에이터 주소로 들어와 주세요.');return}
   if(!ADMIN_PAGE&&me.role==='pd'){try{localStorage.setItem('ip_session_adm',localStorage.getItem('ip_session'));localStorage.removeItem('ip_session')}catch(e){}location.replace('admin/');return}
   PEOPLE=null;if(ADMIN_PAGE){var st=null;try{st=sessionStorage.getItem('ws-tab')}catch(e){}if(!st)S.tab='people'}S.me=me.id;S.role=me.role;S.names[me.id]=me.name;document.getElementById('login').hidden=true;document.getElementById('meName').textContent=(me.name===ADMIN_NAME?me.name:me.name+(me.role==='pd'?' · 관리자':' · 크리에이터'));document.body.classList.toggle('is-pd',me.role==='pd');
-  sub('channels','channels');sub('items','items');sub('refs','refs');sub('comments','comments');sub('concepts','concepts');sub('talks','talks');
+  sub('channels','channels');sub('items','items');sub('refs','refs');sub('comments','comments');sub('concepts','concepts');sub('talks','talks');sub('accts','accts');
   pull();if(!started.on){started.on=1;setInterval(function(){if(!document.hidden)pull()},4000);document.addEventListener('visibilitychange',function(){if(!document.hidden)pull()})}}
 var SETUP=false,ADM=false,HASADM=false,ADMIN_NAME='관리자';
 function admMode(on){ADM=!!on;try{localStorage.setItem('ip_adm',ADM?'1':'')}catch(e){}var nl=document.getElementById('lgNameL'),n=document.getElementById('lgName');nl.hidden=ADM&&!SETUP;n.required=!(ADM&&!SETUP);
