@@ -3,168 +3,304 @@
 <script src="../config.js"></script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F4F5F7;--paper:#fff;--ink:#16181D;--sub:#565C67;--line:#D5D9E0;--acc:#1D4ED8;--accbg:#E7EEFF;--ok:#0B7A4B;--okbg:#E2F5EA;--warn:#B45309;--warnbg:#FFF1D6;--bad:#B42318;--soft:#ECEEF2}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#101216;--paper:#1A1D24;--ink:#F1F2F5;--sub:#AEB4BF;--line:#373C47;--acc:#8FB0FF;--accbg:#1E2A4A;--ok:#5DD39E;--okbg:#143326;--warn:#F5B453;--warnbg:#3A2B10;--bad:#FF8A7A;--soft:#232730}}
-:root[data-theme="dark"]{--bg:#101216;--paper:#1A1D24;--ink:#F1F2F5;--sub:#AEB4BF;--line:#373C47;--acc:#8FB0FF;--accbg:#1E2A4A;--ok:#5DD39E;--okbg:#143326;--warn:#F5B453;--warnbg:#3A2B10;--bad:#FF8A7A;--soft:#232730}
+:root{--bg:#F5F5F2;--paper:#fff;--ink:#22262B;--sub:#666D78;--line:#E1E3E7;--line2:#C9CDD4;--acc:#2456D6;--accbg:#EEF3FF;--ok:#0B7A4B;--okbg:#E6F5EC;--warn:#9A5B00;--warnbg:#FFF6DF;--bad:#B42318;--soft:#F1F2F4}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#101216;--paper:#1A1D24;--ink:#F1F2F5;--sub:#AEB4BF;--line:#373C47;--acc:#8FB0FF;--accbg:#1E2A4A;--ok:#5DD39E;--okbg:#143326;--warn:#F5B453;--warnbg:#3A2B10;--bad:#FF8A7A;--soft:#232730;--line2:#4A505C}}
+:root[data-theme="dark"]{--bg:#101216;--paper:#1A1D24;--ink:#F1F2F5;--sub:#AEB4BF;--line:#373C47;--acc:#8FB0FF;--accbg:#1E2A4A;--ok:#5DD39E;--okbg:#143326;--warn:#F5B453;--warnbg:#3A2B10;--bad:#FF8A7A;--soft:#232730;--line2:#4A505C}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif;font-size:18px;line-height:1.5;word-break:keep-all;overflow-wrap:anywhere}
 button,input,select,textarea{font:inherit;color:inherit}
 .wrap{padding:0 max(16px,env(safe-area-inset-right,0px)) 80px max(16px,env(safe-area-inset-left,0px))}
 @media(min-width:900px){.wrap{padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}}
-header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:2px solid var(--line);padding:12px max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px));display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px));display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 @media(max-width:800px){header{position:static}}
 @media(min-width:900px){header{padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}}
-header .brand{font-weight:900;font-size:22px;margin-right:4px}
+header .brand{font-weight:700;font-size:22px;margin-right:4px}
 .tabs{display:flex;gap:6px;margin-left:auto}
-.btn{background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:9px 16px;font-weight:700;cursor:pointer;min-height:46px}
+.btn{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:9px 16px;font-weight:600;cursor:pointer;min-height:46px}
 .btn:hover{border-color:var(--acc)}
 .btn.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .btn.on{background:var(--acc);border-color:var(--acc);color:var(--paper)}
 .btn.sm{padding:5px 12px;min-height:38px;font-size:16px}
 .btn.bad{color:var(--bad)}
-:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
-select,input,textarea{background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:9px 12px;min-height:46px;width:100%}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+select,input,textarea{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:9px 12px;min-height:46px;width:100%}
 textarea{min-height:110px;resize:vertical;line-height:1.6}
-header select{width:auto;font-weight:700;max-width:60vw}
+header select{width:auto;font-weight:600;max-width:60vw}
 .bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:18px 0 14px}
 .bar .sp{margin-left:auto}
-.chip{background:var(--paper);border:2px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700;cursor:pointer;font-size:16px;min-height:40px}
-.chip b{color:var(--sub);font-weight:700;margin-left:4px}
+.chip{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:600;cursor:pointer;font-size:16px;min-height:40px}
+.chip b{color:var(--sub);font-weight:600;margin-left:4px}
 .chip.on{background:var(--accbg);border-color:var(--acc);color:var(--acc)}.chip.on b{color:var(--acc)}
 .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}
-.card{background:var(--paper);border:2px solid var(--line);border-radius:18px;padding:16px;display:grid;gap:10px;align-content:start}
-.card h3{margin:0;font-size:21px;line-height:1.35;font-weight:900}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:16px;display:grid;gap:10px;align-content:start}
+.card h3{margin:0;font-size:21px;line-height:1.35;font-weight:700}
 .card.click{cursor:pointer;text-align:left}
 .card.click:hover{border-color:var(--acc)}
 .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;color:var(--sub);font-size:16px}
-.badge{display:inline-block;border-radius:8px;padding:2px 10px;font-weight:700;font-size:15px;background:var(--soft);color:var(--ink)}
+.badge{display:inline-block;border-radius:8px;padding:2px 10px;font-weight:600;font-size:15px;background:var(--soft);color:var(--ink)}
 .badge.acc{background:var(--accbg);color:var(--acc)}.badge.ok{background:var(--okbg);color:var(--ok)}.badge.warn{background:var(--warnbg);color:var(--warn)}
 .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .nums div{background:var(--soft);border-radius:12px;padding:8px 10px}
 .nums small{display:block;color:var(--sub);font-size:14px}
-.nums b{white-space:nowrap;font-size:20px;font-weight:900;font-variant-numeric:tabular-nums}
+.nums b{white-space:nowrap;font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
 .nums .x b{color:var(--ok)}.nums .x.no b{color:var(--sub)}
 .row{display:grid;grid-template-columns:84px 1fr;gap:8px;font-size:17px}
 .row span{color:var(--sub);font-size:15px;padding-top:2px}
 .empty{background:var(--paper);border:2px dashed var(--line);border-radius:18px;padding:36px 20px;text-align:center;color:var(--sub)}
-.note{background:var(--warnbg);color:var(--warn);border-radius:12px;padding:10px 14px;font-weight:700;margin-top:14px}
-.panel{background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:20px;margin-top:18px;display:grid;gap:16px}
-.panel h2{margin:0;font-size:24px;font-weight:900}
+.note{background:var(--warnbg);color:var(--warn);border-radius:12px;padding:10px 14px;font-weight:600;margin-top:14px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:18px;display:grid;gap:16px}
+.panel h2{margin:0;font-size:24px;font-weight:700}
 .f{display:grid;gap:6px}
-.f label{font-weight:900;font-size:17px}
+.f label{font-weight:700;font-size:17px}
 .f label small{font-weight:500;color:var(--sub);margin-left:8px}
 .cols{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
 .two{display:grid;gap:18px}
 @media(min-width:1100px){.two{grid-template-columns:1.6fr 1fr;align-items:start}}
-.title-in{font-size:24px;font-weight:900}
+.title-in{font-size:24px;font-weight:700}
 .cm{background:var(--soft);border-radius:14px;padding:10px 14px}
 .cm small{color:var(--sub);display:block;font-size:14px}
 .saved{color:var(--sub);font-size:15px}
 a.btn{text-decoration:none;color:var(--ink);display:inline-flex;align-items:center}
-.h1{font-size:26px;font-weight:900;margin:0}
+.h1{font-size:26px;font-weight:700;margin:0}
 .lay{display:grid;gap:10px}.lay>div{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:center}
 .lay>div:nth-child(2){margin-left:28px}.lay>div:nth-child(3){margin-left:56px}
-.lay i{font-style:normal;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--accbg);color:var(--acc);font-weight:900}
+.lay i{font-style:normal;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--accbg);color:var(--acc);font-weight:700}
 .lay>div:nth-child(3) i{background:var(--acc);color:var(--paper)}
 @media(max-width:800px){.lay>div:nth-child(2){margin-left:10px}.lay>div:nth-child(3){margin-left:20px}}
 .stat{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:6px 0 4px}
-.stat>div{background:var(--soft);border-radius:14px;padding:12px 14px}.stat small{display:block;color:var(--sub);font-size:14px}.stat b{font-size:26px;font-weight:900}
+.stat>div{background:var(--soft);border-radius:14px;padding:12px 14px}.stat small{display:block;color:var(--sub);font-size:14px}.stat b{font-size:26px;font-weight:700}
 .prog{height:14px;border-radius:7px;background:var(--soft);overflow:hidden;margin-top:8px}.prog i{display:block;height:100%;background:var(--ok)}
 .rowl{display:flex;gap:10px;align-items:center;justify-content:space-between;background:var(--soft);border-radius:12px;padding:10px 14px;cursor:pointer;border:0;width:100%;text-align:left;font:inherit;color:inherit;min-height:48px}
 .rowl span{color:var(--sub);font-size:15px;white-space:nowrap}
 .corner{display:grid;gap:8px;align-content:start}
 .ver{font-size:13px;color:var(--sub);font-weight:500;margin-left:6px}
 .steps{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 14px}
-.step{display:flex;align-items:center;gap:8px;background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:8px 16px 8px 8px;font-weight:700;cursor:pointer;min-height:50px}
-.step i{font-style:normal;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--soft);font-weight:900}
+.step{display:flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:8px 16px 8px 8px;font-weight:600;cursor:pointer;min-height:50px}
+.step i{font-style:normal;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--soft);font-weight:700}
 .step.done i{background:var(--okbg);color:var(--ok)}
 .step.on{border-color:var(--acc);background:var(--accbg);color:var(--acc)}.step.on i{background:var(--acc);color:var(--paper)}
 .dots{display:flex;gap:5px;align-items:center}.dots i{width:22px;height:8px;border-radius:4px;background:var(--soft)}.dots i.d{background:var(--ok)}
 .sc{display:grid;grid-template-columns:150px 1fr 1fr 1fr .7fr 58px 46px;gap:8px;align-items:start}
-.sc textarea{min-height:76px}.sch{font-size:15px;color:var(--sub);font-weight:700}
+.sc textarea{min-height:76px}.sch{font-size:15px;color:var(--sub);font-weight:600}
 @media(max-width:800px){.sc{grid-template-columns:1fr 74px 46px;border-top:1px solid var(--line);padding-top:10px}.sc textarea{grid-column:1/-1;order:3}.sch{display:none}}
 .ed3{display:grid;gap:18px}.edc{display:grid;gap:14px;align-content:start;min-width:0}.edc .panel{margin-top:0}
 @media(min-width:1200px){.ed3{grid-template-columns:minmax(280px,.9fr) minmax(0,2.5fr) minmax(270px,.85fr);align-items:start}}
-.lab{justify-self:start;background:var(--ink);color:var(--paper);border-radius:10px;padding:3px 12px;font-weight:900;font-size:16px}
-.edh{gap:12px}.edm{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.edm label{display:grid;gap:4px;font-weight:700;font-size:15px;color:var(--sub)}
-.prg{display:flex;gap:6px;flex-wrap:wrap}.prg span{background:var(--soft);border-radius:999px;padding:3px 12px;font-size:15px;color:var(--sub);font-weight:700}.prg .d{background:var(--okbg);color:var(--ok)}
+.lab{justify-self:start;background:var(--ink);color:var(--paper);border-radius:10px;padding:3px 12px;font-weight:700;font-size:16px}
+.edh{gap:12px}.edm{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.edm label{display:grid;gap:4px;font-weight:600;font-size:15px;color:var(--sub)}
+.prg{display:flex;gap:6px;flex-wrap:wrap}.prg span{background:var(--soft);border-radius:999px;padding:3px 12px;font-size:15px;color:var(--sub);font-weight:600}.prg .d{background:var(--okbg);color:var(--ok)}
 .panel.fxc{border-color:var(--acc);background:var(--accbg)}.panel h2{margin:0;font-size:21px}
 .panel.diffc{border-color:var(--warn);background:var(--warnbg)}
 .ed3 textarea{field-sizing:content;max-height:420px;width:100%;min-width:0;box-sizing:border-box}.edc .panel,.edc .panel>*,.edc .f,.edc .cols>*{min-width:0}.ed3 .sc textarea{min-height:96px}.sck{display:grid;gap:4px}.sck select{min-width:0;width:100%;padding-left:8px;padding-right:4px;font-size:15px}.sck small{color:var(--acc);font-size:14px;line-height:1.35}
-.chk{display:grid;gap:6px}.chk div{display:flex;gap:8px;align-items:center;color:var(--sub);font-size:16px}.chk i{font-style:normal;flex:0 0 24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-weight:900;font-size:14px}.chk .y{color:var(--ink)}.chk .y i{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+.chk{display:grid;gap:6px}.chk div{display:flex;gap:8px;align-items:center;color:var(--sub);font-size:16px}.chk i{font-style:normal;flex:0 0 24px;height:24px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:14px}.chk .y{color:var(--ink)}.chk .y i{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
 .shot{display:flex;gap:10px;align-items:flex-start;background:var(--soft);border-radius:12px;padding:8px 12px;cursor:pointer}.shot input{width:22px;height:22px;flex:0 0 22px;margin-top:3px}.shot small{display:block;color:var(--sub);font-size:14px}.shot input:checked+span{color:var(--sub);text-decoration:line-through}
 .cols.c2{grid-template-columns:1fr 1fr}
 .aadd{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}.aadd input{flex:1 1 220px;width:auto}
 .row.ag b{color:var(--ok)}.row.ab b{color:var(--warn)}
 .hm{display:grid;gap:18px}.hm .panel{margin-top:0}.hg2{display:grid;gap:18px}.hg3{display:grid;gap:18px}
 @media(min-width:1000px){.hg2{grid-template-columns:1.5fr 1fr;align-items:stretch}.hg3{grid-template-columns:repeat(3,1fr);align-items:stretch}}
-.panel.big{border-color:var(--acc);background:var(--accbg)}.bt{font-size:30px;font-weight:900;line-height:1.25}.bs{color:var(--sub);font-size:17px}.hs{color:var(--sub);font-size:16px;font-weight:500}
+.panel.big{border-color:var(--acc);background:var(--accbg)}.bt{font-size:30px;font-weight:700;line-height:1.25}.bs{color:var(--sub);font-size:17px}.hs{color:var(--sub);font-size:16px;font-weight:500}
 .panel h2{margin:0;font-size:21px}.kvb{text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
-.wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}.wd{background:var(--soft);border-radius:12px;padding:10px;min-height:96px;display:grid;gap:6px;align-content:start;font-size:15px;min-width:0}.wd b{font-size:16px}.wd.td{outline:3px solid var(--acc)}.wd.up{background:var(--okbg)}
-.wi{border:0;background:var(--paper);border-radius:8px;padding:6px 8px;font:inherit;font-size:15px;text-align:left;cursor:pointer;color:inherit;overflow-wrap:anywhere}.wi.up{color:var(--ok);font-weight:700}
+.wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}.wd{background:var(--soft);border-radius:12px;padding:10px;min-height:96px;display:grid;gap:6px;align-content:start;font-size:15px;min-width:0}.wd b{font-size:16px}.wd.td{outline:2px solid var(--acc)}.wd.up{background:var(--okbg)}
+.wi{border:0;background:var(--paper);border-radius:8px;padding:6px 8px;font:inherit;font-size:15px;text-align:left;cursor:pointer;color:inherit;overflow-wrap:anywhere}.wi.up{color:var(--ok);font-weight:600}
 @media(max-width:800px){.wk{grid-template-columns:1fr}.wd{min-height:0}}
-.lanes{gap:0}.lane{display:grid;grid-template-columns:220px repeat(4,minmax(0,1fr));gap:10px;padding:14px 0;border-top:2px solid var(--line)}.lane.lh{border:0;padding:0 0 8px;color:var(--sub);font-weight:800;font-size:16px}
+.lanes{gap:0}.lane{display:grid;grid-template-columns:220px repeat(4,minmax(0,1fr));gap:10px;padding:14px 0;border-top:1px solid var(--line)}.lane.lh{border:0;padding:0 0 8px;color:var(--sub);font-weight:700;font-size:16px}
 .ln{display:grid;gap:6px;align-content:start;justify-items:start}.ln b{font-size:21px}.ln small{color:var(--sub);font-size:15px}.lc{display:grid;gap:8px;align-content:start;min-width:0}
-.lcard{background:var(--soft);border-radius:12px;padding:10px 12px;display:grid;gap:4px;cursor:pointer;min-width:0}.lcard b{font-size:17px;overflow-wrap:anywhere}.lcard small{color:var(--sub);font-size:15px}.lcard .btn{justify-self:start;margin-top:4px}.lcard .lg{display:none;font-size:14px;font-weight:800;color:var(--acc)}
-.lnew{border:2px dashed var(--line);background:var(--paper);border-radius:12px;padding:10px;font:inherit;font-weight:800;color:var(--acc);cursor:pointer;min-height:48px}
+.lcard{background:var(--soft);border-radius:12px;padding:10px 12px;display:grid;gap:4px;cursor:pointer;min-width:0}.lcard b{font-size:17px;overflow-wrap:anywhere}.lcard small{color:var(--sub);font-size:15px}.lcard .btn{justify-self:start;margin-top:4px}.lcard .lg{display:none;font-size:14px;font-weight:700;color:var(--acc)}
+.lnew{border:2px dashed var(--line);background:var(--paper);border-radius:12px;padding:10px;font:inherit;font-weight:700;color:var(--acc);cursor:pointer;min-height:48px}
 @media(max-width:900px){.lane{grid-template-columns:1fr}.lane.lh{display:none}.lcard .lg{display:block}.lc:empty{display:none}}
 .svg{display:grid;gap:18px}.svm{display:grid;gap:18px;align-content:start;min-width:0}.svm .panel{margin-top:0}@media(min-width:1000px){.svg{grid-template-columns:300px minmax(0,1fr);align-items:start}}
-@media screen and (min-width:1700px){body{zoom:1.2}}details.panel{display:block}.hg2>.panel,.hg3>.panel{align-content:start}.stc{margin-top:16px!important}.stc:not([open]){padding:12px 20px}.feat span{white-space:normal}.lane.emp{padding:8px 0;align-items:center}.lane.emp .ln b{font-size:19px}.lane.emp .lnew{min-height:40px;padding:6px}@media(min-width:1100px){.hm .kg{grid-template-columns:repeat(4,minmax(0,1fr))}}.hm .kg .kv b{font-weight:600;line-height:1.5}.stc summary span.nxt{color:var(--sub);font-weight:600;font-size:16px;margin-left:8px}.stc{margin-top:0}.stg{display:grid;gap:8px;margin-top:12px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}.sti{display:flex;gap:12px;align-items:center;text-align:left;background:var(--soft);border:2px solid transparent;border-radius:14px;padding:10px 14px;cursor:pointer;font:inherit;color:inherit}.sti i{flex:none;width:34px;height:34px;border-radius:50%;background:var(--paper);border:2px solid var(--line);display:grid;place-items:center;font-style:normal;font-weight:800}.sti.d i{background:var(--okbg);color:var(--ok);border-color:var(--ok)}.sti.d b{color:var(--sub)}.sti.nx{border-color:var(--acc);background:var(--accbg)}.sti b{display:block;font-size:18px}.sti small{color:var(--sub);font-size:15px}.auto2{display:grid;gap:12px}@media(min-width:900px){.auto2{grid-template-columns:1fr 1fr}}.kvb{background:var(--soft);border-radius:14px;padding:14px 16px;display:grid;gap:8px;align-content:start;justify-items:start}.kvb b{font-size:20px}.kvb textarea{width:100%;box-sizing:border-box}.shg{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}@media(min-width:1100px){.shg{grid-template-columns:repeat(4,minmax(0,1fr))}}#grow .stat{grid-template-columns:repeat(2,minmax(0,1fr))}.shc{background:var(--soft);border-radius:14px;padding:14px;display:grid;gap:6px}.shc svg{width:100%;max-width:200px;height:auto;color:var(--acc)}.shc b{font-size:20px}.shc small{color:var(--sub);font-size:15px}.shotr{display:flex;align-items:center;gap:10px}.shotr svg{width:64px;height:36px;color:var(--acc);flex:none}ul.how{margin:0;padding-left:22px;display:grid;gap:6px;font-size:18px}.slist{gap:12px}.rowl.on{outline:3px solid var(--acc);background:var(--accbg)}.rowl span{color:var(--sub);font-size:15px;white-space:nowrap}
-.sht{font-size:30px!important;font-weight:900}.shm{display:grid;grid-template-columns:1fr 1fr;gap:10px}.shm div{background:var(--soft);border-radius:12px;padding:10px 14px}.shm small{display:block;color:var(--sub);font-size:15px}
-.shr{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;border-top:2px solid var(--line);padding-top:14px}.shk{display:grid;gap:4px;align-content:start}.shk b{font-size:20px}.shk span{color:var(--acc);font-weight:800}.shb{display:grid;gap:8px}.shl{font-size:26px;font-weight:800;line-height:1.4;white-space:pre-wrap}
+details.panel{display:block}.hg2>.panel,.hg3>.panel{align-content:start}.stc{margin-top:16px!important}.stc:not([open]){padding:12px 20px}.feat span{white-space:normal}.lane.emp{padding:8px 0;align-items:center}.lane.emp .ln b{font-size:19px}.lane.emp .lnew{min-height:40px;padding:6px}@media(min-width:1100px){.hm .kg{grid-template-columns:repeat(4,minmax(0,1fr))}}.hm .kg .kv b{font-weight:600;line-height:1.5}.stc summary span.nxt{color:var(--sub);font-weight:600;font-size:16px;margin-left:8px}.stc{margin-top:0}.stg{display:grid;gap:8px;margin-top:12px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}.sti{display:flex;gap:12px;align-items:center;text-align:left;background:var(--soft);border:2px solid transparent;border-radius:14px;padding:10px 14px;cursor:pointer;font:inherit;color:inherit}.sti i{flex:none;width:34px;height:34px;border-radius:50%;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;font-style:normal;font-weight:700}.sti.d i{background:var(--okbg);color:var(--ok);border-color:var(--ok)}.sti.d b{color:var(--sub)}.sti.nx{border-color:var(--acc);background:var(--accbg)}.sti b{display:block;font-size:18px}.sti small{color:var(--sub);font-size:15px}.auto2{display:grid;gap:12px}@media(min-width:900px){.auto2{grid-template-columns:1fr 1fr}}.kvb{background:var(--soft);border-radius:14px;padding:14px 16px;display:grid;gap:8px;align-content:start;justify-items:start}.kvb b{font-size:20px}.kvb textarea{width:100%;box-sizing:border-box}.shg{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}@media(min-width:1100px){.shg{grid-template-columns:repeat(4,minmax(0,1fr))}}#grow .stat{grid-template-columns:repeat(2,minmax(0,1fr))}.shc{background:var(--soft);border-radius:14px;padding:14px;display:grid;gap:6px}.shc svg{width:100%;max-width:200px;height:auto;color:var(--acc)}.shc b{font-size:20px}.shc small{color:var(--sub);font-size:15px}.shotr{display:flex;align-items:center;gap:10px}.shotr svg{width:64px;height:36px;color:var(--acc);flex:none}ul.how{margin:0;padding-left:22px;display:grid;gap:6px;font-size:18px}.slist{gap:12px}.rowl.on{outline:2px solid var(--acc);background:var(--accbg)}.rowl span{color:var(--sub);font-size:15px;white-space:nowrap}
+.sht{font-size:30px!important;font-weight:700}.shm{display:grid;grid-template-columns:1fr 1fr;gap:10px}.shm div{background:var(--soft);border-radius:12px;padding:10px 14px}.shm small{display:block;color:var(--sub);font-size:15px}
+.shr{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;border-top:1px solid var(--line);padding-top:14px}.shk{display:grid;gap:4px;align-content:start}.shk b{font-size:20px}.shk span{color:var(--acc);font-weight:700}.shb{display:grid;gap:8px}.shl{font-size:26px;font-weight:700;line-height:1.4;white-space:pre-wrap}
 @media(max-width:700px){.shr{grid-template-columns:1fr;gap:6px}.shl{font-size:22px}.shm{grid-template-columns:1fr}.bt{font-size:24px}}
 .how{margin:10px 0 0;padding-left:26px;display:grid;gap:8px;font-size:18px}
 .kg{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}.kg.k2{grid-template-columns:1fr 1fr}
-.kv{background:var(--soft);border:0;border-radius:14px;padding:12px 14px;text-align:left;font:inherit;color:inherit;cursor:pointer;display:grid;gap:4px;align-content:start;min-height:76px}.kv small{color:var(--sub);font-size:15px}.kv b{font-size:19px;white-space:pre-wrap;overflow-wrap:anywhere}.kv.none b{color:var(--sub);font-weight:500}.kv:hover,.kvb:hover{outline:3px solid var(--acc)}
-.hm .kg .kv{background:var(--paper);border:2px solid var(--line)}
+.kv{background:var(--soft);border:0;border-radius:14px;padding:12px 14px;text-align:left;font:inherit;color:inherit;cursor:pointer;display:grid;gap:4px;align-content:start;min-height:76px}.kv small{color:var(--sub);font-size:15px}.kv b{font-size:19px;white-space:pre-wrap;overflow-wrap:anywhere}.kv.none b{color:var(--sub);font-weight:500}.kv:hover,.kvb:hover{outline:2px solid var(--acc)}
+.hm .kg .kv{background:var(--paper);border:1px solid var(--line)}
 .subnav{margin:14px 0 0}
 @media print{header,.noprint,#msg,#toast{display:none!important}body{background:#fff}.wrap{padding:0;max-width:none}.svg{display:block}.sheet{border:0;padding:0;margin:0 0 24px;break-inside:avoid}}
 .mini{background:var(--soft);border-radius:14px;padding:12px 14px;display:grid;gap:6px}
 .calc{background:var(--soft);border-radius:14px;padding:14px 16px;display:flex;gap:18px;flex-wrap:wrap;align-items:baseline}
-.calc b{font-size:28px;font-weight:900}.calc .ok{color:var(--ok)}
-#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--bg);border-radius:14px;padding:10px 12px 10px 18px;display:none;gap:12px;align-items:center;z-index:9;font-weight:700;max-width:calc(100vw - 32px)}
-#toast button{background:var(--bg);color:var(--ink);border:0;border-radius:10px;padding:8px 14px;font-weight:900;cursor:pointer}
+.calc b{font-size:28px;font-weight:700}.calc .ok{color:var(--ok)}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--bg);border-radius:14px;padding:10px 12px 10px 18px;display:none;gap:12px;align-items:center;z-index:9;font-weight:600;max-width:calc(100vw - 32px)}
+#toast button{background:var(--bg);color:var(--ink);border:0;border-radius:10px;padding:8px 14px;font-weight:700;cursor:pointer}
 .guide{color:var(--sub);font-size:16px;margin:0}
 details{border-top:1px solid var(--line);padding-top:10px}
-summary{cursor:pointer;font-weight:700;color:var(--acc);font-size:16px;min-height:32px}
-.sec{display:flex;gap:10px;align-items:center;margin:26px 0 12px;padding-top:18px;border-top:2px solid var(--line)}
+summary{cursor:pointer;font-weight:600;color:var(--acc);font-size:16px;min-height:32px}
+.sec{display:flex;gap:10px;align-items:center;margin:26px 0 12px;padding-top:18px;border-top:1px solid var(--line)}
 .bar+.sec{border-top:0;padding-top:0;margin-top:8px}
 #login[hidden]{display:none}#login{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;padding:16px}
-.lgbox{width:100%;max-width:400px;display:grid;gap:14px}.lgbox h1{font-size:28px;margin:0 0 6px}.lgbox label{display:grid;gap:6px;font-weight:700}
-#login [hidden]{display:none!important}#lgSet{margin:0;color:var(--sub)}#lgErr{color:var(--bad);min-height:1.5em;margin:0;font-weight:700}.lgbox .btn{min-height:54px;font-size:19px}
+.lgbox{width:100%;max-width:400px;display:grid;gap:14px}.lgbox h1{font-size:28px;margin:0 0 6px}.lgbox label{display:grid;gap:6px;font-weight:600}
+#login [hidden]{display:none!important}#lgSet{margin:0;color:var(--sub)}#lgErr{color:var(--bad);min-height:1.5em;margin:0;font-weight:600}.lgbox .btn{min-height:54px;font-size:19px}
 .pdonly{display:none}body.is-pd .pdonly{display:inline-block}
 .talk{background:var(--paper);border:2px solid var(--acc);border-radius:18px;padding:16px;margin:14px 0}
 .talkh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.talkh h2{margin:0;font-size:21px}.talkh span{color:var(--sub);font-size:16px}
 .tk{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}.tq b{font-size:19px}.tq small{display:block;color:var(--sub);font-size:15px}
-.tm{border-radius:14px;padding:9px 12px;margin:8px 0 0;max-width:560px}.tm small{display:block;font-size:13px;font-weight:700}
+.tm{border-radius:14px;padding:9px 12px;margin:8px 0 0;max-width:560px}.tm small{display:block;font-size:13px;font-weight:600}
 .tm.pd{background:var(--accbg)}.tm.pd small{color:var(--acc)}.tm.cr{background:var(--warnbg)}.tm.cr small{color:var(--warn)}
 .tin,.tnew,.pnew{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.tin input,.tnew input{flex:1 1 220px}.tnew select{flex:0 1 220px}
 .btn.ok{background:var(--ok);border-color:var(--ok);color:var(--paper)}
-.tdone{margin-top:12px}.tdone summary{font-weight:700;cursor:pointer;min-height:40px}.td{border:2px solid var(--ok);border-radius:14px;padding:10px 12px;margin-top:8px}.td b{color:var(--ok)}.td small{display:block;color:var(--sub);font-size:14px}.td .btn{margin-top:6px}
-.prow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--line);padding:12px 0}.prow b{font-size:19px}.prow span{color:var(--sub)}.prow .me{color:var(--acc);font-weight:700}.prow .pnpw{flex:1 1 180px;width:auto}
+.tdone{margin-top:12px}.tdone summary{font-weight:600;cursor:pointer;min-height:40px}.td{border:2px solid var(--ok);border-radius:14px;padding:10px 12px;margin-top:8px}.td b{color:var(--ok)}.td small{display:block;color:var(--sub);font-size:14px}.td .btn{margin-top:6px}
+.prow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--line);padding:12px 0}.prow b{font-size:19px}.prow span{color:var(--sub)}.prow .me{color:var(--acc);font-weight:600}.prow .pnpw{flex:1 1 180px;width:auto}
 .pnew input{flex:1 1 160px;width:auto}.pnew select{flex:0 1 150px;width:auto}
 .who{display:flex;gap:6px}
 .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}.pgh{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.pgh h3{margin:0;font-size:22px;flex:1 1 auto}
-.pgst{display:flex;flex-wrap:wrap;gap:6px}.pgst span{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:15px;color:var(--sub)}.pgst span.on{border-color:var(--acc);color:var(--acc);font-weight:700}
+.pgst{display:flex;flex-wrap:wrap;gap:6px}.pgst span{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:15px;color:var(--sub)}.pgst span.on{border-color:var(--acc);color:var(--acc);font-weight:600}
 .pgn{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.pgn small{display:block;color:var(--sub);font-size:14px}.pgn b{font-size:20px}.pgn b.warn{color:var(--warn)}
 .prow select{flex:0 1 220px;width:auto}
-.seg{display:inline-flex;border:2px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper)}.seg button{border:0;background:none;font:inherit;font-weight:700;font-size:18px;padding:10px 18px;min-height:48px;cursor:pointer;color:var(--sub)}.seg button.on{background:var(--acc);color:var(--paper)}
-.acct{color:var(--ink);font-size:20px}.cc{font-size:17px;font-weight:700}.feat{display:flex;flex-wrap:wrap;gap:6px}.feat span{background:var(--soft);border-radius:999px;padding:4px 12px;font-size:15px}.feat span.todo{background:var(--warnbg);color:var(--warn);font-weight:700}
-.lnk{background:none;border:0;padding:0;font:inherit;font-weight:700;color:var(--acc);cursor:pointer;font-size:16px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper)}.seg button{border:0;background:none;font:inherit;font-weight:600;font-size:18px;padding:10px 18px;min-height:48px;cursor:pointer;color:var(--sub)}.seg button.on{background:var(--acc);color:var(--paper)}
+.acct{color:var(--ink);font-size:20px}.cc{font-size:17px;font-weight:600}.feat{display:flex;flex-wrap:wrap;gap:6px}.feat span{background:var(--soft);border-radius:999px;padding:4px 12px;font-size:15px}.feat span.todo{background:var(--warnbg);color:var(--warn);font-weight:600}
+.lnk{background:none;border:0;padding:0;font:inherit;font-weight:600;color:var(--acc);cursor:pointer;font-size:16px}
 .ovg{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:16px}.ovg .panel{margin:0;display:grid;gap:10px;align-content:start}.ovg h3{margin:12px 0 0;font-size:19px}
 .sum.s3{grid-template-columns:repeat(3,1fr)}
 .brow{display:grid;grid-template-columns:110px 1fr 36px;gap:10px;align-items:center;font-size:17px}.brow b{text-align:right}.brow small{grid-column:2/4;color:var(--sub);font-size:14px;margin-top:-6px}.bbar{background:var(--soft);border-radius:999px;height:14px;overflow:hidden}.bbar i{display:block;height:100%;background:var(--acc);border-radius:999px}
-.orow{display:grid;grid-template-columns:auto auto 1fr;gap:10px;align-items:baseline;text-align:left;background:var(--soft);border:0;border-radius:12px;padding:10px 12px;font:inherit;cursor:pointer}.orow span{color:var(--ok);font-weight:900}.orow small{color:var(--sub);font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.orow{display:grid;grid-template-columns:auto auto 1fr;gap:10px;align-items:baseline;text-align:left;background:var(--soft);border:0;border-radius:12px;padding:10px 12px;font:inherit;cursor:pointer}.orow span{color:var(--ok);font-weight:700}.orow small{color:var(--sub);font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:6px}.fgrid div{background:var(--soft);border-radius:12px;padding:10px 12px}.fgrid small{display:block;color:var(--sub);font-size:14px}.fgrid b{font-size:17px}.fgrid b.empty0{color:var(--sub);font-weight:400}
 @media(max-width:700px){.ovg{grid-template-columns:1fr}.seg button{padding:8px 12px;font-size:17px}.sum.s3 b{font-size:24px}}
 body.home #chSel,body.home .tabs,body.home header [data-act=addCh]{display:none!important}
-.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:6px 0 8px}.sum div{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 16px}.sum small{display:block;color:var(--sub);font-size:15px}.sum b{font-size:30px;font-weight:900}.sum b.warn{color:var(--warn)}
-.card.pg{cursor:pointer}.card.pg:hover{border-color:var(--acc)}.pgo{color:var(--acc);font-weight:700;font-size:17px}
-.plink{background:none;border:0;padding:0;font:inherit;font-size:19px;font-weight:700;color:var(--acc);text-decoration:underline;cursor:pointer;min-height:40px}
-.nowch{font-weight:900;font-size:19px}
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:6px 0 8px}.sum div{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 16px}.sum small{display:block;color:var(--sub);font-size:15px}.sum b{font-size:30px;font-weight:700}.sum b.warn{color:var(--warn)}
+.card.pg{cursor:pointer}.card.pg:hover{border-color:var(--acc)}.pgo{color:var(--acc);font-weight:600;font-size:17px}
+.plink{background:none;border:0;padding:0;font:inherit;font-size:19px;font-weight:600;color:var(--acc);text-decoration:underline;cursor:pointer;min-height:40px}
+.nowch{font-weight:700;font-size:19px}
 @media(max-width:700px){header{gap:8px;padding-top:8px;padding-bottom:8px}header .brand{font-size:19px;order:1;flex:1 1 auto}.who{order:2}.who .btn{min-height:40px;padding:4px 10px}header select{order:3;flex:1 1 0;max-width:none;min-height:42px}header [data-act=addCh]{order:4}.tabs{order:5;width:100%;margin-left:0}.tabs{flex-wrap:wrap}.tabs .btn{flex:1 0 auto;padding:8px 10px;min-height:44px;white-space:nowrap;font-size:17px}}
+/* ---- 눈이 편하게: 굵기와 선을 줄이고, 색 면을 걷어 냄 ---- */
+b,strong{font-weight:600}
+body{line-height:1.6}
+@media(min-width:1904px){.wrap,header{padding-left:calc((100vw - 1840px)/2);padding-right:calc((100vw - 1840px)/2)}}
+header{background:var(--paper);border-bottom:1px solid var(--line);padding-top:8px;padding-bottom:0;align-items:center}
+header .brand{font-size:20px;padding-bottom:8px}
+header select{font-weight:600;margin-bottom:8px}
+header>.btn,.who{margin-bottom:8px}
+.tabs{gap:2px;align-self:flex-end}
+.tabs .btn{border:0;background:none;border-radius:0;border-bottom:3px solid transparent;color:var(--sub);padding:8px 14px 10px;min-height:46px}
+.tabs .btn:hover{color:var(--ink)}
+.tabs .btn.on{background:none;color:var(--ink);border-bottom-color:var(--acc)}
+.btn{border-color:var(--line2);border-radius:10px;min-height:44px}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:var(--paper)}
+.btn.pri:hover{filter:brightness(1.08)}
+select,input,textarea{border-color:var(--line2);border-radius:10px}
+.chip{border-color:var(--line2)}
+.panel{border-radius:14px;padding:20px 22px;gap:14px}
+.panel h2{font-size:19px;line-height:1.4}
+.h1{font-size:24px}
+.bt{font-size:26px;line-height:1.3}
+.card{border-radius:14px}.card h3{font-size:19px}
+.title-in{font-size:22px}
+.f label{font-size:15px;color:var(--sub)}
+.lab{background:none;color:var(--sub);padding:0;font-size:15px}
+.panel.big{background:var(--paper);border-color:var(--line);border-left:4px solid var(--acc)}
+.panel.fxc,.panel.diffc{background:var(--paper);border-color:var(--line)}
+.talk{border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:14px}
+.kv b{font-weight:500;font-size:18px}
+.empty{border:1px dashed var(--line2);border-radius:14px}
+.stc summary b{font-size:19px}
+.sti{border-width:1px}.sti b{font-size:17px}
+details.panel:not([open]){padding:12px 22px}
+details.panel>summary{font-size:18px;color:var(--ink);min-height:0}
+.dbody{display:grid;gap:12px;margin-top:12px}
+.lnk{font-weight:600}.lnk.bad{color:var(--bad)}.lnk.sub{color:var(--sub)}
+.lnk:hover{text-decoration:underline}
+.guide{font-size:15px}
+
+/* ---- 콘텐츠: 코너마다 한 줄, 있는 편만 ---- */
+.bl{display:grid;grid-template-columns:210px minmax(0,1fr);gap:16px;padding:16px 0;border-top:1px solid var(--line);align-items:start}
+.bl:first-child{border-top:0;padding-top:0}.bl:last-child{padding-bottom:0}
+.bln{display:grid;gap:4px;justify-items:start;padding-top:6px}.bln b{font-size:18px}.bln small{color:var(--sub);font-size:14px}
+.blc{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch}
+.lcard{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:6px;cursor:pointer;min-width:0;flex:0 1 320px;align-content:start}
+.lcard:hover{border-color:var(--acc)}
+.lcard b{font-size:17px;line-height:1.4}.lcard small{color:var(--sub);font-size:14px}
+.lca{display:flex;gap:16px;flex-wrap:wrap;margin-top:2px}.lca .lnk{min-height:32px}
+.lnew{border:1px dashed var(--line2);background:none;border-radius:12px;padding:10px 18px;font:inherit;font-weight:600;font-size:16px;color:var(--acc);cursor:pointer;min-height:48px;flex:0 0 auto}
+.lnew:hover{border-color:var(--acc);background:var(--accbg)}
+@media(max-width:800px){.bl{grid-template-columns:1fr;gap:8px}.bln{display:flex;gap:8px;align-items:baseline;padding:0}.lcard{flex:1 1 100%}}
+
+/* ---- 콘텐츠 안 (기획) ---- */
+@media(min-width:1200px){.ed3{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1fr)}}
+.scp{display:grid;gap:6px}.scp>div{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px;font-size:16px}.scp span{color:var(--sub);font-size:14px;padding-top:2px}
+
+/* ---- 대본 ---- */
+.sw{display:grid;gap:18px;align-items:start}.sw .panel{margin-top:0}
+.swl{display:none}.swsel{font-weight:600}
+.swm{display:grid;gap:18px;min-width:0}.sws{display:grid;gap:14px;align-content:start;min-width:0}
+@media(min-width:900px){.sw{grid-template-columns:260px minmax(0,1fr)}.sw .sws{grid-column:2}.swl{display:grid;gap:2px;position:sticky;top:72px;max-height:calc(100vh - 92px);overflow:auto;padding:12px}.swsel{display:none}}
+@media(min-width:1300px){.sw{grid-template-columns:270px minmax(0,1fr) 330px}.sw.s2{grid-template-columns:270px minmax(0,1fr)}.sw .sws{grid-column:auto;position:sticky;top:72px}}
+.swc{font-size:14px;font-weight:600;color:var(--sub);padding:10px 2px 2px 8px;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:40px}.swc:first-child{padding-top:0}.swc span{min-width:0;overflow-wrap:anywhere}
+.swi{display:grid;gap:1px;text-align:left;border:0;background:none;border-radius:10px;padding:8px 10px;font:inherit;color:inherit;cursor:pointer;width:100%}
+.swi:hover{background:var(--soft)}.swi.on{background:var(--accbg)}
+.swi b{font-weight:500;font-size:16px;line-height:1.4}.swi.on b{font-weight:600;color:var(--acc)}
+.swi small{font-size:14px;color:var(--sub)}.swi small.y{color:var(--ok)}
+.swn{flex:none;border:0;background:none;padding:4px 8px;font:inherit;font-size:14px;font-weight:600;color:var(--acc);cursor:pointer;border-radius:8px;min-height:32px;white-space:nowrap}
+.swn:hover{background:var(--accbg)}
+.swall{text-align:left;border:0;border-top:1px solid var(--line);background:none;margin-top:10px;padding:12px 10px 4px;font:inherit;font-size:15px;font-weight:600;color:var(--sub);cursor:pointer}.swall:hover,.swall.on{color:var(--acc)}
+.sheet{gap:0;padding:26px 30px}
+.sth{display:grid;gap:4px;margin-bottom:14px;justify-items:start}
+.sht{font-size:26px!important;font-weight:700;line-height:1.3;margin:0}
+.sset{display:grid;gap:6px;background:var(--soft);border-radius:12px;padding:12px 16px;margin:12px 0 0}
+.dnote{background:var(--soft);border-radius:10px;padding:10px 14px;font-size:16px;color:var(--sub);margin:10px 0 0}
+.dnote.warn{background:var(--warnbg);color:var(--warn)}
+.sheet>.hs{margin-top:8px}
+.scn{display:grid;grid-template-columns:150px minmax(0,1fr) 124px;gap:20px;border-top:1px solid var(--line);padding:18px 0;margin-top:0}
+.sheet>.scn:first-of-type,#scs>.scn:first-child{margin-top:16px}
+.sheet>.scn:last-child{padding-bottom:0}
+.scl{display:grid;gap:3px;align-content:start;justify-items:start}
+.scl i{font-style:normal;font-size:14px;color:var(--sub);font-weight:600}
+.scl b{font-size:17px}.scl>span{font-size:15px;color:var(--sub)}
+.scsh{display:grid;gap:2px;align-content:start;justify-items:center;text-align:center;color:var(--sub)}.scsh svg{width:96px;height:54px;color:var(--acc);opacity:.8}.scsh small{font-size:14px}
+.scn.ed{grid-template-columns:170px minmax(0,1fr)}
+.scb{display:grid;gap:8px;align-content:start;min-width:0}
+.scn.ex .scb{border-left:3px solid var(--warn);padding-left:14px;margin-left:-17px}
+.srow{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;font-size:17px;align-items:baseline}
+.srow>span{font-size:14px;color:var(--sub);font-weight:600}
+.srow.why{color:var(--sub);font-size:16px}
+.sline{font-size:21px;font-weight:600;line-height:1.5}
+.extag{justify-self:start;background:var(--warnbg);color:var(--warn);border-radius:6px;padding:2px 10px;font-size:14px;font-weight:600}
+.extag.need{outline:1px solid var(--warn)}
+.scn.ed .scl{gap:8px;justify-items:stretch}
+.scn.ed .scl input,.scn.ed .scl select{min-height:42px;padding:6px 10px;font-size:16px}
+.secin{display:flex;align-items:center;gap:6px}.secin input{width:72px}.secin span{color:var(--sub);font-size:15px}
+.sce label{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;align-items:start;font-size:14px;color:var(--sub);font-weight:600;line-height:42px}
+.sce label>textarea,.sce label>input{font-size:18px;font-weight:400;color:var(--ink);line-height:1.6}
+.sce textarea{min-height:48px;field-sizing:content;max-height:300px}
+.scf{margin:16px 0 0;padding-top:14px;border-top:1px solid var(--line)}
+.mk{gap:16px;padding:26px 30px}
+.mk label{display:grid;gap:6px;font-weight:600;font-size:17px}
+.mk label small{font-weight:400;color:var(--sub);font-size:15px}
+.mk label textarea{min-height:60px;field-sizing:content;max-height:260px;font-weight:400}
+.mk label input,.mk label select{font-weight:400}
+.mk #mkTitle{font-size:20px;font-weight:600}
+.mkq{display:grid;gap:14px;border-top:1px solid var(--line);padding-top:16px}
+.mkgo{min-height:56px;font-size:19px;padding:10px 28px}
+.psy{font-size:17px;line-height:1.7}
+
+/* ---- 찍는 법 ---- */
+.hw{display:grid;gap:18px;align-items:start}.hw .panel{margin-top:0}
+.hwn{display:flex;gap:4px;overflow-x:auto;padding:8px}.hwn .swi{width:auto;white-space:nowrap;flex:none}
+.hwm{display:grid;gap:18px;min-width:0}
+@media(min-width:900px){.hw{grid-template-columns:240px minmax(0,1fr)}.hwn{display:grid;gap:2px;position:sticky;top:72px;padding:12px}.hwn .swi{width:100%;white-space:normal}}
+.hsteps{display:grid;gap:14px}.hsteps>div{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start}
+.hsteps i{font-style:normal;width:32px;height:32px;border-radius:50%;background:var(--accbg);color:var(--acc);display:grid;place-items:center;font-weight:600;font-size:16px}
+.hsteps b{display:block;font-size:18px}.hsteps span{color:var(--sub);font-size:16px}
+.fmr{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;border-top:1px solid var(--line);padding-top:12px}.fmr>b{font-size:17px}.fmr>div{display:grid;gap:4px}
+ol.how{margin:0;padding-left:26px;display:grid;gap:8px;font-size:18px}
+.shc{background:none;border:1px solid var(--line)}.shc b{font-size:18px}.shc svg{width:160px;height:90px;display:block}
+
+@media(max-width:700px){.tabs .btn{padding:8px 10px;font-size:16px;flex:1 0 auto}.fmr{grid-template-columns:1fr}.scn,.scn.ed{grid-template-columns:1fr;gap:8px}.scl{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}.scsh{display:block;text-align:left}.scsh svg{display:none}.scsh small:before{content:"구도  "}.sheet,.mk{padding:18px 16px}.sline{font-size:19px}.panel{padding:16px}.mkgo{width:100%}}
+@media print{.sw,.hw{display:block}.swl,.sws,.swsel{display:none!important}.scn{break-inside:avoid}.sheet{padding:0}.scn.ex .scb{border:0;padding:0;margin-left:0}.extag{display:none}}
+
+/* 다듬기 */
+.panel>.badge{justify-self:start}
+.lnew{align-self:center}
+.wd{background:none;border:1px solid var(--line);min-height:64px}.wd.td{outline:0;border-color:var(--acc);background:var(--accbg)}.wd.up{background:var(--okbg);border-color:transparent}
+
+.scx{justify-self:start;font-size:15px}.scx:hover{color:var(--bad)}
+[data-act=cmAdd]{justify-self:end}
+.sws textarea{field-sizing:content;min-height:48px;width:100%;box-sizing:border-box}
+@media(max-width:899px){.scn.ex .scb{margin-left:0}}
+
+@media screen and (min-width:2300px){body{zoom:1.2}.wrap,header{padding-left:calc((100vw/1.2 - 1840px)/2);padding-right:calc((100vw/1.2 - 1840px)/2)}}
 </style>
 
 <header>
@@ -175,6 +311,7 @@ body.home #chSel,body.home .tabs,body.home header [data-act=addCh]{display:none!
     <button class="btn" data-tab="home">오늘</button>
     <button class="btn" data-tab="board">콘텐츠</button>
     <button class="btn" data-tab="script">대본</button>
+    <button class="btn" data-tab="how">찍는 법</button>
     <button class="btn" data-tab="concept">크리에이터</button>
     <button class="btn" data-tab="refs">레퍼런스·분석</button>
   </div>
@@ -188,9 +325,9 @@ body.home #chSel,body.home .tabs,body.home header [data-act=addCh]{display:none!
 (function(){
 var STAGES=['방향성','채널명','기획','대본','영상작업','편집','분석','보완'];
 var FORMS=['썰','정보 정리','브이로그','검증','개그','기타'];
-var S={accts:[],asks:[],tpls:[],sm:'s',fxEdit:false,rchs:[],rv:'ch',rc:null,rcEdit:null,talks:[],role:'',ch:null,sec:-1,sv:null,tab:'home',stage:'all',open:null,refEdit:null,pass:false,form:'all',q:'',channels:[],refs:[],items:[],comments:[],concepts:[],group:true,step:0,undo:null,me:null,names:{},loaded:{},ro:false,addCh:false,del:false};
+var S={accts:[],asks:[],tpls:[],sid:null,smode:'',sed:false,swhy:false,hs:0,fxEdit:false,rchs:[],rv:'ch',rc:null,rcEdit:null,talks:[],role:'',ch:null,sec:-1,sv:null,tab:'home',stage:'all',open:null,refEdit:null,pass:false,form:'all',q:'',channels:[],refs:[],items:[],comments:[],concepts:[],group:true,step:0,undo:null,me:null,names:{},loaded:{},ro:false,addCh:false,del:false};
 var db=null,user=null,app=document.getElementById('app'),msg=document.getElementById('msg');
-try{var t=sessionStorage.getItem('ws-tab');if(t&&/^(home|board|script|concept|refs|acct|people)$/.test(t))S.tab=t;S.ch=localStorage.getItem('ws-ch')||null}catch(e){}
+try{var t=sessionStorage.getItem('ws-tab');if(t&&/^(home|board|script|how|concept|refs|acct|people)$/.test(t))S.tab=t;S.ch=localStorage.getItem('ws-ch')||null}catch(e){}
 
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function num(v){if(typeof v==='number')return v;var s=String(v||'').replace(/[, ]/g,'');if(!s)return 0;var m=parseFloat(s);if(isNaN(m))return 0;if(/만/.test(s))m*=10000;else if(/천/.test(s))m*=1000;else if(/k$/i.test(s))m*=1000;return Math.round(m)}
@@ -246,12 +383,14 @@ function render(soft){
   if(!S.channels.length){app.innerHTML=S.role==='pd'?'<div class="empty" style="margin-top:24px">아직 크리에이터가 없습니다.<br><br><button class="btn pri" data-act="addCh">첫 크리에이터 만들기</button></div>':'<div class="empty" style="margin-top:24px">아직 이 계정에 연결된 크리에이터가 없습니다.<br>관리자에게 연결해 달라고 말해 주세요.</div>';return}
   if(S.open){var it=S.items.filter(function(i){return i.id===S.open})[0];if(it){app.innerHTML=editor(it);return}S.open=null}
   if(S.refEdit){app.innerHTML=refForm();return}
-  app.innerHTML=S.tab==='people'?peopleHtml():S.tab==='refs'?subNav()+refs():S.tab==='acct'?subNav()+accts():S.tab==='concept'?concept():S.tab==='script'?scripts():S.tab==='board'?board():home();
+  var sl0=app.querySelector('.swl'),st0=sl0?sl0.scrollTop:0;
+  app.innerHTML=S.tab==='people'?peopleHtml():S.tab==='refs'?subNav()+refs():S.tab==='acct'?subNav()+accts():S.tab==='concept'?concept():S.tab==='script'?scripts():S.tab==='how'?howPage():S.tab==='board'?board():home();
+  var sl1=app.querySelector('.swl');if(sl1){sl1.scrollTop=st0;var on1=sl1.querySelector('.swi.on');if(on1&&(on1.offsetTop<sl1.scrollTop||on1.offsetTop+on1.offsetHeight>sl1.scrollTop+sl1.clientHeight))sl1.scrollTop=Math.max(0,on1.offsetTop-60)}
 }
 /* 입력 중일 때는 화면을 다시 그리지 않고, 상대가 바꾼 다른 칸만 맞춘다 */
 function softSync(){
   if(S.tab==='concept'&&!S.open){var c=curConcept();[].forEach.call(app.querySelectorAll('[data-c]'),function(el){if(el!==document.activeElement&&!el.dataset.dirty){var v=c[el.dataset.c]==null?'':String(c[el.dataset.c]);if(el.value!==v)el.value=v}});var g=document.getElementById('grow');if(g)g.innerHTML=growStats(c);return}
-  if(S.open){var it=S.items.filter(function(i){return i.id===S.open})[0];if(!it)return;
+  var sid=eid();if(sid){var it=itemBy(sid);if(!it)return;
     [].forEach.call(app.querySelectorAll('[data-f]'),function(el){if(el!==document.activeElement&&!el.dataset.dirty){var v=it[el.dataset.f]==null?'':String(it[el.dataset.f]);if(el.dataset.f==='stage')v=GSTAGE[grp(v)];if(el.value!==v)el.value=v}});
     var sc=it.scenes||[];[].forEach.call(app.querySelectorAll('[data-sc]'),function(el){if(el!==document.activeElement&&!sceneDirty){var a=el.dataset.sc.split(':'),r=sc[+a[0]];if(r){var v=r[a[1]]==null?'':String(r[a[1]]);if(el.value!==v)el.value=v}}});
     var k=document.getElementById('calc');if(k)k.innerHTML=calc(it);
@@ -267,7 +406,7 @@ function epName(i,ep){return (ep[i.id]?ep[i.id]+'편 · ':'')+(i.title||'제목 
 function scFilled(i){return (i.scenes||[]).filter(function(x){return (x.line||x.sub||x.screen||'').trim()})}
 function nextAct(i){var d=stepDone(i),g=grp(i.stage);
   if(g===0)return !d[0]?'레퍼런스 고르기':!d[1]?'기획 적기':'대본으로 넘기기';
-  if(g===1){var n=scFilled(i).length;return n?'대본 '+(i.scenes||[]).length+'줄 중 '+n+'줄':'대본 쓰기'}
+  if(g===1){var n=scSum(i);return n?'대본 '+n:'대본 만들기'}
   if(g===2){var l=(i.scenes||[]).filter(function(x){return (x.screen||'').trim()}),dn=(i.shotDone||[]).length;return l.length?'촬영 '+l.length+'컷 중 '+Math.min(dn,l.length)+'컷':'촬영 준비'}
   return num(i.views)?'조회 '+fmt(num(i.views))+(i.lesson?' · 배운 점 적음':' · 배운 점 적기'):(i.url||i.posted?'성과 적기':'올리기')}
 function allCorners(items){var cs=corners().slice();items.forEach(function(i){if(i.corner&&cs.indexOf(i.corner)<0)cs.push(i.corner)});return cs}
@@ -280,12 +419,12 @@ function nowItem(items){
   return c.sort(function(a,b){return (b.title?1:0)-(a.title?1:0)||pr[grp(b.stage)]-pr[grp(a.stage)]||(b.updatedAt||b.at||0)-(a.updatedAt||a.at||0)})[0];
 }
 function home(){
-  var items=chItems(),ep=epMap(items),c=curConcept(),it=nowItem(items),h='<div class="hm">'+startCard(items,c);
+  var items=chItems(),ep=epMap(items),c=curConcept(),it=nowItem(items),h='<div class="hm">';
   /* 지금 할 일 */
   h+='<div class="hg2"><div class="panel big"><span class="badge acc">지금 할 일</span>';
   if(it){var f=fxOf(it.corner),fx=f[f.length-1];
-    h+='<div class="bt">'+esc((it.corner?it.corner+' ':'')+(ep[it.id]?ep[it.id]+'편':(it.title||'제목 없음')))+' · '+GDO[grp(it.stage)]+'</div><div class="bs">'+(it.corner&&ep[it.id]&&it.title?esc(it.title)+' · ':'')+esc(nextAct(it))+(fx&&fx.hook?'<br>이 코너의 첫 3초: '+esc(fx.hook):'')+'</div><div class="bar" style="margin:0"><button class="btn pri" data-open="'+esc(it.id)+'">이어서 하기</button><button class="btn" data-tab="board">다른 편 고르기</button><button class="btn" data-act="svOpen" data-id="'+esc(it.id)+'">대본 보기</button></div>';
-  }else h+='<div class="bt">첫 콘텐츠를 만들 차례입니다</div><div class="bs">코너를 고르고 1편부터 시작합니다.</div><div class="bar" style="margin:0">'+(S.ro?'':'<button class="btn pri" data-act="newItem">새 콘텐츠</button>')+'<button class="btn" data-tab="concept">크리에이터 먼저 정하기</button></div>';
+    h+='<div class="bt">'+esc((it.corner?it.corner+' ':'')+(ep[it.id]?ep[it.id]+'편':(it.title||'제목 없음')))+' · '+GDO[grp(it.stage)]+'</div><div class="bs">'+(it.corner&&ep[it.id]&&it.title?esc(it.title)+' · ':'')+esc(nextAct(it))+(fx&&fx.hook?'<br>이 코너의 첫 3초: '+esc(fx.hook):'')+'</div><div class="bar" style="margin:0">'+(scFilled(it).length?'<button class="btn pri" data-open="'+esc(it.id)+'">이어서 하기</button><button class="btn" data-act="svOpen" data-id="'+esc(it.id)+'">대본 보기</button>':'<button class="btn pri" data-act="svOpen" data-id="'+esc(it.id)+'">'+(draftOf(it)?'써 둔 대본 보기':'대본 만들기')+'</button><button class="btn" data-open="'+esc(it.id)+'">기획 열기</button>')+'<button class="btn" data-tab="board">다른 편 고르기</button></div>';
+  }else h+='<div class="bt">첫 콘텐츠를 만들 차례입니다</div><div class="bs">코너를 고르고 1편부터 시작합니다.</div><div class="bar" style="margin:0">'+(S.ro?'':'<button class="btn pri" data-act="newItem" data-to="script">새 콘텐츠</button>')+'<button class="btn" data-tab="concept">크리에이터 먼저 정하기</button></div>';
   h+='</div>';
   /* 같이 정할 것 */
   var ts=(S.talks||[]).filter(function(t){return t.ch===S.ch&&!t.decided}).sort(function(a,b){return (b.at||0)-(a.at||0)});
@@ -295,7 +434,7 @@ function home(){
     var mine=l&&l.by===S.me,tg=!l?'<span class="badge">의견 없음</span>':mine?'<span class="badge">답 기다림</span>':'<span class="badge acc">내가 답할 차례</span>';
     h+='<button class="rowl" data-act="goTalk" data-scope="'+esc(t.scope||'')+'"><b>'+esc(t.q)+'</b>'+tg+'</button>'});
   if(ts.length>5)h+='<div style="color:var(--sub)">외 '+(ts.length-5)+'개</div>';
-  h+='</div></div>';
+  h+='</div></div>'+startCard(items,c);
   /* 이번 주 */
   var now=new Date(),mon=new Date(now.getFullYear(),now.getMonth(),now.getDate()-((now.getDay()+6)%7)),td=ymd(now),goal=parseInt(String(c.freq||'').replace(/[^0-9]/g,''),10)||0,up=0,days='';
   ['월','화','수','목','금','토','일'].forEach(function(n,k){var d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+k),s=ymd(d),x='',posted=false;
@@ -320,87 +459,139 @@ function startCard(items,c){
     ['내 인스타 아이디 올리기','올리면 잘된 점과 아쉬운 점을 분석해 드립니다',mine,'data-sub="acct"'],
     ['참고할 채널 3곳 모으기','직접 넣거나 "찾아 달라"고 요청합니다 (지금 '+rc+'곳)',rc>=3,'data-sub="refs"'],
     ['코너 정하기','이어서 올릴 묶음을 2~3개 정합니다',corners().length>0,'data-sec="2" data-go="concept"'],
-    ['첫 콘텐츠 만들기','코너에서 "+ 1편"을 누릅니다',items.some(function(i){return i.title}),'data-tab="board"'],
-    ['대본 만들기','"바로 틀 만들기"로 시작합니다',items.some(function(i){return scFilled(i).length>0}),'data-tab="script"'],
-    ['찍고 편집하기','구도와 찍는 순서를 보고 따라 합니다',items.some(function(i){return grp(i.stage)>=2}),'data-act="sm" data-v="g" data-go="1"'],
+    ['첫 콘텐츠 만들기','코너에서 "＋ 1편 만들기"를 누릅니다',items.some(function(i){return i.title}),'data-tab="board"'],
+    ['대본 만들기','대본 탭에서 버튼 한 번이면 나옵니다',items.some(function(i){return scFilled(i).length>0}),'data-tab="script"'],
+    ['찍고 편집하기','"찍는 법"을 보고 따라 합니다',items.some(function(i){return grp(i.stage)>=2}),'data-tab="how"'],
     ['올리고 성과 적기','7일 뒤 숫자와 배운 점을 적습니다',items.some(function(i){return i.posted&&num(i.views)}),'data-tab="board"']];
   var dn=st.filter(function(x){return x[2]}).length;if(dn===st.length)return '';var nx=-1;st.forEach(function(x,i){if(nx<0&&!x[2])nx=i});
-  return '<details class="panel stc"'+(dn<7?' open':'')+'><summary><b style="font-size:22px">처음이라면 이 순서로</b> <span class="badge '+(dn?'ok':'')+'">'+dn+' / '+st.length+'</span><span class="nxt">다음: '+st[nx][0]+'</span></summary><div class="stg">'+st.map(function(x,i){return '<button class="sti'+(x[2]?' d':'')+(i===nx?' nx':'')+'" '+x[3]+'><i>'+(x[2]?'✓':(i+1))+'</i><span><b>'+x[0]+'</b><small>'+x[1]+'</small></span></button>'}).join('')+'</div></details>';
+  return '<details class="panel stc"'+(dn<5?' open':'')+'><summary><b>처음이라면 이 순서로</b> <span class="badge '+(dn?'ok':'')+'">'+dn+' / '+st.length+'</span><span class="nxt">다음: '+st[nx][0]+'</span></summary><div class="stg">'+st.map(function(x,i){return '<button class="sti'+(x[2]?' d':'')+(i===nx?' nx':'')+'" '+x[3]+'><i>'+(x[2]?'✓':(i+1))+'</i><span><b>'+x[0]+'</b><small>'+x[1]+'</small></span></button>'}).join('')+'</div></details>';
 }
 function findPanel(){
   if(S.ro)return '';var fs=S.asks.filter(function(a){return a.ch===S.ch&&a.kind==='find'}).sort(function(a,b){return (b.at||0)-(a.at||0)}),c=curConcept();
-  return '<details class="panel"'+(fs.some(function(a){return a.status!=='done'})||S.rchs.filter(function(r){return r.ch===S.ch}).length<3?' open':'')+'><summary><b style="font-size:20px">참고할 채널을 새로 찾아 달라고 요청</b></summary><div class="hs" style="margin-top:8px">팔로워보다 평균 조회가 10배 넘는 곳을 먼저 찾습니다. Claude가 켜져 있을 때 찾아서 이 목록에 넣습니다 (매일 오후 2시쯤).</div>'+
+  return '<details class="panel"'+(fs.some(function(a){return a.status!=='done'})||S.rchs.filter(function(r){return r.ch===S.ch}).length<3?' open':'')+'><summary>참고할 채널을 새로 찾아 달라고 요청</summary><div class="hs" style="margin-top:8px">팔로워보다 평균 조회가 10배 넘는 곳을 먼저 찾습니다. Claude가 켜져 있을 때 찾아서 이 목록에 넣습니다 (매일 오후 2시쯤).</div>'+
     '<textarea id="fdIn" placeholder="어떤 채널을 찾을까요? 예: 얼굴 없이 손만 나오는 임신 준비 계정, 팔로워 1천 명 아래" style="min-height:64px">'+'</textarea><button class="btn pri" style="justify-self:start" data-act="fdAsk">찾아 달라고 요청</button>'+(c.l3||c.one?'<div class="hs">비워 두면 이 크리에이터의 자리("'+esc(c.l3||c.one)+'")에 맞춰 찾습니다.</div>':'')+
     fs.slice(0,5).map(function(a){var r=a.res||{};return '<div class="cm"><small>'+day(a.at)+' 요청</small><b>'+esc(a.text||'이 크리에이터에 맞는 채널')+'</b><br>'+(a.status==='done'?esc(r.a||'찾아서 넣었습니다.'):'<span style="color:var(--warn)">기다리는 중입니다.</span>')+'</div>'}).join('')+'</details>';
 }
-/* ---------- 콘텐츠: 코너마다 한 줄 ---------- */
-function lcard(i,ep){var g=grp(i.stage);
-  return '<div class="lcard click" data-open="'+esc(i.id)+'" tabindex="0" role="button"><span class="lg">'+GROUPS[g]+'</span><b>'+esc(epName(i,ep))+'</b><small>'+esc(nextAct(i))+(i.due?' · 촬영 '+esc(i.due.slice(5).replace('-','/')):'')+'</small>'+(g<3&&!S.ro?'<button class="btn sm" data-next="'+esc(i.id)+'" title="다음 단계로 넘기기">다음: '+GROUPS[g+1]+'</button>':'')+'</div>'}
+/* ---------- 콘텐츠: 코너마다 한 줄, 있는 편만 보인다 ---------- */
+function lcard(i,ep){var g=grp(i.stage),n=scFilled(i).length,dr=!n&&draftOf(i);
+  return '<div class="lcard" data-open="'+esc(i.id)+'" tabindex="0" role="button"><div class="meta"><span class="badge'+(g===3?' ok':g>0?' acc':'')+'">'+GROUPS[g]+'</span>'+(i.due?'<span>촬영 '+esc(i.due.slice(5).replace('-','/'))+'</span>':'')+'</div><b>'+esc(epName(i,ep))+'</b><small>'+esc(nextAct(i))+'</small><div class="lca"><button class="lnk" data-act="svOpen" data-id="'+esc(i.id)+'">'+(n?'대본 보기':dr?'써 둔 대본 보기':'대본 만들기')+'</button>'+(g<3&&!S.ro?'<button class="lnk sub" data-next="'+esc(i.id)+'" title="'+GROUPS[g+1]+' 단계로 넘깁니다">다음 단계로</button>':'')+'</div></div>'}
 function board(){
   var items=chItems(),ep=epMap(items),cs=allCorners(items),left=items.filter(function(i){return !i.corner});
-  var h='<div class="bar"><h2 class="h1">콘텐츠</h2><span class="hs">코너마다 한 줄. 1편, 2편으로 쌓습니다.</span><span class="sp"></span>'+(S.ro?'':'<button class="btn" data-sec="2" data-go="concept">코너 추가·고치기</button>')+'</div>';
-  if(!cs.length&&!left.length)return h+'<div class="empty">아직 코너와 콘텐츠가 없습니다.<br><br>'+(S.ro?'':'<button class="btn pri" data-sec="2" data-go="concept">코너부터 정하기</button> <button class="btn" data-act="newItem">코너 없이 새 콘텐츠</button>')+'</div>';
-  h+='<div class="panel lanes" style="margin-top:0"><div class="lane lh"><div>코너</div>'+GROUPS.map(function(g){return '<div>'+g+'</div>'}).join('')+'</div>';
+  var h='<div class="bar"><h2 class="h1">콘텐츠</h2><span class="hs">코너마다 1편, 2편으로 쌓습니다. 카드를 누르면 기획이 열립니다.</span><span class="sp"></span>'+(S.ro?'':'<button class="btn" data-sec="2" data-go="concept">코너 추가·고치기</button>')+'</div>';
+  if(!cs.length&&!left.length)return h+'<div class="empty">아직 코너와 콘텐츠가 없습니다.<br><br>'+(S.ro?'':'<button class="btn pri" data-sec="2" data-go="concept">코너부터 정하기</button> <button class="btn" data-act="newItem" data-to="script">코너 없이 새 콘텐츠</button>')+'</div>';
+  h+='<div class="panel" style="margin-top:0;gap:0">';
   var lane=function(cn,list){
-    var ms=list.map(im).filter(Boolean),m=med(ms),f=fxOf(cn),fx=f[f.length-1];
-    var s='<div class="lane'+(list.length?'':' emp')+'"><div class="ln"><b>'+esc(cn||'코너 없음')+'</b>'+(ms.length?'<span class="badge '+(m>=10?'ok':'')+'">팔로워의 '+m+'배 · '+ms.length+'편</span>':'')+(cn?(fx&&fx.hook?'<small>틀: '+esc(fx.hook)+'</small>':''):'<small>콘텐츠를 열어 코너를 골라 주세요</small>')+'</div>';
-    for(var g=0;g<4;g++){s+='<div class="lc">'+list.filter(function(i){return grp(i.stage)===g}).sort(byOrder).map(function(i){return lcard(i,ep)}).join('')+(g===0&&!S.ro?'<button class="lnew" data-act="newItem" data-corner="'+esc(cn)+'">＋ '+(cn?(list.length+1)+'편':'새 콘텐츠')+'</button>':'')+'</div>'}
-    return s+'</div>'};
+    var ms=list.map(im).filter(Boolean),m=med(ms);list=list.slice().sort(byOrder);
+    return '<div class="bl"><div class="bln"><b>'+esc(cn||'코너 없음')+'</b><small>'+(list.length?list.length+'편':'아직 없음')+'</small>'+(ms.length?'<span class="badge '+(m>=10?'ok':'')+'">팔로워의 '+m+'배</span>':'')+'</div><div class="blc">'+list.map(function(i){return lcard(i,ep)}).join('')+(S.ro?'':'<button class="lnew" data-act="newItem" data-corner="'+esc(cn)+'" data-to="script">＋ '+(cn?(list.length+1)+'편 만들기':'새 콘텐츠')+'</button>')+'</div></div>'};
   cs.forEach(function(cn){h+=lane(cn,items.filter(function(i){return i.corner===cn}))});
   if(left.length||!cs.length)h+=lane('',left);
   return h+'</div>';
 }
 
-/* ---------- 대본 ---------- */
+/* ---------- 대본: 편을 고르고 버튼 한 번으로 만든다 ---------- */
 var SUBG={'썰':{sub:'말하는 문장을 한 줄씩, 화면 아래쪽 가운데. 나이와 숫자만 색을 다르게',sfx:'장면이 바뀔 때만 짧게 한 번',bgm:'잔잔한 곡을 작게. 말소리가 먼저 들리게'},
-  '정보 정리':{sub:'번호(1, 2, 3)를 크게. 한 화면에 한 가지만',sfx:'번호가 뜰 때 한 번',bgm:'밝고 박자가 일정한 곡'},
+  '정보 정리':{sub:'번호(1, 2, 3)를 크게. 한 화면에 한 가지만',sfx:'번호가 뜰 때 한 번',bgm:'밝고 박자가 일정한 곡을 작게'},
   '브이로그':{sub:'말투가 살아 있는 짧은 자막. 첫 화면에 날짜나 "n일차"',sfx:'따르는 소리, 써는 소리처럼 현장 소리 살리기',bgm:'가사 없는 잔잔한 곡'},
-  '검증':{sub:'첫 화면에 질문을 크게. 끝에 답을 O, X로',sfx:'답이 나오는 순간 한 번',bgm:'궁금하게 만드는 곡을 작게'},
-  '개그':{sub:'진지한 자막 + 반대되는 웃긴 장면. 자막은 짧게',sfx:'지거나 넘어지는 순간 한 번',bgm:'유행하는 소리가 있으면 그것'}};
+  '검증':{sub:'첫 화면에 질문을 크게. 끝에 답을 크게',sfx:'답이 나오는 순간 한 번',bgm:'궁금하게 만드는 곡을 작게'},
+  '개그':{sub:'말 없이 자막만. 진지한 자막에 반대되는 장면',sfx:'반전이 나오는 순간 한 번',bgm:'유행하는 소리가 있으면 그것'}};
 var PARTG=[['첫 3초','영상이 시작하자마자 떠 있게. 제목처럼 크게 한 줄, 15자 안쪽. 말과 같은 문장으로'],['가운데','말하는 대로 한 줄씩 바뀌게. 한 줄 12~16자. 중요한 낱말 하나만 색을 다르게'],['마무리','부탁하는 말(저장, 댓글, 다음 편)을 크게. 2초 넘게 멈춰서 보여 주기']];
-var SHOW=['코너 틀과 지난 편에서 배운 점을 먼저 봅니다.','"바로 틀 만들기"를 누르거나 Claude에게 맞춤 대본을 요청합니다.','괄호 ( ) 안을 내 말로 바꿉니다. 장면마다 구도, 촬영, 말, 자막을 한 줄에 같이.','가운데는 컷을 1~2초로 짧게. 한 줄에 한 장면.','끝에는 저장, 댓글, 다음 편 중 하나를 부탁합니다.','효과음은 꼭 필요한 곳만, 배경음악은 한 곡으로 정합니다.','촬영 목록대로 찍고 체크합니다.','올리고 7일 뒤 숫자와 배운 점을 적습니다. 다음 편에 미리 뜹니다.'];
-function subTips(it){
-  var fm=cForm(it.corner),g=SUBG[fm],h='',tp=tplFor(it).t;
-  if(tp&&tp.psych)h+='<div class="guide"><b>사람들이 이 형식을 보는 이유</b><br>'+esc(tp.psych)+'</div>';
-  if(g)h+='<div class="row"><span>자막</span><div><b>'+g.sub+'</b></div></div><div class="row"><span>효과음</span><div>'+g.sfx+'</div></div><div class="row"><span>배경음악</span><div>'+g.bgm+'</div></div>';
-  else h+='<div style="color:var(--sub)">코너를 고르면 그 형식에 맞는 자막, 효과음, 배경음악 쓰는 법이 뜹니다.</div>';
-  h+='<div class="f"><label>장면마다 자막 넣는 법</label>'+PARTG.map(function(x){return '<div class="row"><span>'+x[0]+'</span><div>'+x[1]+'</div></div>'}).join('')+'</div>';
-  var ex=S.rchs.filter(function(r){return r.ch===S.ch&&/자막/.test(r.tone||'')&&mult(r)>=5}).sort(function(a,b){return mult(b)-mult(a)}).slice(0,3);
-  if(ex.length)h+='<div class="f"><label>잘되는 곳의 자막<small>조사한 계정</small></label>'+ex.map(function(r){return '<div class="cm"><small>@'+esc(r.account)+' · 팔로워의 '+mult(r)+'배</small>'+esc(r.tone)+'</div>'}).join('')+'</div>';
-  return h+'<div class="guide">추천은 조사한 계정에서 뽑은 것입니다. 우리 영상 성과가 쌓이면 그쪽을 먼저 따릅니다.</div>';
-}
+var SHOW=[['대본을 만듭니다','대본 탭에서 편을 고르고 "대본 만들기"를 누릅니다. 장면, 말, 자막, 화면, 구도가 한 번에 나옵니다.'],['내 말로 바꿉니다','노란 표시가 붙은 곳은 예시 문장입니다. "고치기"를 눌러 내 말로 바꿉니다.'],['찍습니다','대본의 "화면"에 적힌 대로 찍습니다. 말 한 문장이 컷 하나입니다. 같은 자리끼리 묶어서 찍으면 빨리 끝납니다.'],['목소리를 녹음합니다','대본의 "말"을 한 문장씩 끊어서 녹음합니다.'],['편집합니다','대본 순서대로 컷을 놓고, 목소리, 자막, 효과음, 배경음악 순서로 얹습니다.'],['올리고 적습니다','올린 뒤 7일이 지나면 조회, 저장, 공유 숫자와 배운 점을 콘텐츠에 적습니다. 다음 편을 만들 때 같이 보입니다.']];
+var MK={}; /* 만들기 칸에 적는 중인 글 (화면을 다시 그려도 지워지지 않게) */
+function eid(){return S.open||(S.tab==='script'&&S.sid&&S.sid!=='all'?S.sid:null)}
+function itemBy(id){return S.items.filter(function(i){return i.id===id})[0]}
+function scTot(sc){var t=0;(sc||[]).forEach(function(x){t+=num(x.sec)});return t}
+function scSum(it){var n=scFilled(it).length,t=scTot(it.scenes);return n?n+'장면'+(t?' · '+t+'초':''):''}
+function askOf(it){return S.asks.filter(function(a){return a.ch===S.ch&&a.kind==='script'&&a.item===it.id}).sort(function(a,b){return (b.at||0)-(a.at||0)})[0]}
+function draftOf(it){return S.asks.filter(function(a){return a.ch===S.ch&&a.kind==='script'&&a.item===it.id&&a.status==='done'&&!a.used&&a.res&&a.res.scenes&&a.res.scenes.length}).sort(function(a,b){return ((b.res.at||b.at||0)-(a.res.at||a.at||0))})[0]}
 function scText(it,ep){var t=epName(it,ep||{})+(it.corner?' ('+it.corner+')':'')+'\n';
   if(it.bgm)t+='배경음악: '+it.bgm+'\n';if(it.subStyle)t+='자막 방식: '+it.subStyle+'\n';
-  scenesOf(it).forEach(function(x){t+='\n['+(x.k||'장면')+(x.sec?' · '+x.sec+'초':'')+']\n'+(x.shot?'구도: '+x.shot+'\n':'')+(x.screen?'촬영: '+x.screen+'\n':'')+(x.line?'말: '+x.line+'\n':'')+(x.sub?'자막: '+x.sub+'\n':'')+(x.sfx?'효과음: '+x.sfx+'\n':'')});return t}
-function sheet(it,ep){
-  var sc=scenesOf(it),has=scFilled(it).length>0,tot=0,f=fxOf(it.corner),fx=f[f.length-1];sc.forEach(function(x){tot+=num(x.sec)});
-  var h='<div class="panel sheet"><div class="bar noprint" style="margin:0"><span class="badge acc">'+GROUPS[grp(it.stage)]+'</span><span class="sp"></span>'+(S.ro?'':'<button class="btn sm" data-open="'+esc(it.id)+'">고치기</button>')+(has?'<button class="btn sm" data-act="scCopy" data-id="'+esc(it.id)+'">전체 복사</button><button class="btn sm pri" data-act="print">인쇄</button>':'')+'</div>'+
-    '<h2 class="sht">'+esc(epName(it,ep))+'</h2><div class="hs">'+(it.corner?esc(it.corner)+' · ':'')+(tot?'전체 '+tot+'초':'시간 아직 안 적음')+(it.due?' · 촬영 '+esc(it.due):'')+(it.place?' · '+esc(it.place):'')+'</div>';
-  if(!has){h+='<div class="empty">아직 대본이 없습니다.'+(fx?'<br>이 코너의 틀: 첫 3초 '+esc(fx.hook||'-')+' / 끝 '+esc(fx.end||'-'):'')+'<br><br>'+(S.ro?'':'<button class="btn pri" data-act="scFill" data-id="'+esc(it.id)+'">바로 틀 만들기</button>')+'<div class="hs" style="margin-top:8px">장면, 구도, 자막 자리가 채워집니다. 맞춤 대본은 아래에서 Claude에게 요청합니다.</div></div>';return h+'</div>'}
-  h+='<div class="shm"><div><small>배경음악</small><b>'+esc(it.bgm||'아직 안 정함')+'</b></div><div><small>자막 방식</small><b>'+esc(it.subStyle||'아직 안 정함')+'</b></div></div>';
-  sc.forEach(function(x,i){h+='<div class="shr"><div class="shk"><b>'+esc(x.k||(i+1)+'번')+'</b>'+(x.sec?'<span>'+esc(x.sec)+'초</span>':'')+'</div><div class="shb">'+
-    (x.line?'<div class="shl">'+esc(x.line)+'</div>':'')+(x.sub?'<div class="row"><span>자막</span><div><b>'+esc(x.sub)+'</b></div></div>':'')+(x.shot?'<div class="row"><span>구도</span><div class="shotr">'+shotSvg(x.shot)+'<b>'+esc(x.shot)+'</b></div></div>':'')+(x.screen?'<div class="row"><span>촬영</span><div>'+esc(x.screen)+'</div></div>':'')+(x.sfx?'<div class="row"><span>효과음</span><div>'+esc(x.sfx)+'</div></div>':'')+(x.why?'<div class="row noprint"><span>왜</span><div style="color:var(--sub)">'+esc(x.why)+'</div></div>':'')+
-    (!(x.line||x.sub||x.screen||x.sfx)?'<div class="noprint" style="color:var(--sub)">아직 비어 있습니다.'+(fx?' 이 코너의 틀: '+esc((i===0?fx.hook:i===sc.length-1?fx.end:fx.mid)||'-'):'')+'</div>':'')+'</div></div>'});
-  if(it.prep)h+='<div class="row"><span>준비물</span><div>'+esc(it.prep)+'</div></div>';
+  (it.scenes||[]).forEach(function(x,i){t+='\n['+(x.k||(i+1)+'번')+(x.sec?' · '+x.sec+'초':'')+']\n'+(x.line?'말: '+x.line+'\n':'')+(x.sub?'자막: '+x.sub+'\n':'')+(x.screen?'화면: '+x.screen+'\n':'')+(x.shot?'구도: '+x.shot+'\n':'')+(x.sfx?'효과음: '+x.sfx+'\n':'')});return t}
+function exTag(x,i){return x.ex?'<span class="extag'+(x.ex==='2'?' need':'')+' noprint"'+(i==null?'':' data-extag="'+i+'"')+'>'+(x.ex==='2'?'꼭 채울 곳입니다':'예시 문장입니다 · 내 말로 바꿔 주세요')+'</span>':''}
+function scnView(x,i,why){
+  var h='<div class="scn'+(x.ex?' ex':'')+'"><div class="scl"><i>'+(i+1)+'</i><b>'+esc(x.k||'장면')+'</b>'+(x.sec?'<span>'+esc(x.sec)+'초</span>':'')+'</div><div class="scb">'+exTag(x);
+  if(x.line)h+='<div class="srow"><span>말</span><div class="sline">'+esc(x.line)+'</div></div>';
+  if(x.sub)h+='<div class="srow"><span>자막</span><div'+(x.line?'':' class="sline"')+'>'+esc(x.sub)+'</div></div>';
+  if(x.screen)h+='<div class="srow"><span>화면</span><div>'+esc(x.screen)+'</div></div>';
+  if(x.sfx)h+='<div class="srow"><span>효과음</span><div>'+esc(x.sfx)+'</div></div>';
+  if(why&&x.why)h+='<div class="srow why noprint"><span>이유</span><div>'+esc(x.why)+'</div></div>';
+  if(!(x.line||x.sub||x.screen||x.sfx))h+='<div class="hs">아직 비어 있습니다.</div>';
+  return h+'</div>'+(x.shot?'<div class="scsh">'+shotSvg(x.shot)+'<small>'+esc(x.shot)+'</small></div>':'')+'</div>';
+}
+function scnEdit(x,i){
+  var shots=SHOTS.map(function(q){return q[0]});if(x.shot&&shots.indexOf(x.shot)<0)shots.push(x.shot);
+  return '<div class="scn ed"><div class="scl"><i>'+(i+1)+'</i><input data-sc="'+i+':k" value="'+esc(x.k||'')+'" placeholder="장면 이름" aria-label="장면 이름"><label class="secin"><input data-sc="'+i+':sec" inputmode="numeric" value="'+esc(x.sec||'')+'" aria-label="길이(초)"><span>초</span></label><select data-sc="'+i+':shot" aria-label="구도"><option value="">구도 고르기</option>'+shots.map(function(q){return '<option'+(q===x.shot?' selected':'')+'>'+esc(q)+'</option>'}).join('')+'</select><input type="hidden" data-sc="'+i+':why" value="'+esc(x.why||'')+'"><input type="hidden" data-sc="'+i+':ex" value="'+esc(x.ex||'')+'"><button class="lnk sub scx" data-scdel="'+i+'">장면 지우기</button></div>'+
+    '<div class="scb sce">'+exTag(x,i)+'<label>말<textarea data-sc="'+i+':line" placeholder="소리 내어 말할 문장. 자막만 쓸 때는 비워 둡니다">'+esc(x.line||'')+'</textarea></label><label>자막<textarea data-sc="'+i+':sub" placeholder="화면에 띄울 글">'+esc(x.sub||'')+'</textarea></label><label>화면<textarea data-sc="'+i+':screen" placeholder="찍을 장면">'+esc(x.screen||'')+'</textarea></label><label>효과음<input data-sc="'+i+':sfx" value="'+esc(x.sfx||'')+'" placeholder="없으면 비워 둡니다"></label></div></div>';
+}
+function scHead(it,ep,sc,badge){var t=scTot(sc);
+  return '<div class="sth">'+(badge?'<span class="badge acc noprint">'+badge+'</span>':'')+'<h2 class="sht">'+esc(epName(it,ep))+'</h2><div class="hs">'+esc(it.corner||'코너 없음')+(sc&&sc.length?' · '+sc.length+'장면'+(t?' · 약 '+t+'초':''):'')+(it.due?' · 촬영 '+esc(it.due):'')+'</div></div>'}
+function sheetRead(it,ep){var sc=it.scenes||[];
+  return '<div class="panel sheet">'+scHead(it,ep,sc)+(it.bgm||it.subStyle?'<div class="sset">'+(it.bgm?'<div class="srow"><span>배경음악</span><div>'+esc(it.bgm)+'</div></div>':'')+(it.subStyle?'<div class="srow"><span>자막 방식</span><div>'+esc(it.subStyle)+'</div></div>':'')+'</div>':'')+sc.map(function(x,i){return scnView(x,i,false)}).join('')+'</div>'}
+function scriptView(it,ep,dr){
+  var sc=it.scenes||[],nex=sc.filter(function(x){return x.ex}).length,id=esc(it.id);
+  var h='<div class="panel sheet">'+scHead(it,ep,sc);
+  if(S.sed&&!S.ro){
+    return h+'<div class="dnote noprint">칸을 고치면 바로 저장됩니다. <span class="saved" id="saved"></span></div><div id="scs">'+sc.map(scnEdit).join('')+'</div><div class="bar noprint scf"><button class="btn" data-act="scAdd">＋ 장면 추가</button><span class="sp"></span><span class="hs" id="tot">전체 '+scTot(sc)+'초</span><button class="btn pri" data-act="scDone">다 고쳤습니다</button></div></div>';
+  }
+  h+='<div class="bar noprint" style="margin:0">'+(S.ro?'':'<button class="btn pri" data-act="scEdit">고치기</button>')+'<button class="btn" data-act="scCopy" data-id="'+id+'">복사</button><button class="btn" data-act="print">인쇄</button><span class="sp"></span><button class="lnk" data-act="swhy">'+(S.swhy?'이유 숨기기':'왜 이렇게 쓰는지 보기')+'</button></div>';
+  if(nex&&!S.ro)h+='<div class="dnote warn noprint">노란 표시 '+nex+'곳은 예시로 채운 문장입니다. "고치기"를 눌러 내 말로 바꿔 주세요.</div>';
+  if(dr&&!S.ro)h+='<div class="dnote noprint">Claude가 이 편에 맞춰 써 둔 대본이 따로 있습니다. <button class="lnk" data-act="smode" data-v="draft">읽어 보기</button></div>';
+  h+=sc.map(function(x,i){return scnView(x,i,S.swhy)}).join('');
+  if(it.prep)h+='<div class="scn"><div class="scl"><b>준비물</b></div><div class="scb">'+esc(it.prep)+'</div></div>';
+  if(!S.ro)h+='<div class="bar noprint scf"><button class="lnk" data-act="smode" data-v="make">질문에 답해서 다시 만들기</button>'+(it.scenesPrev&&it.scenesPrev.length?'<button class="lnk" data-act="scBack" data-id="'+id+'">이전 대본으로 되돌리기</button>':'')+'</div>';
   return h+'</div>';
 }
+function draftView(it,ep,a,has){var r=a.res;
+  var h='<div class="panel sheet">'+scHead(it,ep,r.scenes,'Claude가 이 편에 맞춰 써 둔 대본');
+  h+='<div class="bar noprint" style="margin:0">'+(S.ro?'':'<button class="btn pri mkgo" data-act="scUse" data-id="'+esc(a.id)+'">'+(has?'이 대본으로 바꾸기':'이 대본으로 시작')+'</button>')+(has?'<button class="btn" data-act="smode" data-v="">내 대본으로 돌아가기</button>':(S.ro?'':'<button class="btn" data-act="smode" data-v="make">질문에 답해서 새로 만들기</button>'))+'<span class="sp"></span><button class="lnk" data-act="swhy">'+(S.swhy?'이유 숨기기':'왜 이렇게 쓰는지 보기')+'</button></div>';
+  h+='<div class="hs noprint">'+(has?'바꿔도 지금 대본은 보관되고 되돌릴 수 있습니다.':'시작한 뒤 "고치기"로 문장을 내 말로 바꿉니다.')+'</div>';
+  if(r.note||r.bgm||r.subStyle)h+='<div class="sset">'+(r.note?'<div class="srow"><span>참고</span><div>'+esc(r.note)+'</div></div>':'')+(r.bgm?'<div class="srow"><span>배경음악</span><div>'+esc(r.bgm)+'</div></div>':'')+(r.subStyle?'<div class="srow"><span>자막 방식</span><div>'+esc(r.subStyle)+'</div></div>':'')+'</div>';
+  return h+r.scenes.map(function(x,i){return scnView(x,i,S.swhy)}).join('')+'</div>';
+}
+function makeForm(it,ep,has,dr){
+  if(S.ro)return '<div class="panel sheet">'+scHead(it,ep)+'<div class="hs">아직 대본이 없습니다.</div></div>';
+  var t=tplFor(it).t,cs=corners(),as=tplAsks(t),df=MK[it.id]||{},ans=Object.assign({},it.ans||{},df.ans||{}),ttl=df.title!=null?df.title:(it.title||'');
+  var h='<div class="panel mk"><div class="sth"><h2 class="sht">'+(has?'대본 다시 만들기':'대본 만들기')+'</h2><div class="hs">'+esc(it.corner?(it.corner+(ep[it.id]?' '+ep[it.id]+'편':'')):'코너 없음')+' · 버튼을 누르면 장면, 말, 자막, 화면, 구도가 한 번에 나옵니다.</div></div>';
+  h+='<label>제목<input id="mkTitle" data-f="title" value="'+esc(ttl)+'" placeholder="예: '+esc(t.exTitle||'영상 제목')+'"></label>';
+  if(!it.corner&&cs.length)h+='<label>코너<small>고르면 그 코너에 맞는 틀로 만듭니다</small><select id="mkCorner"><option value="">코너 없이 만들기</option>'+cs.map(function(x){return '<option>'+esc(x)+'</option>'}).join('')+'</select></label>';
+  if(as.length)h+='<div class="mkq"><div class="hs">아래 질문에 답하면 그 말이 대본에 들어갑니다. 비워 두면 예시 문장으로 채우고 노란 표시를 해 둡니다.</div>'+as.map(function(a){return '<label>'+esc(a.q)+(a.need?'<small>확인한 내용만 적어 주세요</small>':'')+'<textarea data-mk="'+esc(a.k)+'" placeholder="'+(a.ex?'예: '+esc(a.ex):'')+'">'+esc(ans[a.k]||'')+'</textarea></label>'}).join('')+'</div>';
+  if(t.note)h+='<div class="dnote">'+esc(t.note)+'</div>';
+  h+='<div class="bar" style="margin:0"><button class="btn pri mkgo" data-act="scMake" data-id="'+esc(it.id)+'">'+(has?'대본 다시 만들기':'대본 만들기')+'</button>'+(has||dr?'<button class="btn" data-act="smode" data-v="">'+(has?'내 대본으로 돌아가기':'써 둔 대본 보기')+'</button>':'')+'</div>';
+  if(has)h+='<div class="hs">지금 대본은 지워지지 않고 보관됩니다. 되돌릴 수 있습니다.</div>';
+  return h+'</div>';
+}
+function scSide(it,mode,dr){
+  var t=tplFor(it).t,la=askOf(it),psych=(mode!=='make'&&la&&la.status==='done'&&la.res&&la.res.psych)||t.psych||'',ro=S.ro?' readonly':'',h='';
+  if(mode==='view')h+='<div class="panel"><h2>이 편 설정</h2><div class="f"><label>배경음악</label><textarea data-f="bgm" rows="1" placeholder="예: 잔잔한 곡을 작게"'+ro+'>'+esc(it.bgm||'')+'</textarea></div><div class="f"><label>자막 방식</label><textarea data-f="subStyle" style="min-height:70px" placeholder="예: 한 줄씩, 아래쪽 가운데"'+ro+'>'+esc(it.subStyle||'')+'</textarea></div><div class="f"><label>점검</label><div id="chk">'+edChecks(it,true)+'</div></div></div>';
+  if(psych)h+='<div class="panel"><h2>사람들이 보는 이유</h2><div class="psy">'+esc(psych)+'</div></div>';
+  if(!S.ro){var a=askOf(it),wait=a&&a.status!=='done';
+    h+='<details class="panel"'+(wait?' open':'')+'><summary>Claude에게 이 편 대본 맡기기</summary><div class="dbody"><div class="hs">제목, 기획, 레퍼런스를 보고 이 편만의 대본을 써서 여기에 올립니다. Claude가 켜져 있을 때 처리합니다 (매일 오후 2시쯤).</div>'+
+      (wait?'<div class="cm"><small>'+day(a.reqAt||a.at)+' 요청함</small>기다리는 중입니다.'+(a.text?' 메모: '+esc(a.text):'')+'</div>':'<textarea id="rqNote" placeholder="꼭 넣고 싶은 말이나 장면 (비워도 됩니다)" style="min-height:64px"></textarea><button class="btn" style="justify-self:start" data-act="scReq" data-id="'+esc(it.id)+'">맡기기</button>')+'</div></details>'}
+  return h+'<div class="bar" style="margin:0"><button class="btn sm" data-open="'+esc(it.id)+'">이 편 기획 열기</button><button class="btn sm" data-tab="how">찍는 법 보기</button></div>';
+}
 function scripts(){
-  var items=chItems(),ep=epMap(items),cs=allCorners(items).concat(['']),cur=S.sv==='all'?null:items.filter(function(i){return i.id===S.sv})[0];
-  if(!cur&&S.sv!=='all'){cur=nowItem(items.filter(function(i){return scFilled(i).length}))||nowItem(items)}
-  var h='<div class="bar noprint"><h2 class="h1">대본</h2><span class="sp"></span><button class="chip'+(S.sm!=='g'?' on':'')+'" data-act="sm" data-v="s">대본</button><button class="chip'+(S.sm==='g'?' on':'')+'" data-act="sm" data-v="g">만드는 법 · 구도</button></div>';
-  if(S.sm==='g')return h+guidePage();
-  if(!items.length)return h+'<div class="empty">아직 콘텐츠가 없습니다.<br><br>'+(S.ro?'':'<button class="btn pri" data-act="newItem">새 콘텐츠</button>')+'</div>';
-  h+='<div class="svg"><div class="panel slist noprint" style="margin-top:0"><button class="rowl'+(S.sv==='all'?' on':'')+'" data-act="svOpen" data-id="all"><b>쓴 대본 전체 보기</b></button>';
-  cs.forEach(function(cn){var l=items.filter(function(i){return (i.corner||'')===cn}).sort(byOrder);if(!l.length)return;
-    h+='<div class="f"><label>'+esc(cn||'코너 없음')+'</label>'+l.map(function(i){var n=scFilled(i).length;return '<button class="rowl'+(cur&&cur.id===i.id?' on':'')+'" data-act="svOpen" data-id="'+esc(i.id)+'"><b>'+esc(epName(i,ep))+'</b><span>'+(n?n+'줄':'없음')+'</span></button>'}).join('')+'</div>'});
-  h+='</div><div class="svm">';
-  if(S.sv==='all'){var w=items.filter(function(i){return scFilled(i).length}).sort(byOrder);h+=w.length?w.map(function(i){return sheet(i,ep)}).join(''):'<div class="empty">쓴 대본이 아직 없습니다.</div>'}
-  else if(cur){h+=sheet(cur,ep)+autoPanel(cur)+'<div class="panel noprint"><h2>자막, 효과음, 배경음악 쓰는 법 <span class="badge">'+esc(cForm(cur.corner)||'형식 없음')+'</span></h2>'+subTips(cur)+'</div>'}
-  h+='<details class="panel noprint"'+(S.ro?'':' open')+'><summary><b style="font-size:20px">대본은 이 순서로 진행합니다</b></summary><ol class="how">'+SHOW.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ol></details>';
-  return h+'</div></div>';
+  var items=chItems(),ep=epMap(items);
+  var h='<div class="bar noprint"><h2 class="h1">대본</h2><span class="hs">편을 고르고 버튼 한 번이면 대본이 나옵니다.</span></div>';
+  if(!items.length)return h+'<div class="empty">아직 콘텐츠가 없습니다.<br><br>'+(S.ro?'':'<button class="btn pri" data-act="newItem" data-to="script">첫 편 만들기</button>')+'</div>';
+  var cur=S.sid==='all'?null:itemBy(S.sid);if(cur&&cur.ch!==S.ch)cur=null;
+  if(!cur&&S.sid!=='all'){cur=nowItem(items);S.sid=cur?cur.id:null;S.smode='';S.sed=false}
+  var cs=allCorners(items),left=items.filter(function(i){return !i.corner}).sort(byOrder);
+  var st=function(i){var n=scSum(i);return n||(draftOf(i)?'써 둔 대본 있음':'대본 없음')};
+  var li=function(i){return '<button class="swi'+(cur&&cur.id===i.id?' on':'')+'" data-act="svOpen" data-id="'+esc(i.id)+'"><b>'+esc(epName(i,ep))+'</b><small'+(scSum(i)?' class="y"':'')+'>'+st(i)+'</small></button>'};
+  var L='<div class="panel swl noprint">',O='';
+  cs.forEach(function(cn){var l=items.filter(function(i){return i.corner===cn}).sort(byOrder);
+    L+='<div class="swc"><span>'+esc(cn)+'</span>'+(S.ro?'':'<button class="swn" data-act="newItem" data-corner="'+esc(cn)+'" data-to="script" title="'+esc(cn)+' '+(l.length+1)+'편 만들기">＋ 새 편</button>')+'</div>'+l.map(li).join('');
+    if(l.length)O+='<optgroup label="'+esc(cn)+'">'+l.map(function(i){return '<option value="'+esc(i.id)+'"'+(cur&&cur.id===i.id?' selected':'')+'>'+esc(epName(i,ep))+' ('+st(i)+')</option>'}).join('')+'</optgroup>'});
+  if(left.length){L+='<div class="swc"><span>코너 없음</span></div>'+left.map(li).join('');O+='<optgroup label="코너 없음">'+left.map(function(i){return '<option value="'+esc(i.id)+'"'+(cur&&cur.id===i.id?' selected':'')+'>'+esc(epName(i,ep))+' ('+st(i)+')</option>'}).join('')+'</optgroup>'}
+  L+='<button class="swall'+(S.sid==='all'?' on':'')+'" data-act="svOpen" data-id="all">쓴 대본 모두 보기 · 인쇄</button></div>';
+  var sel='<select class="swsel noprint" data-pick="sid" aria-label="편 고르기">'+O+'<option value="all"'+(S.sid==='all'?' selected':'')+'>쓴 대본 모두 보기</option></select>',M='',side='';
+  if(S.sid==='all'){var w=items.filter(function(i){return scFilled(i).length}).sort(byOrder);
+    M='<div class="bar noprint" style="margin:0"><b>쓴 대본 '+w.length+'편</b><span class="sp"></span>'+(w.length?'<button class="btn" data-act="print">모두 인쇄</button>':'')+'</div>'+(w.length?w.map(function(i){return sheetRead(i,ep)}).join(''):'<div class="empty">쓴 대본이 아직 없습니다.</div>')}
+  else if(cur){var has=scFilled(cur).length>0,dr=draftOf(cur),mode=S.smode==='make'?'make':(S.smode==='draft'&&dr)?'draft':has?'view':dr?'draft':'make';
+    M=mode==='make'?makeForm(cur,ep,has,dr):mode==='draft'?draftView(cur,ep,dr,has):scriptView(cur,ep,dr);side=scSide(cur,mode,dr)}
+  return h+'<div class="sw'+(side?'':' s2')+'">'+sel+L+'<div class="swm">'+M+'</div>'+(side?'<div class="sws noprint">'+side+'</div>':'')+'</div>';
 }
 
-/* ---------- 자동 대본, 구도, 만드는 법 ---------- */
+/* ---------- 구도, 대본 틀 ---------- */
 var SHOTS=[
   ['위에서 내려찍기','음식, 물건 늘어놓기, 손으로 하는 일','폰을 바닥과 나란히 들고 바로 위에서. 그림자가 지면 창 쪽으로 옮깁니다.','<rect x="52" y="8" width="56" height="12" rx="3" fill="currentColor"/><path d="M80 22v30" stroke="currentColor" stroke-width="3" stroke-dasharray="5 5"/><path d="M72 46l8 8 8-8" fill="none" stroke="currentColor" stroke-width="3"/><rect x="20" y="72" width="120" height="8" rx="3" fill="currentColor" opacity=".35"/><circle cx="80" cy="64" r="9" fill="currentColor" opacity=".7"/>'],
   ['물건 눈높이','컵, 병, 제품 하나를 보여 줄 때','폰을 물건 높이까지 내리고 정면에서. 뒤 배경은 벽이나 창처럼 단순하게.','<rect x="14" y="30" width="12" height="40" rx="3" fill="currentColor"/><path d="M30 50h44" stroke="currentColor" stroke-width="3" stroke-dasharray="5 5"/><path d="M68 42l8 8-8 8" fill="none" stroke="currentColor" stroke-width="3"/><rect x="92" y="34" width="26" height="38" rx="5" fill="currentColor" opacity=".7"/><rect x="60" y="72" width="90" height="8" rx="3" fill="currentColor" opacity=".35"/>'],
@@ -411,87 +602,107 @@ var SHOTS=[
   ['세워 두고 찍기','동작 전체, 개그 장면, 두 손을 다 쓸 때','컵이나 책에 기대 세우고 녹화를 누른 뒤 들어갑니다. 얼굴이 안 나오게 어깨 아래로 맞춥니다.','<rect x="20" y="26" width="12" height="40" rx="3" fill="currentColor"/><path d="M26 66v14M14 80h24" stroke="currentColor" stroke-width="3"/><path d="M36 46h40" stroke="currentColor" stroke-width="3" stroke-dasharray="5 5"/><rect x="96" y="30" width="24" height="50" rx="8" fill="currentColor" opacity=".6"/><path d="M96 44l-16 14M120 44l16 14" stroke="currentColor" stroke-width="6" stroke-linecap="round" opacity=".6"/>']
 ];
 function shotSvg(n){var s=SHOTS.filter(function(x){return x[0]===n})[0];return s?'<svg viewBox="0 0 160 90" aria-hidden="true">'+s[3]+'</svg>':''}
+/* 틀: ask = 만들기 전에 묻는 것(k 는 a,b,c…), scenes 의 {a} 자리에 답이 들어간다. 답이 없으면 ex(예시)로 채우고 표시한다. need = 확인한 내용만 넣어야 하는 곳. 말과 자막이 배열이면 다시 만들 때마다 다른 표현을 쓴다 */
 var DTPL={
- '썰':{psych:'같은 처지인 사람이 "내 얘기다" 하고 멈춥니다. 나이와 상황을 숫자로 먼저 말하면 끝까지 봅니다.',scenes:[
-  {k:'첫 3초',sec:'3',shot:'손 가까이',screen:'가장 센 장면 하나 (결과가 보이는 물건을 손에 든 모습)',line:'{이름표} {제목}',sub:'(숫자 하나가 들어간 한 줄, 15자 안쪽)',sfx:'',why:'나이와 숫자가 먼저 나오면 같은 처지인 사람이 넘기지 않습니다'},
-  {k:'왜 시작했나',sec:'5',shot:'내 눈 시점',screen:'평소 모습 (출근길, 책상, 부엌)',line:'(왜 이걸 하게 됐는지 한두 문장)',sub:'(말 그대로 한 줄씩)',sfx:'',why:'이유를 알아야 내 일처럼 봅니다'},
-  {k:'한 일',sec:'8',shot:'위에서 내려찍기',screen:'한 일을 2~3컷으로, 컷마다 1~2초',line:'(한 일을 순서대로. 문장마다 컷 하나)',sub:'(한 줄씩, 숫자만 색 다르게)',sfx:'컷이 바뀔 때 짧게',why:'컷이 짧으면 지루할 틈이 없습니다'},
-  {k:'느낀 점',sec:'4',shot:'손 가까이',screen:'결과나 지금 상태',line:'(해 보니 어땠는지 솔직하게 한 문장)',sub:'(그 문장 그대로)',sfx:'',why:'꾸미지 않은 한마디가 믿음을 줍니다'},
-  {k:'마무리',sec:'3',shot:'넓게 한 컷',screen:'창밖, 길, 하늘 같은 조용한 장면',line:'(질문 하나. 예: 여러분은 어떻게 하셨어요?)',sub:'(질문을 크게)',sfx:'',why:'질문으로 끝내면 댓글을 답니다. 다음 편을 약속하면 다시 옵니다'}]},
- '정보 정리':{psych:'나중에 쓰려고 저장합니다. 번호와 완성 장면이 있으면 저장이 늘어납니다.',scenes:[
-  {k:'첫 3초',sec:'3',shot:'손 가까이',screen:'완성된 결과부터',line:'{제목}',sub:'(제목을 크게 + 숫자. 예: 3가지, 4단계)',sfx:'딩 한 번',why:'결과를 먼저 보면 방법이 궁금해집니다'},
-  {k:'하나',sec:'4',shot:'위에서 내려찍기',screen:'첫 번째를 하는 손',line:'첫째, ( )',sub:'1  ( )',sfx:'번호가 뜰 때 한 번',why:'번호가 있으면 끝까지 세어 봅니다'},
-  {k:'둘',sec:'4',shot:'위에서 내려찍기',screen:'두 번째를 하는 손',line:'둘째, ( )',sub:'2  ( )',sfx:'번호가 뜰 때 한 번',why:'한 화면에 한 가지만 있어야 따라 합니다'},
-  {k:'셋',sec:'4',shot:'물건 눈높이',screen:'세 번째. 물건을 정면에서',line:'셋째, ( )',sub:'3  ( )',sfx:'번호가 뜰 때 한 번',why:'구도를 한 번 바꾸면 눈이 다시 갑니다'},
-  {k:'마무리',sec:'3',shot:'손 가까이',screen:'완성 장면 다시',line:'(저장해 두고 해 보세요. 궁금한 건 댓글로)',sub:'(저장 부탁을 크게)',sfx:'',why:'저장할 이유를 말해 줘야 저장합니다'}]},
- '브이로그':{psych:'남의 하루를 보는 재미와 "결과가 어떻게 됐을까" 하는 궁금함으로 봅니다. 날짜나 n일차가 있으면 이어 봅니다.',scenes:[
-  {k:'첫 3초',sec:'3',shot:'손 가까이',screen:'오늘 가장 중요한 순간 하나 + 화면 위 고정 제목',line:'(오늘이 무슨 날인지 한 줄)',sub:'(n일차 · 날짜. 끝까지 떠 있게)',sfx:'',why:'오늘의 결과를 살짝 먼저 보여 주면 과정이 궁금해집니다'},
-  {k:'준비, 가는 길',sec:'4',shot:'내 눈 시점',screen:'집을 나서거나 준비하는 모습',line:'(혼잣말처럼 짧게)',sub:'(말투 그대로)',sfx:'현장 소리 살리기',why:'꾸미지 않은 말투가 옆에 있는 사람처럼 느껴집니다'},
-  {k:'하는 일',sec:'8',shot:'세워 두고 찍기',screen:'오늘 한 일 2~3컷',line:'(무엇을 했는지, 숫자 하나)',sub:'(한 줄씩)',sfx:'따르는 소리, 써는 소리',why:'소리가 살아 있으면 끝까지 틀어 둡니다'},
-  {k:'결과, 기다림',sec:'4',shot:'손 가까이',screen:'결과가 보이는 물건이나 화면',line:'(결과 또는 기다리는 마음 한 문장)',sub:'(그 문장 그대로)',sfx:'',why:'결과를 기다리던 사람이 여기서 반응합니다'},
-  {k:'마무리',sec:'3',shot:'넓게 한 컷',screen:'돌아가는 길, 창밖',line:'(다음에 무엇을 보여 줄지 한 줄)',sub:'(다음 편 예고)',sfx:'',why:'다음을 약속하면 팔로우합니다'}]},
- '검증':{psych:'"진짜일까?" 하는 궁금함으로 봅니다. 답을 끝에 주면 끝까지 보고, 자기가 들은 말을 댓글로 답니다.',scenes:[
-  {k:'첫 3초',sec:'3',shot:'물건 눈높이',screen:'주제가 되는 물건 하나',line:'{제목}',sub:'(질문을 크게, 물음표까지)',sfx:'',why:'질문으로 시작하면 답을 보려고 남습니다'},
-  {k:'어디서 들었나',sec:'5',shot:'화면·자료 찍기',screen:'그 말이 나온 곳 (댓글, 글, 메모)',line:'(누가, 어디서 그런 말을 하는지)',sub:'(들은 말을 그대로)',sfx:'',why:'"나도 들었는데" 하는 공감이 생깁니다'},
-  {k:'확인',sec:'8',shot:'화면·자료 찍기',screen:'확인한 자료',line:'(확인한 내용. 출처 이름을 말하기)',sub:'(핵심 한 줄 + 출처는 작게)',sfx:'',why:'출처가 보여야 믿고 공유합니다'},
-  {k:'답',sec:'3',shot:'손 가까이',screen:'물건을 다시, 가까이',line:'(그래서 답은 O / X / 사람마다 다름)',sub:'O 또는 X 를 크게',sfx:'답이 나올 때 한 번',why:'답이 한 글자로 보이면 기억에 남습니다'},
-  {k:'마무리',sec:'3',shot:'넓게 한 컷',screen:'조용한 장면',line:'(여러분이 들은 다른 말은? 댓글로 알려 주세요)',sub:'(질문을 크게)',sfx:'',why:'다음 편 주제를 댓글에서 받습니다'}]},
- '개그':{psych:'"우리 집도 저래" 하는 공감과 예상 밖 결말로 봅니다. 짝꿍에게 보여 주려고 공유합니다.',scenes:[
-  {k:'첫 3초',sec:'3',shot:'세워 두고 찍기',screen:'진지한 상황 한 장면',line:'',sub:'(진지한 자막 한 줄. 예: 남편을 위해 준비했습니다)',sfx:'',why:'진지하게 시작해야 뒤의 반전이 웃깁니다'},
-  {k:'기대 키우기',sec:'5',shot:'위에서 내려찍기',screen:'정성 들이는 장면 2컷',line:'',sub:'(기대하는 말)',sfx:'',why:'기대가 클수록 반전이 큽니다'},
-  {k:'반전',sec:'4',shot:'세워 두고 찍기',screen:'예상과 반대로 되는 순간',line:'',sub:'(짧게 한마디 또는 자막 없음)',sfx:'그 순간 한 번',why:'자막은 진지하고 장면이 웃기면 엇갈림이 웃음이 됩니다'},
-  {k:'마무리',sec:'3',shot:'손 가까이',screen:'말없는 반응 한 컷',line:'',sub:'(글에 쓸 말: 짝꿍 태그해 주세요)',sfx:'',why:'보여 주고 싶은 사람이 떠올라야 공유합니다'}]},
- '기타':{psych:'첫 3초에 "이게 뭐지?" 하고 멈추게 하고, 끝에 할 일을 하나 부탁합니다.',scenes:[
-  {k:'첫 3초',sec:'3',shot:'손 가까이',screen:'가장 센 장면 하나',line:'{제목}',sub:'(한 줄, 15자 안쪽)',sfx:'',why:'처음 3초에 넘길지 정합니다'},
-  {k:'가운데',sec:'15',shot:'위에서 내려찍기',screen:'컷마다 1~2초',line:'(문장마다 컷 하나)',sub:'(한 줄씩)',sfx:'',why:'컷이 짧으면 끝까지 봅니다'},
-  {k:'마무리',sec:'4',shot:'넓게 한 컷',screen:'조용한 장면',line:'(저장, 댓글, 다음 편 중 하나를 부탁)',sub:'(부탁을 크게)',sfx:'',why:'할 일을 하나만 말해야 합니다'}]}
+ '썰':{psych:'같은 처지인 사람이 "내 얘기다" 하고 멈춥니다. 상황을 먼저 말하고, 잘한 모습보다 솔직한 한마디가 있을 때 끝까지 봅니다.',exTitle:'미루던 일을 오늘 처음 해 봤습니다',
+  ask:[{k:'a',q:'왜 시작하게 됐나요?',ex:'예전부터 해 보고 싶었는데 계속 미뤘어요'},{k:'b',q:'무엇을 했나요? (한두 문장)',ex:'오늘 처음으로 해 봤습니다. 생각보다 오래 걸렸어요'},{k:'c',q:'해 보니 어땠나요? (솔직하게 한마디)',ex:'솔직히 쉽지 않았습니다'}],scenes:[
+  {k:'첫 3초',sec:'3',shot:'손 가까이',screen:'오늘 이야기의 물건 하나를 손에 든 모습',line:'{제목}',sub:'{제목}',sfx:'',why:'제목을 그대로 말하고 띄우면 무슨 영상인지 바로 압니다'},
+  {k:'왜 시작했나',sec:'5',shot:'내 눈 시점',screen:'평소 모습 (가는 길, 책상 앞)',line:'{a}.',sub:'{a}',sfx:'',why:'이유를 먼저 말해야 내 일처럼 봅니다'},
+  {k:'한 일',sec:'8',shot:'위에서 내려찍기',screen:'한 일을 2~3컷으로. 컷마다 1~2초',line:'{b}.',sub:'{b}',sfx:'컷이 바뀔 때 짧게',why:'컷이 짧으면 지루할 틈이 없습니다'},
+  {k:'솔직한 한마디',sec:'4',shot:'손 가까이',screen:'지금 상태가 보이는 장면',line:'{c}.',sub:'{c}',sfx:'',why:'꾸미지 않은 한마디가 믿음을 줍니다'},
+  {k:'마무리',sec:'4',shot:'넓게 한 컷',screen:'창밖, 길, 하늘 같은 조용한 장면',line:['여러분은 어떻게 하고 계세요? 댓글로 알려 주세요.','저만 이런가요? 댓글로 알려 주세요.','다음 편에서 이어 갑니다. 지켜봐 주세요.'],sub:['여러분은 어떻게 하고 계세요?','저만 이런가요?','다음 편에서 이어 갑니다'],sfx:'',why:'질문으로 끝내면 댓글이 달리고, 다음 편을 약속하면 다시 옵니다'}]},
+ '정보 정리':{psych:'나중에 따라 하려고 저장합니다. 번호가 붙어 있고 완성된 모습이 먼저 나오면 저장이 늘어납니다.',exTitle:'매번 헷갈리던 것, 세 가지로 정리했습니다',
+  ask:[{k:'a',q:'불편했던 점 한 가지는?',ex:'매번 헷갈려서 다시 찾아보게 돼요'},{k:'b',q:'방법 1',ex:'먼저 필요한 것만 꺼내 둡니다'},{k:'c',q:'방법 2',ex:'순서를 종이에 적어 붙여 둡니다'},{k:'d',q:'방법 3',ex:'끝나면 바로 제자리에 둡니다'}],scenes:[
+  {k:'첫 3초',sec:'3',shot:'손 가까이',screen:'완성된 모습부터',line:'{제목}',sub:'{제목}',sfx:'딩 한 번',why:'완성된 모습을 먼저 보여 주면 방법이 궁금해집니다'},
+  {k:'불편한 점',sec:'4',shot:'물건 눈높이',screen:'불편했던 원래 모습',line:'솔직히, {a}.',sub:'{a}',sfx:'',why:'불편을 먼저 말하면 "나도 그래" 하고 남습니다'},
+  {k:'하나',sec:'4',shot:'위에서 내려찍기',screen:'첫 번째 방법을 하는 손',line:'하나, {b}.',sub:'1  {b}',sfx:'번호가 뜰 때 한 번',why:'번호가 있으면 끝까지 세어 봅니다'},
+  {k:'둘',sec:'4',shot:'위에서 내려찍기',screen:'두 번째 방법을 하는 손',line:'둘, {c}.',sub:'2  {c}',sfx:'번호가 뜰 때 한 번',why:'한 화면에 한 가지만 있어야 따라 합니다'},
+  {k:'셋',sec:'4',shot:'물건 눈높이',screen:'세 번째 방법. 물건을 정면에서',line:'셋, {d}.',sub:'3  {d}',sfx:'번호가 뜰 때 한 번',why:'구도를 한 번 바꾸면 눈이 다시 갑니다'},
+  {k:'마무리',sec:'4',shot:'손 가까이',screen:'완성된 모습 다시',line:['저장해 두고 해 보세요. 더 좋은 방법은 댓글로 알려 주세요.','더 좋은 방법 있으면 댓글로 알려 주세요.'],sub:['저장해 두고 해 보세요','더 좋은 방법은 댓글로'],sfx:'',why:'저장할 이유를 말해 줘야 저장합니다'}]},
+ '브이로그':{psych:'남의 하루를 보는 재미와 "어떻게 됐을까" 하는 궁금함으로 봅니다. 무슨 날인지가 첫 화면에 있으면 이어 봅니다.',exTitle:'처음 가 보는 곳에 다녀온 날',
+  ask:[{k:'a',q:'오늘은 무슨 날인가요? (한 문장)',ex:'오늘은 처음 가 보는 곳에 다녀온 날입니다'},{k:'b',q:'오늘 한 일은? (한두 문장)',ex:'아침 일찍 나와서 볼일을 보고 왔습니다'},{k:'c',q:'오늘의 마음 한마디',ex:'별일 아닌데 괜히 긴장했습니다'}],scenes:[
+  {k:'첫 3초',sec:'3',shot:'손 가까이',screen:'오늘 가장 중요한 순간 하나',line:'{a}.',sub:'{a}',sfx:'',why:'무슨 날인지 먼저 알려 주면 끝이 궁금해집니다'},
+  {k:'가는 길',sec:'4',shot:'내 눈 시점',screen:'집을 나서는 발, 걷는 길',line:'',sub:'나서는 길',sfx:'현장 소리 살리기',why:'말없이 걷는 장면이 숨 쉴 틈을 줍니다'},
+  {k:'한 일',sec:'8',shot:'세워 두고 찍기',screen:'오늘 한 일 2~3컷',line:'{b}.',sub:'{b}',sfx:'',why:'한 일을 컷으로 짧게 보여 주면 같이 다녀온 느낌이 듭니다'},
+  {k:'마음',sec:'4',shot:'손 가까이',screen:'돌아오는 길에 든 것',line:'{c}.',sub:'{c}',sfx:'',why:'솔직한 마음 한마디에 댓글이 달립니다'},
+  {k:'마무리',sec:'3',shot:'넓게 한 컷',screen:'창밖, 집 가는 길',line:['다음 이야기도 올릴게요. 지켜봐 주세요.','비슷한 하루 보내신 분, 댓글로 알려 주세요.'],sub:['다음 이야기도 올릴게요','비슷한 하루 보내신 분?'],sfx:'',why:'다음을 약속하면 팔로우합니다'}]},
+ '검증':{psych:'"진짜일까?" 하는 궁금함으로 봅니다. 답을 끝에 주면 끝까지 보고, 자기가 들은 말을 댓글로 답니다.',exTitle:'다들 그렇다고 하는 이 말, 진짜일까요?',note:'확인한 내용만 넣습니다. 확인하지 못했으면 "사람마다 다름"으로 두고 단정하지 않습니다.',
+  ask:[{k:'a',q:'어디서 어떤 말을 들었나요?',ex:'주변에서 다들 그렇게 말하더라고요'},{k:'b',q:'확인한 내용과 어디서 확인했는지',need:1},{k:'c',q:'그래서 답은? (맞다, 아니다, 사람마다 다름)',need:1}],scenes:[
+  {k:'첫 3초',sec:'3',shot:'물건 눈높이',screen:'주제가 되는 물건 하나',line:'{제목}',sub:'{제목}',sfx:'',why:'질문으로 시작하면 답을 보려고 남습니다'},
+  {k:'어디서 들었나',sec:'5',shot:'화면·자료 찍기',screen:'그 말이 나온 곳 (댓글, 메모, 메시지 화면). 이름은 가리기',line:'{a}.',sub:'{a}',sfx:'',why:'"나도 들었는데" 하는 공감이 생깁니다'},
+  {k:'확인',sec:'8',shot:'화면·자료 찍기',screen:'확인한 자료 화면. 출처 이름이 보이게',line:'{b}.',sub:'{b}',sfx:'',why:'출처가 보여야 믿고 공유합니다'},
+  {k:'답',sec:'3',shot:'손 가까이',screen:'물건을 다시, 가까이',line:'그래서 답은, {c}.',sub:'{c}',sfx:'답이 나올 때 한 번',why:'답이 짧게 보이면 기억에 남습니다'},
+  {k:'마무리',sec:'4',shot:'넓게 한 컷',screen:'조용한 장면',line:['여러분이 들은 다른 말은 뭐가 있나요? 댓글로 알려 주시면 확인해 볼게요.'],sub:['들은 말, 댓글로 알려 주세요'],sfx:'',why:'다음 편 주제를 댓글에서 받습니다'}]},
+ '개그':{psych:'"우리 집도 저래" 하는 공감과 예상 밖의 끝으로 봅니다. 짝꿍에게 보여 주려고 공유합니다.',exTitle:'큰맘 먹고 준비했더니 생긴 일',note:'말은 넣지 않고 자막만 씁니다. 글 첫 줄에 "짝꿍 태그해 주세요"를 적습니다.',
+  ask:[{k:'a',q:'진지하게 시작하는 한 줄',ex:'오늘은 큰맘 먹고 준비한 날'},{k:'b',q:'기대를 키우는 한 줄',ex:'한 시간이나 걸렸습니다'},{k:'c',q:'예상과 반대로 된 일',ex:'돌아와 보니 이미 끝나 있었습니다'}],scenes:[
+  {k:'첫 3초',sec:'3',shot:'세워 두고 찍기',screen:'진지하게 준비하는 모습 (어깨 아래만)',line:'',sub:'{a}',sfx:'',why:'진지하게 시작해야 뒤의 반전이 웃깁니다'},
+  {k:'기대 키우기',sec:'5',shot:'위에서 내려찍기',screen:'정성 들이는 장면 2컷',line:'',sub:'{b}',sfx:'',why:'기대가 클수록 반전이 큽니다'},
+  {k:'반전 직전',sec:'3',shot:'세워 두고 찍기',screen:'다 됐다고 한숨 돌리는 모습',line:'',sub:['이제 다 됐다','완벽하다'],sfx:'',why:'한 박자 쉬어야 반전이 삽니다'},
+  {k:'반전',sec:'4',shot:'넓게 한 컷',screen:'예상과 반대로 된 장면',line:'',sub:'{c}',sfx:'그 순간 한 번',why:'자막은 담담하고 장면이 웃기면 엇갈림이 웃음이 됩니다'},
+  {k:'마지막 컷',sec:'3',shot:'손 가까이',screen:'말없는 반응 한 컷 (멈춘 손)',line:'',sub:['…','오늘도 평화롭습니다'],sfx:'',why:'반응을 짧게 보여 주고 바로 끝내야 다시 봅니다'}]},
+ '기타':{psych:'첫 3초에 "이게 뭐지?" 하고 멈추게 하고, 끝에 할 일을 하나만 부탁합니다.',exTitle:'오늘 해 본 것을 보여 드립니다',
+  ask:[{k:'a',q:'무엇을 보여 주나요? (한두 문장)',ex:'오늘 해 본 것을 순서대로 보여 드릴게요'},{k:'b',q:'끝에 부탁할 말 한 가지',ex:'도움이 됐다면 저장해 주세요'}],scenes:[
+  {k:'첫 3초',sec:'3',shot:'손 가까이',screen:'가장 눈에 띄는 장면 하나',line:'{제목}',sub:'{제목}',sfx:'',why:'처음 3초에 넘길지 정합니다'},
+  {k:'가운데',sec:'15',shot:'위에서 내려찍기',screen:'컷마다 1~2초. 문장마다 컷 하나',line:'{a}.',sub:'{a}',sfx:'',why:'컷이 짧으면 끝까지 봅니다'},
+  {k:'마무리',sec:'4',shot:'넓게 한 컷',screen:'조용한 장면',line:'{b}.',sub:'{b}',sfx:'',why:'할 일을 하나만 말해야 합니다'}]}
 };
 function tplFor(it){
-  var own=S.tpls.filter(function(t){return t.ch===S.ch&&t.scenes&&t.scenes.length}).sort(function(a,b){return (b.ver||0)-(a.ver||0)||(b.at||0)-(a.at||0)});
-  var t=own.filter(function(t){return it.corner&&t.corner===it.corner})[0];if(t)return {t:t,src:'이 채널에 맞춰 Claude가 만든 틀'+(t.ver?' '+t.ver+'판':'')};
-  var fm=cForm(it.corner)||'기타';t=own.filter(function(t){return !t.corner&&t.form===fm})[0];if(t)return {t:t,src:'Claude가 만든 '+fm+' 틀'};
-  return {t:DTPL[fm]||DTPL['기타'],src:(DTPL[fm]&&fm!=='기타'?'기본 '+fm+' 틀':'기본 틀')};
+  var own=S.tpls.filter(function(t){return t.ch===S.ch&&t.scenes&&t.scenes.length}).sort(function(a,b){return (b.ver||0)-(a.ver||0)||(b.at||0)-(a.at||0)}),fm=cForm(it.corner)||'기타';
+  var t=own.filter(function(t){return it.corner&&t.corner===it.corner})[0];if(t)return {t:t,src:'이 코너에 맞춘 틀'};
+  t=own.filter(function(t){return !t.corner&&t.form===fm})[0];if(t)return {t:t,src:fm+' 틀'};
+  return {t:DTPL[fm]||DTPL['기타'],src:'기본 틀'};
 }
-function tplRows(it){var o=tplFor(it),tg=String(curConcept().tag||'').trim();if(/미정|후보/.test(tg))tg='';
-  return o.t.scenes.map(function(x){var r={};['k','sec','shot','screen','line','sub','sfx','why'].forEach(function(f){r[f]=String(x[f]==null?'':x[f]).replace(/\{제목\}/g,it.title||'(제목)').replace(/\{이름표\}/g,tg).trim()});return r})}
-function askOf(it){return S.asks.filter(function(a){return a.ch===S.ch&&a.kind==='script'&&a.item===it.id}).sort(function(a,b){return (b.at||0)-(a.at||0)})[0]}
-function autoPanel(it){
-  if(S.ro)return '';var has=scFilled(it).length>0,o=tplFor(it),a=askOf(it),h='<div class="panel noprint"><h2>자동 대본</h2>';
-  h+='<div class="auto2"><div class="kvb"><b>바로 만들기</b><div class="hs">'+esc(o.src)+'으로 장면, 구도, 자막, 효과음 자리를 채웁니다. 괄호 ( ) 안만 내 말로 바꾸면 됩니다.</div><button class="btn pri" data-act="scFill" data-id="'+esc(it.id)+'"'+(has?' data-force="1"':'')+'>'+(has?'틀로 다시 만들기':'바로 틀 만들기')+'</button>'+(it.scenesPrev&&it.scenesPrev.length?'<button class="btn sm" data-act="scBack" data-id="'+esc(it.id)+'">이전 대본으로 되돌리기</button>':'')+'</div>';
-  h+='<div class="kvb"><b>Claude에게 맞춤 대본 요청</b><div class="hs">제목, 기획, 레퍼런스, 지난 편 성과를 보고 이 편만의 대본을 써 옵니다. Claude가 켜져 있을 때 처리합니다 (매일 오후 2시쯤).</div>';
-  if(a&&a.status!=='done')h+='<div class="cm"><small>'+day(a.reqAt||a.at)+' 요청함</small>기다리는 중입니다.'+(a.text?' 메모: '+esc(a.text):'')+'</div>';
-  else h+='<textarea id="rqNote" placeholder="꼭 넣고 싶은 말이나 장면 (비워도 됩니다)" style="min-height:64px"></textarea><button class="btn" data-act="scReq" data-id="'+esc(it.id)+'">'+(a?'다시 요청':'요청하기')+'</button>';
-  h+='</div></div>';
-  if(a&&a.status==='done'&&a.res&&a.res.scenes){var r=a.res;h+='<div class="f"><label>Claude가 써 온 대본<small>'+day(r.at||a.at)+(a.used?' · 대본에 넣음':'')+'</small></label>'+(r.psych?'<div class="guide">사람들이 보는 이유: '+esc(r.psych)+'</div>':'')+
-    r.scenes.map(function(x){return '<div class="cm"><small>'+esc(x.k||'')+(x.sec?' · '+esc(x.sec)+'초':'')+(x.shot?' · '+esc(x.shot):'')+'</small>'+(x.line?'<b>'+esc(x.line)+'</b><br>':'')+(x.sub?'자막: '+esc(x.sub)+'<br>':'')+(x.screen?'촬영: '+esc(x.screen):'')+'</div>'}).join('')+(r.note?'<div class="hs">'+esc(r.note)+'</div>':'')+
-    '<button class="btn pri" style="justify-self:start" data-act="scUse" data-id="'+esc(a.id)+'">이 대본을 넣기</button><div class="hs">지금 대본은 지워지지 않고 보관됩니다. 되돌릴 수 있습니다.</div></div>'}
-  return h+'</div>';
+function tplAsks(t){return (t.ask||[]).filter(function(a){return a&&a.k&&a.q})}
+function tplRows(it,ans){
+  var t=tplFor(it).t,asks={},tv=+it.tv||0,title=String(it.title||'').trim();tplAsks(t).forEach(function(a){asks[a.k]=a});ans=ans||it.ans||{};
+  return t.scenes.map(function(x){var r={},ex=0;
+    ['k','sec','shot','screen','line','sub','sfx','why'].forEach(function(f){var s=x[f];if(Array.isArray(s))s=s.length?s[tv%s.length]:'';s=String(s==null?'':s);
+      s=s.replace(/\{이름표\}\s*/g,'').replace(/\{제목\}/g,function(){if(title)return title;ex=Math.max(ex,1);return t.exTitle||'(제목)'})
+        .replace(/\{([a-z])\}/g,function(m,k,off,str){var v=String(ans[k]||'').trim(),a=asks[k];
+          if(!v){if(a&&a.need){ex=2;return '('+String(a.q).replace(/\s*\(.*\)\s*$/,'').replace(/\?$/,'')+')'}ex=Math.max(ex,1);v=a&&a.ex?a.ex:'( )'}
+          if(/[.,!?]/.test(str.charAt(off+m.length)))v=v.replace(/[.!?\s]+$/,'');return v});
+      r[f]=s.trim()});
+    r.ex=ex?String(ex):'';return r});
 }
+
+/* ---------- 찍는 법 ---------- */
 var MAKE=[
  ['찍기 전에',['세로로 찍습니다 (9:16). 폰을 세워서.','렌즈를 옷으로 한 번 닦습니다. 뿌연 화면의 대부분이 이것입니다.','창가에서 찍습니다. 창을 옆에 두면 그림자가 부드럽습니다. 형광등 바로 아래는 피합니다.','카메라 설정에서 격자선을 켭니다. 물건을 가운데 줄에 맞춥니다.','방해 금지를 켭니다. 찍는 중에 알림이 뜨지 않게.']],
- ['대본과 맞춰 찍는 법',['대본의 말 한 문장이 컷 하나입니다. 한 컷은 1~2초만 쓰입니다.','말에 나오는 물건이 그 순간 화면에 있어야 합니다. "주스"라고 말할 때 주스가 보이게.','컷마다 5초씩 넉넉히 찍습니다. 앞뒤는 편집에서 자릅니다.','대본 순서대로 찍지 않습니다. 같은 구도, 같은 자리끼리 묶어서 찍으면 빨리 끝납니다. 콘텐츠 안의 촬영 목록에 체크하며 찍습니다.','첫 3초 장면은 세 번 찍어 둡니다. 가장 잘 나온 것을 고릅니다.']],
+ ['대본과 맞춰 찍기',['대본의 말 한 문장이 컷 하나입니다. 한 컷은 1~2초만 쓰입니다.','말에 나오는 물건이 그 순간 화면에 있어야 합니다. "주스"라고 말할 때 주스가 보이게.','컷마다 5초씩 넉넉히 찍습니다. 앞뒤는 편집에서 자릅니다.','대본 순서대로 찍지 않습니다. 같은 구도, 같은 자리끼리 묶어서 찍으면 빨리 끝납니다. 콘텐츠 안의 촬영 목록에 체크하며 찍습니다.','첫 3초 장면은 세 번 찍어 둡니다. 가장 잘 나온 것을 고릅니다.']],
  ['얼굴 없이 찍기',['손, 물건, 뒷모습, 그림자로 "내가 하는 중"을 보여 줍니다.','거울, 창, 숟가락 같은 반사되는 곳에 얼굴이 비치는지 봅니다.','병원 이름, 내 이름, 접수 번호, 차 번호는 찍기 전에 가립니다.']],
  ['목소리 녹음',['조용한 방에서, 옷장 앞이나 이불 가까이에서 녹음하면 울림이 줄어듭니다.','폰을 입에서 한 뼘 떨어뜨립니다.','한 문장씩 끊어서 녹음합니다. 틀리면 그 문장만 다시.','평소보다 조금 빠르게 말합니다. 느리면 넘깁니다.']],
  ['편집 순서',['1. 쓸 컷만 고릅니다.','2. 대본 순서로 놓습니다.','3. 목소리를 얹습니다.','4. 컷 길이를 말에 맞춰 자릅니다. 말이 끝나면 바로 다음 컷.','5. 자막을 넣습니다. 대본의 자막 칸 그대로.','6. 효과음은 대본에 적은 곳만.','7. 배경음악은 목소리가 또렷이 들릴 만큼 작게.','8. 표지에 제목을 크게 넣습니다.']],
- ['올릴 때',['글 첫 줄에 저장하거나 공유할 이유를 씁니다.','해시태그는 3~5개만. 주제에 딱 맞는 것으로.','올리고 한 시간 동안 달리는 댓글에 답합니다.','7일 뒤 조회, 저장, 공유 숫자와 배운 점을 콘텐츠에 적습니다. 다음 편 틀에 반영됩니다.']]
+ ['올릴 때',['글 첫 줄에 저장하거나 공유할 이유를 씁니다.','해시태그는 3~5개만. 주제에 딱 맞는 것으로.','올리고 한 시간 동안 달리는 댓글에 답합니다.','7일 뒤 조회, 저장, 공유 숫자와 배운 점을 콘텐츠에 적습니다. 다음 편을 만들 때 같이 보입니다.']]
 ];
-var FAQ0=[['장비가 필요한가요?','폰 하나면 됩니다. 세워 둘 때는 컵이나 책에 기대면 됩니다.'],['몇 초로 만들어야 하나요?','처음에는 20~30초로 짧게 만듭니다. 대본의 초를 더한 숫자가 화면에 나옵니다.'],['편집은 무엇으로 하나요?','인스타그램 안의 편집 기능이나 무료 편집 앱이면 충분합니다. 자막과 컷 자르기만 되면 됩니다.'],['말을 꼭 넣어야 하나요?','아닙니다. 개그나 브이로그는 자막만으로도 됩니다. 대본의 말 칸을 비우고 자막 칸만 채우면 됩니다.']];
-function guidePage(){
-  var h='<div class="panel" style="margin-top:0"><h2>구도 7가지</h2><div class="hs">대본의 장면마다 "구도" 칸에서 고릅니다. 틀을 만들면 미리 들어 있습니다.</div><div class="shg">'+SHOTS.map(function(s){return '<div class="shc">'+shotSvg(s[0])+'<b>'+s[0]+'</b><small>'+s[1]+'</small><div>'+s[2]+'</div></div>'}).join('')+'</div></div>';
-  MAKE.forEach(function(m){var od=/^1\. /.test(m[1][0]);h+='<div class="panel"><h2>'+m[0]+'</h2><'+(od?'ol':'ul')+' class="how">'+m[1].map(function(x){return '<li>'+x.replace(/^\d+\. /,'')+'</li>'}).join('')+'</'+(od?'ol':'ul')+'></div>'});
-  var qs=S.asks.filter(function(a){return a.ch===S.ch&&a.kind==='q'}).sort(function(a,b){return (b.at||0)-(a.at||0)});
-  h+='<div class="panel"><h2>궁금한 것</h2>'+qs.map(function(a){var r=a.res||{};return '<div class="cm"><small>'+day(a.at)+' · '+esc(who(a.by)||'')+'</small><b>'+esc(a.text)+'</b><br>'+(a.status==='done'&&r.a?esc(r.a):'<span style="color:var(--warn)">답을 기다리는 중입니다. Claude가 켜지면 답합니다.</span>')+'</div>'}).join('')+
-    FAQ0.map(function(x){return '<div class="cm"><b>'+x[0]+'</b><br>'+x[1]+'</div>'}).join('')+
-    (S.ro?'':'<textarea id="qIn" placeholder="찍다가, 편집하다가 막힌 것을 적어 주세요" style="min-height:70px"></textarea><button class="btn pri" style="justify-self:start" data-act="qAsk">물어보기</button><div class="hs">답은 여기에 쌓여서 다음에도 볼 수 있습니다.</div>')+'</div>';
-  return h+'<div class="guide">여기 적힌 방법은 일반적으로 쓰는 촬영, 편집 방법을 정리한 것입니다. 우리 영상 성과가 쌓이면 그에 맞춰 고칩니다.</div>';
+var FAQ0=[['장비가 필요한가요?','폰 하나면 됩니다. 세워 둘 때는 컵이나 책에 기대면 됩니다.'],['몇 초로 만들어야 하나요?','처음에는 20~30초로 짧게 만듭니다. 대본의 초를 더한 숫자가 대본 위에 나옵니다.'],['편집은 무엇으로 하나요?','인스타그램 안의 편집 기능이나 무료 편집 앱이면 충분합니다. 자막과 컷 자르기만 되면 됩니다.'],['말을 꼭 넣어야 하나요?','아닙니다. 개그나 브이로그는 자막만으로도 됩니다. 대본의 말 칸을 비우고 자막 칸만 채우면 됩니다.']];
+var HOWS=['전체 순서','구도 7가지','찍기 전에','대본과 맞춰 찍기','얼굴 없이 찍기','목소리 녹음','자막 · 효과음 · 음악','편집 순서','올릴 때','궁금한 것'];
+function howList(m){var od=/^1\. /.test(m[1][0]);return '<div class="panel"><h2>'+m[0]+'</h2><'+(od?'ol':'ul')+' class="how">'+m[1].map(function(x){return '<li>'+x.replace(/^\d+\. /,'')+'</li>'}).join('')+'</'+(od?'ol':'ul')+'></div>'}
+function howPage(){
+  var n=Math.max(0,Math.min(HOWS.length-1,+S.hs||0)),b='';
+  var h='<div class="bar"><h2 class="h1">찍는 법</h2><span class="hs">처음 찍는 분도 따라 할 수 있게 순서대로 적었습니다.</span></div><div class="hw"><div class="panel hwn">'+HOWS.map(function(x,i){return '<button class="swi'+(i===n?' on':'')+'" data-act="hs" data-v="'+i+'"><b>'+x+'</b></button>'}).join('')+'</div><div class="hwm">';
+  if(n===0)b='<div class="panel"><h2>대본부터 올리기까지</h2><div class="hsteps">'+SHOW.map(function(x,i){return '<div><i>'+(i+1)+'</i><div><b>'+x[0]+'</b><span>'+x[1]+'</span></div></div>'}).join('')+'</div><button class="btn pri" style="justify-self:start" data-tab="script">대본 만들러 가기</button></div>';
+  else if(n===1)b='<div class="panel"><h2>구도 7가지</h2><div class="hs">대본의 장면마다 어떤 구도로 찍을지 적혀 있습니다. 이름과 그림을 맞춰 보세요.</div><div class="shg">'+SHOTS.map(function(s){return '<div class="shc">'+shotSvg(s[0])+'<b>'+s[0]+'</b><small>'+s[1]+'</small><div>'+s[2]+'</div></div>'}).join('')+'</div></div>';
+  else if(n>=2&&n<=5)b=howList(MAKE[n-2]);
+  else if(n===6){var ex=S.rchs.filter(function(r){return r.ch===S.ch&&/자막/.test(r.tone||'')&&mult(r)>=5}).sort(function(a,b){return mult(b)-mult(a)}).slice(0,3);
+    b='<div class="panel"><h2>장면마다 자막 넣는 법</h2>'+PARTG.map(function(x){return '<div class="srow"><span>'+x[0]+'</span><div>'+x[1]+'</div></div>'}).join('')+'</div><div class="panel"><h2>형식마다 이렇게 씁니다</h2>'+Object.keys(SUBG).map(function(k){var g=SUBG[k];return '<div class="fmr"><b>'+k+'</b><div><div class="srow"><span>자막</span><div>'+g.sub+'</div></div><div class="srow"><span>효과음</span><div>'+g.sfx+'</div></div><div class="srow"><span>배경음악</span><div>'+g.bgm+'</div></div></div></div>'}).join('')+'<div class="guide">대본을 만들면 그 코너에 맞는 자막 방식과 배경음악이 같이 들어갑니다.</div></div>'+
+      (ex.length?'<div class="panel"><h2>잘되는 곳의 자막 <small class="hs">조사한 계정</small></h2>'+ex.map(function(r){return '<div class="cm"><small>@'+esc(r.account)+' · 팔로워의 '+mult(r)+'배</small>'+esc(r.tone)+'</div>'}).join('')+'</div>':'')}
+  else if(n===7)b=howList(MAKE[4]);
+  else if(n===8)b=howList(MAKE[5]);
+  else{var qs=S.asks.filter(function(a){return a.ch===S.ch&&a.kind==='q'}).sort(function(a,b){return (b.at||0)-(a.at||0)});
+    b='<div class="panel"><h2>궁금한 것</h2>'+(S.ro?'':'<textarea id="qIn" placeholder="찍다가, 편집하다가 막힌 것을 적어 주세요" style="min-height:70px"></textarea><button class="btn pri" style="justify-self:start" data-act="qAsk">물어보기</button><div class="hs">Claude가 켜지면 답을 달아 둡니다. 답은 여기에 쌓여서 다음에도 볼 수 있습니다.</div>')+
+      qs.map(function(a){var r=a.res||{};return '<div class="cm"><small>'+day(a.at)+' · '+esc(who(a.by)||'')+'</small><b>'+esc(a.text)+'</b><br>'+(a.status==='done'&&r.a?esc(r.a):'<span style="color:var(--warn)">답을 기다리는 중입니다.</span>')+'</div>'}).join('')+FAQ0.map(function(x){return '<div class="cm"><b>'+x[0]+'</b><br>'+x[1]+'</div>'}).join('')+'</div>'}
+  h+=b+'<div class="bar" style="margin:0">'+(n>0?'<button class="btn" data-act="hs" data-v="'+(n-1)+'">이전: '+HOWS[n-1]+'</button>':'')+'<span class="sp"></span>'+(n<HOWS.length-1?'<button class="btn pri" data-act="hs" data-v="'+(n+1)+'">다음: '+HOWS[n+1]+'</button>':'')+'</div>';
+  return h+'<div class="guide">여기 적힌 방법은 일반적으로 쓰는 촬영, 편집 방법을 정리한 것입니다. 우리 영상 성과가 쌓이면 그에 맞춰 고칩니다.</div></div></div>';
 }
 
+
+function say(t,ms){toast(t);clearTimeout(timers.toast);timers.toast=setTimeout(function(){document.getElementById('toast').style.display='none'},ms||3500)}
 /* ---------- 크리에이터 한 장 ---------- */
 function tile(sec,label,val,big){return '<button class="kv'+(big?' kb':'')+(val?'':' none')+'" data-sec="'+sec+'"><small>'+label+'</small><b>'+esc(val||'아직 없음 · 눌러서 적기')+'</b></button>'}
 function conceptSheet(){
   var c=curConcept(),cs=corners(),ts=(S.talks||[]).filter(function(t){return t.ch===S.ch&&!t.decided&&/^c\d/.test(t.scope||'')}).length;
   var h='<div class="bar"><h2 class="h1">'+esc(chName())+'</h2><span class="hs">누른 칸만 열려서 고칩니다.</span><span class="sp"></span>'+(ts?'<span class="badge warn">같이 정할 것 '+ts+'</span>':'')+'</div><div class="hm">';
-  h+='<button class="panel big kvb" data-sec="0"><span class="badge acc">모든 영상 첫 문장 (이름표)</span><div class="bt">'+esc(c.tag||'아직 없음 · 눌러서 정하기')+'</div><div class="bs">정해 두면 대본 초안의 첫 줄에 들어갑니다.</div></button>';
+  h+='<button class="panel big kvb" data-sec="0"><span class="badge acc">모든 영상 첫 문장 (이름표)</span><div class="bt">'+esc(c.tag||'아직 없음 · 눌러서 정하기')+'</div><div class="bs">모든 영상을 여는 한 문장입니다. 정해 두고 첫 3초에 씁니다.</div></button>';
   h+='<div class="kg">'+tile(0,'한 줄 소개',c.one)+tile(1,'가장 좁힌 자리',c.l3)+tile(0,'보여 주는 것과 안 보여 주는 것',c.show)+tile(0,'말투와 분위기',c.tone)+tile(0,'누구인가',c.speaker)+tile(1,'누가 보나',c.target)+tile(1,'다른 계정과 다른 점',c.diff)+tile(0,'하지 않는 것',c.dont)+'</div>';
   h+='<div class="hg2"><div class="panel"><h2>코너와 올리는 리듬</h2>'+tile(2,'코너',cs.join(' · '))+'<div class="kg k2">'+tile(2,'한 주에 몇 편',c.freq)+tile(2,'요일과 시간',c.slot)+'</div></div>';
   h+='<div class="panel"><h2>숫자</h2><div id="grow">'+growStats(c)+'</div><div class="kg k2">'+tile(3,'지금 팔로워',c.folNow)+tile(3,'목표 팔로워',c.folGoal)+'</div></div></div>';
@@ -518,7 +729,7 @@ function calc(it){var v=num(it.views),f=num(it.fol),m=v&&f?Math.round(v/f*10)/10
   return '<span><small>조회 ÷ 팔로워</small><br><b class="'+(m>=10?'ok':'')+'">'+(m?m+'배':'-')+'</b></span>'+(m?'<span class="badge '+(m>=10?'ok':'')+'">'+(m>=10?'10배 통과':'10배 미달')+'</span>':'')+
     (v&&(sv||sh)?'<span><small>조회 1,000회당 저장과 공유</small><br><b>'+Math.round((sv+sh)/v*1000*10)/10+'</b></span>':'')}
 /* ---------- 콘텐츠 작업판: 보고 시작 → 쓰기 → 찍고 돌아보기 ---------- */
-function cForm(cn){cn=cn||'';return /썰/.test(cn)?'썰':/검증|미신/.test(cn)?'검증':/브이로그|일상/.test(cn)?'브이로그':/개그|웃/.test(cn)?'개그':/꿀팁|정보|리뷰|주스|정리/.test(cn)?'정보 정리':''}
+function cForm(cn){cn=cn||'';return /썰/.test(cn)?'썰':/검증|미신/.test(cn)?'검증':/브이로그|일상|운동/.test(cn)?'브이로그':/개그|웃/.test(cn)?'개그':/꿀팁|정보|리뷰|주스|정리/.test(cn)?'정보 정리':''}
 function fxOf(cn){var a=(curConcept().fx||{})[cn];return a&&a.length?a:[]}
 function recRefs(it){
   var ids=it.refIds||[],cx={},fm=cForm(it.corner);rcList().forEach(function(c){cx[c.key]=c.x});
@@ -530,9 +741,10 @@ function refMini(r,x,picked,fit){var u=safeUrl(r.url);
     (r.video?'<b>'+esc(String(r.video).slice(0,40))+(r.views?' <span style="color:var(--acc)">'+fmt(r.views)+'</span>':'')+'</b>':'')+
     (r.hook?'<div class="row"><span>첫 3초</span><div>'+esc(r.hook)+'</div></div>':'')+(picked&&r.end?'<div class="row"><span>끝</span><div>'+esc(r.end)+'</div></div>':'')+
     (r.learn?'<div class="row"><span>가져올 점</span><div><b>'+esc(r.learn)+'</b></div></div>':'')+
-    '<div class="meta">'+(u?'<a class="btn sm" href="'+esc(u)+'" target="_blank" rel="noopener">영상 열기</a>':'')+(S.ro?'':(picked?'<button class="btn sm" data-unref="'+esc(r.id)+'">빼기</button>':'<button class="btn sm pri" data-act="pickRef" data-id="'+esc(r.id)+'">고르기</button>'))+'</div></div>'}
+    '<div class="meta">'+(u?'<a class="btn sm" href="'+esc(u)+'" target="_blank" rel="noopener">영상 열기</a>':'')+(S.ro?'':(picked?'<button class="btn sm" data-unref="'+esc(r.id)+'">빼기</button>':'<button class="btn sm" data-act="pickRef" data-id="'+esc(r.id)+'">고르기</button>'))+'</div></div>'}
 function fxCard(it){
   var cn=it.corner||'',a=fxOf(cn),f=a[a.length-1],pd=S.role==='pd'&&!S.ro;
+  if(!f&&!pd)return '';
   var h='<div class="panel fxc"><h2>'+(cn?esc(cn)+' 공식':'코너 공식')+(f?' <span class="badge acc">'+f.v+'판 · '+day(f.at)+'</span>':'')+'</h2>';
   if(!cn)return h+'<div style="color:var(--sub)">위에서 코너를 고르면 그 코너의 공식이 여기에 뜹니다.</div></div>';
   if(S.fxEdit&&pd){
@@ -548,9 +760,10 @@ function fxCard(it){
   if(pd)h+='<button class="btn sm" style="justify-self:start" data-act="fxEdit">'+(f?'공식 고치기 (새 판)':'공식 만들기')+'</button>';
   return h+'</div>';
 }
-function edChecks(it){
-  var sc=it.scenes||[],first=sc[0]||{},last=sc[sc.length-1]||{},tot=0;sc.forEach(function(x){tot+=num(x.sec)});
-  var c=[[!!((it.refIds||[]).length),'레퍼런스를 골랐다'],[!!it.gap,'차별화 한 가지를 적었다'],[!!(first.screen&&(first.line||first.sub)),'첫 3초에 화면과 말(또는 자막)이 있다'],[!!(sc.length>1&&(last.line||last.sub||last.screen))||!!it.cta,'끝에 저장, 공유, 다음 편으로 이어지는 말이 있다'],[tot>0&&tot<=60,'전체 길이를 적었고 60초 이하다'+(tot?' (지금 '+tot+'초)':'')]];
+function edChecks(it,so){
+  var sc=it.scenes||[],first=sc[0]||{},last=sc[sc.length-1]||{},tot=scTot(sc),nex=sc.filter(function(x){return x.ex}).length;
+  var c=[[!!((it.refIds||[]).length),'레퍼런스를 골랐다'],[!!it.gap,'차별화 한 가지를 적었다'],[!!(first.screen&&(first.line||first.sub)),'첫 3초에 화면과 말(또는 자막)이 있다'],[!!(sc.length>1&&(last.line||last.sub||last.screen))||!!it.cta,'끝에 저장, 댓글, 다음 편으로 이어지는 말이 있다'],[tot>0&&tot<=60,'전체 길이가 60초 이하다'+(tot?' (지금 '+tot+'초)':'')]];
+  if(so){c=c.slice(2);c.push([sc.length>0&&!nex,'예시 문장을 모두 내 말로 바꿨다'+(nex?' (남은 곳 '+nex+')':'')])}
   return '<div class="chk">'+c.map(function(x){return '<div class="'+(x[0]?'y':'')+'"><i>'+(x[0]?'✓':'')+'</i>'+x[1]+'</div>'}).join('')+'</div>';
 }
 function shotList(it){var dn=it.shotDone||[],l=scenesOf(it).filter(function(x){return (x.screen||'').trim()});
@@ -580,17 +793,18 @@ function editor(it){
   var c=curConcept();
   h+='<div class="edc"><div class="lab">② 쓰기</div><div class="panel diffc"><h2>차별화 한 가지</h2>'+(c.l3||c.diff?'<div class="guide">이 크리에이터의 자리: '+esc(c.l3||c.diff)+'</div>':'')+ta('gap',it,'고른 레퍼런스에는 없고 이 영상에만 있는 것',64)+'</div>';
   h+='<div class="panel"><h2>기획</h2><div class="cols">'+F('기획의도','왜 만들고 누가 보나',ta('intent',it,'',70))+F('포인트','이 영상만의 한 가지',ta('point',it,'',70))+'</div>'+F('저장하거나 공유할 이유','글 첫 줄에 쓸 말',ta('cta',it,'',56))+(it.story||!S.ro?'<details'+(it.story?' open':'')+'><summary>스토리 메모</summary>'+ta('story',it,'전체 흐름을 글로 적고 싶을 때',80)+'</details>':'')+'</div>';
-  var sc=scenesOf(it),tot=0,fx=fxOf(it.corner),f=fx[fx.length-1];sc.forEach(function(x){tot+=num(x.sec)});
-  h+='<div class="panel"><h2>대본<small style="font-weight:500;color:var(--sub);font-size:15px;margin-left:8px">줄마다 화면, 말, 자막을 따로</small></h2><div class="sc sch"><span>장면 · 구도</span><span>촬영 (화면)</span><span>말</span><span>자막</span><span>효과음</span><span>초</span><span></span></div><div id="scs" style="display:grid;gap:10px">';
-  sc.forEach(function(x,i){var hint=f?(i===0?f.hook:i===sc.length-1?f.end:f.mid):'';
-    h+='<div class="sc"><div class="sck"><input data-sc="'+i+':k" value="'+esc(x.k||'')+'" placeholder="장면"'+ro+'><select data-sc="'+i+':shot"'+(S.ro?' disabled':'')+'><option value="">구도 고르기</option>'+SHOTS.map(function(q){return q[0]}).concat(x.shot&&!SHOTS.some(function(q){return q[0]===x.shot})?[x.shot]:[]).map(function(q){return '<option'+(q===x.shot?' selected':'')+'>'+esc(q)+'</option>'}).join('')+'</select><input type="hidden" data-sc="'+i+':why" value="'+esc(x.why||'')+'">'+(x.why?'<small style="color:var(--sub)">'+esc(x.why)+'</small>':'')+(hint?'<small>공식: '+esc(hint)+'</small>':'')+'</div><textarea data-sc="'+i+':screen" placeholder="촬영 (화면)"'+ro+'>'+esc(x.screen||'')+'</textarea><textarea data-sc="'+i+':line" placeholder="말"'+ro+'>'+esc(x.line||'')+'</textarea><textarea data-sc="'+i+':sub" placeholder="자막"'+ro+'>'+esc(x.sub||'')+'</textarea><textarea data-sc="'+i+':sfx" placeholder="효과음"'+ro+'>'+esc(x.sfx||'')+'</textarea><input class="scs" data-sc="'+i+':sec" inputmode="numeric" value="'+esc(x.sec||'')+'" placeholder="초"'+ro+'>'+(S.ro?'<span class="scx"></span>':'<button class="btn sm scx" data-scdel="'+i+'" aria-label="장면 지우기">×</button>')+'</div>'});
-  h+='</div><div class="bar" style="margin:0">'+(S.ro?'':'<button class="btn" data-act="scAdd">장면 추가</button>')+'<span class="sp"></span><button class="btn sm" data-act="sm" data-v="g" data-go="1">구도 보기</button><button class="btn sm" data-act="svOpen" data-id="'+esc(it.id)+'">큰 글씨로 보기</button><b id="tot">전체 '+tot+'초</b></div>'+
-    '<div class="cols">'+F('배경음악','한 곡으로',inp('bgm',it,'예: 잔잔한 피아노, 작게'))+F('자막 방식','위치, 크기, 색',inp('subStyle',it,'예: 한 줄씩, 아래 가운데, 숫자만 노란색'))+'</div><details><summary>자막, 효과음, 배경음악 쓰는 법</summary><div style="display:grid;gap:8px;margin-top:10px">'+subTips(it)+'</div></details>'+
-    '<div class="f"><label>대본 점검<small>적을수록 채워집니다</small></label><div id="chk">'+edChecks(it)+'</div></div>'+(it.script||!S.ro?'<details'+(it.script?' open':'')+'><summary>대본 메모</summary>'+ta('script',it,'',70)+'</details>':'')+'</div></div>';
+  var sc=it.scenes||[],nsc=scFilled(it).length,drf=nsc?null:draftOf(it);
+  h+='<div class="panel"><h2>대본'+(nsc?' <span class="badge acc">'+scSum(it)+'</span>':'')+'</h2>';
+  if(nsc)h+='<div class="scp">'+sc.map(function(x,i){return '<div><span>'+esc(x.k||(i+1)+'번')+'</span><div>'+esc(x.line||x.sub||x.screen||'')+'</div></div>'}).join('')+'</div>';
+  else h+='<div class="hs">'+(drf?'Claude가 이 편에 맞춰 써 둔 대본이 있습니다. 읽어 보고 그대로 시작할 수 있습니다.':'아직 대본이 없습니다. 질문 몇 개에 답하면 장면, 말, 자막, 화면이 한 번에 만들어집니다.')+'</div>';
+  h+='<button class="btn pri" style="justify-self:start" data-act="svOpen" data-id="'+esc(it.id)+'">'+(nsc?'대본 열기 · 고치기':drf?'써 둔 대본 읽어 보기':'대본 만들기')+'</button>';
+  if(nsc)h+='<div class="f"><label>점검</label><div id="chk">'+edChecks(it)+'</div></div>';
+  h+=(it.script||!S.ro?'<details'+(it.script?' open':'')+'><summary>대본 메모</summary>'+ta('script',it,'',70)+'</details>':'')+'</div></div>';
   /* ③ 찍고 돌아보기 */
   h+='<div class="edc"><div class="lab">③ 찍고 돌아보기</div><div class="panel"><h2>촬영 목록<small style="font-weight:500;color:var(--sub);font-size:15px;margin-left:8px">대본에서 자동</small></h2><div id="shots" style="display:grid;gap:6px">'+shotList(it)+'</div>'+F('장소','',inp('place',it,''))+F('준비물','',ta('prep',it,'',60))+'</div>';
-  h+='<div class="panel"><h2>게시</h2>'+F('게시한 날','',inp('posted',it,'','date'))+F('게시 주소','',inp('url',it,'https://'))+(safeUrl(it.url)?'<a class="btn sm" style="justify-self:start" href="'+esc(it.url)+'" target="_blank" rel="noopener">올린 영상 열기</a>':'')+'</div>';
-  h+='<div class="panel"><h2>성과<small style="font-weight:500;color:var(--sub);font-size:15px;margin-left:8px">올린 뒤 7일</small></h2><div class="cols c2">'+F('조회','',inp('views',it,'예: 1.2만'))+F('게시 때 팔로워','',inp('fol',it,'예: 350'))+F('좋아요','',inp('likes',it,''))+F('댓글','',inp('cmts',it,''))+F('저장','',inp('saves',it,''))+F('공유','',inp('shares',it,''))+'</div><div class="calc" id="calc">'+calc(it)+'</div>'+F('배운 점','잘된 점과 다음에 고칠 점',ta('lesson',it,'',80))+'<div class="guide">배운 점은 이 코너 공식의 다음 판 후보로 올라갑니다.</div></div></div>';
+  var g3=grp(it.stage);
+  h+='<details class="panel"'+(g3>=2||it.posted||it.url?' open':'')+'><summary>게시</summary><div class="dbody">'+F('게시한 날','',inp('posted',it,'','date'))+F('게시 주소','',inp('url',it,'https://'))+(safeUrl(it.url)?'<a class="btn sm" style="justify-self:start" href="'+esc(it.url)+'" target="_blank" rel="noopener">올린 영상 열기</a>':'')+'</div></details>';
+  h+='<details class="panel"'+(g3===3||num(it.views)>0||it.lesson?' open':'')+'><summary>성과 <small class="hs">올린 뒤 7일</small></summary><div class="dbody"><div class="cols c2">'+F('조회','',inp('views',it,'예: 1.2만'))+F('게시 때 팔로워','',inp('fol',it,'예: 350'))+F('좋아요','',inp('likes',it,''))+F('댓글','',inp('cmts',it,''))+F('저장','',inp('saves',it,''))+F('공유','',inp('shares',it,''))+'</div><div class="calc" id="calc">'+calc(it)+'</div>'+F('배운 점','잘된 점과 다음에 고칠 점',ta('lesson',it,'',80))+'<div class="guide">배운 점은 이 코너 공식의 다음 판 후보로 올라갑니다.</div></div></details></div>';
   h+='</div>';
   h+='<div class="two" style="margin-top:18px"><div>'+talksHtml('i:'+it.id,'item')+'</div><div class="panel" style="margin-top:0"><h2>의견</h2><div id="cms" style="display:grid;gap:8px">'+cmList(it.id)+'</div>'+
     (S.ro?'':'<textarea id="cmIn" placeholder="의견 남기기" style="min-height:80px"></textarea><button class="btn pri" data-act="cmAdd">의견 올리기</button>')+'</div></div>';
@@ -836,11 +1050,11 @@ function chForm(){return '<div class="panel"><h2>크리에이터 추가</h2><p c
 /* ---------- 동작 ---------- */
 function toast(t,undo){S.undo=undo||null;var el=document.getElementById('toast');document.getElementById('toastT').textContent=t;el.querySelector('button').style.display=undo?'':'none';el.style.display='flex';clearTimeout(timers.toast);timers.toast=setTimeout(function(){el.style.display='none';S.undo=null},9000)}
 function readScenes(){var rows=[];[].forEach.call(app.querySelectorAll('[data-sc]'),function(el){var a=el.dataset.sc.split(':');(rows[+a[0]]=rows[+a[0]]||{})[a[1]]=el.value});return rows}
-function saveScenes(rows,now){var id=S.open;if(!id||S.ro)return;sceneDirty=true;clearTimeout(timers.sc);var go=function(){var s=document.getElementById('saved');if(s)s.textContent='저장 중';return upd('items',id,{scenes:rows}).then(function(){sceneDirty=false;var s=document.getElementById('saved');if(s&&!S.ro)s.textContent='저장됨'})};if(now)return go();timers.sc=setTimeout(go,700)}
+function saveScenes(rows,now){var id=eid();if(!id||S.ro)return;sceneDirty=true;clearTimeout(timers.sc);var go=function(){var s=document.getElementById('saved');if(s)s.textContent='저장 중';return upd('items',id,{scenes:rows}).then(function(){sceneDirty=false;var s=document.getElementById('saved');if(s&&!S.ro)s.textContent='저장됨'})};if(now)return go();timers.sc=setTimeout(go,700)}
 function setTab(t){if(t==='concept')S.sec=-1;S.tab=t;S.open=null;S.refEdit=null;S.addCh=false;S.del=false;try{sessionStorage.setItem('ws-tab',t)}catch(e){}render()}
 var timers={};
 function saveField(el){
-  var id=S.open,f=el.dataset.f,v=el.value;if(!id||S.ro)return;
+  var id=eid(),f=el.dataset.f,v=el.value;if(!id||S.ro)return;
   el.dataset.dirty='1';clearTimeout(timers[f]);
   timers[f]=setTimeout(function(){var d={};d[f]=v;var s=document.getElementById('saved');if(s)s.textContent='저장 중';
     upd('items',id,d).then(function(){delete el.dataset.dirty;var s=document.getElementById('saved');if(s&&!S.ro)s.textContent='저장됨'})},f==='stage'||f==='due'?0:700);
@@ -853,16 +1067,24 @@ function saveConcept(el){
       return S.concepts.some(function(c){return c.id===ch})?ref.update(d):ref.set(d)}).then(function(){delete el.dataset.dirty;var s=document.getElementById('saved');if(s&&!S.ro)s.textContent='저장됨'})},700);
 }
 document.addEventListener('input',function(e){var el=e.target;
-  if(el.dataset&&el.dataset.f){saveField(el);var k=document.getElementById('calc');if(k){var it0=Object.assign({},S.items.filter(function(i){return i.id===S.open})[0]||{});[].forEach.call(app.querySelectorAll('[data-f]'),function(x){it0[x.dataset.f]=x.value});k.innerHTML=calc(it0)}}
-  if(el.dataset&&el.dataset.sc){var rows=readScenes();saveScenes(rows);var t=0;rows.forEach(function(x){t+=num(x.sec)});var te=document.getElementById('tot');if(te)te.textContent='전체 '+t+'초'}
-  if(el.dataset&&(el.dataset.sc||el.dataset.f)&&S.open){var itc=Object.assign({},S.items.filter(function(i){return i.id===S.open})[0]||{});[].forEach.call(app.querySelectorAll('[data-f]'),function(x){itc[x.dataset.f]=x.value});itc.scenes=readScenes();var ck=document.getElementById('chk');if(ck)ck.innerHTML=edChecks(itc);var sh=document.getElementById('shots');if(sh&&el.dataset.sc)sh.innerHTML=shotList(itc)}
+  var cid=eid();
+  if(el.id==='mkTitle'&&cid){(MK[cid]=MK[cid]||{}).title=el.value}
+  if(el.dataset&&el.dataset.mk&&cid&&!S.ro){var mk=MK[cid]=MK[cid]||{};(mk.ans=mk.ans||{})[el.dataset.mk]=el.value;clearTimeout(timers.mk);
+    timers.mk=setTimeout(function(){var it1=itemBy(cid);if(!it1||!MK[cid]||!MK[cid].ans)return;upd('items',cid,{ans:Object.assign({},it1.ans||{},MK[cid].ans)})},900)}
+  if(el.dataset&&el.dataset.f){saveField(el);var k=document.getElementById('calc');if(k){var it0=Object.assign({},itemBy(cid)||{});[].forEach.call(app.querySelectorAll('[data-f]'),function(x){it0[x.dataset.f]=x.value});k.innerHTML=calc(it0)}}
+  if(el.dataset&&el.dataset.sc){var sa=el.dataset.sc.split(':');
+    if(/^(line|sub|screen)$/.test(sa[1])){var xh=app.querySelector('[data-sc="'+sa[0]+':ex"]');if(xh&&xh.value){xh.value='';var xt=app.querySelector('[data-extag="'+sa[0]+'"]');if(xt)xt.remove();var xr=el.closest('.scn');if(xr)xr.classList.remove('ex')}}
+    var rows=readScenes();saveScenes(rows);var te=document.getElementById('tot');if(te)te.textContent='전체 '+scTot(rows)+'초'}
+  if(el.dataset&&(el.dataset.sc||el.dataset.f)&&cid){var itc=Object.assign({},itemBy(cid)||{});[].forEach.call(app.querySelectorAll('[data-f]'),function(x){itc[x.dataset.f]=x.value});if(app.querySelector('[data-sc]'))itc.scenes=readScenes();var ck=document.getElementById('chk');if(ck)ck.innerHTML=edChecks(itc,!S.open);var sh=document.getElementById('shots');if(sh&&el.dataset.sc)sh.innerHTML=shotList(itc)}
   if(el.id==='q'){S.q=el.value;var pos=el.selectionStart;app.innerHTML=refs();var n=document.getElementById('q');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(x){}}}
   if(el.dataset&&el.dataset.c)saveConcept(el);
 });
 document.addEventListener('change',function(e){var el=e.target;
-  if(el.id==='chSel'){S.ch=el.value;try{localStorage.setItem('ws-ch',S.ch)}catch(x){}S.open=null;S.refEdit=null;S.stage='all';render()}
+  if(el.id==='chSel'){S.ch=el.value;try{localStorage.setItem('ws-ch',S.ch)}catch(x){}S.open=null;S.refEdit=null;S.stage='all';S.sid=null;S.smode='';S.sed=false;render()}
+  if(el.id==='mkCorner'&&!S.ro){var mid=eid(),mtv=document.getElementById('mkTitle');if(mid){var dc={corner:el.value,ans:{}};if(mtv)dc.title=mtv.value.trim();if(MK[mid])delete MK[mid].ans;clearTimeout(timers.title);clearTimeout(timers.mk);el.blur();upd('items',mid,dc).then(function(){render()})}}
+  if(el.dataset&&el.dataset.pick==='sid'){S.sid=el.value;S.smode='';S.sed=false;el.blur();render();window.scrollTo(0,0)}
   if(el.dataset&&el.dataset.own){var uid=el.dataset.own;if(el.value)own(el.value,uid);else S.channels.forEach(function(c){if(c.owner===uid)upd('channels',c.id,{owner:''})});note('맡은 크리에이터를 바꿨습니다.');setTimeout(function(){render()},50)}
-  if(el.dataset&&el.dataset.f==='corner'&&S.open&&!S.ro){S.fxEdit=false;upd('items',S.open,{corner:el.value}).then(function(){el.blur();render()})}
+  if(el.dataset&&el.dataset.f==='corner'&&S.open&&!S.ro){S.fxEdit=false;upd('items',S.open,{corner:el.value,ans:{}}).then(function(){el.blur();render()})}
   if(el.dataset&&el.dataset.shot!==undefined&&S.open&&!S.ro){var ish=S.items.filter(function(i){return i.id===S.open})[0];if(ish){var dn=(ish.shotDone||[]).filter(function(x){return x!==el.dataset.shot});if(el.checked)dn.push(el.dataset.shot);upd('items',ish.id,{shotDone:dn})}}
   if(el.id==='pick'&&el.value){var it=S.items.filter(function(i){return i.id===S.open})[0];if(it){var ids=(it.refIds||[]).concat([el.value]);upd('items',it.id,{refIds:ids}).then(function(){render()})}el.blur()}
 });
@@ -903,32 +1125,49 @@ document.addEventListener('click',function(e){
         var ref=db.collection('channels').doc();write('ch'+ref.id,function(){return ref.set({name:n,order:Date.now(),at:Date.now(),by:S.me,owner:j.id})});
         S.addCh=false;PEOPLE=null;S.tab='people';try{sessionStorage.setItem('ws-tab','people')}catch(x){}render();window.scrollTo(0,0);note('크리에이터 '+cid+' 아이디를 만들었습니다. 크리에이터 주소 '+location.origin+location.pathname.replace(/admin\/?(index\.html)?$/,'')+' 와 아이디, 비밀번호를 같이 보내 주세요.')});return;
     case 'goTalk':var scp=d.scope||'',mc=/^c(\d)/.exec(scp);if(/^i:/.test(scp)){S.open=scp.slice(2);S.fxEdit=false}else{S.tab='concept';S.sec=mc?+mc[1]:0;S.open=null}render();window.scrollTo(0,0);return;
-    case 'svOpen':S.sv=d.id;S.sm='s';return setTab('script');
+    case 'svOpen':S.sid=d.id;S.smode='';S.sed=false;setTab('script');window.scrollTo(0,0);return;
     case 'print':window.print();return;
-    case 'scCopy':var ic=S.items.filter(function(i){return i.id===d.id})[0];if(!ic)return;var tx=scText(ic,epMap(chItems())),okc=function(){note('대본을 복사했습니다. 붙여 넣으시면 됩니다.');setTimeout(function(){note('')},2500)};
+    case 'scCopy':var ic=S.items.filter(function(i){return i.id===d.id})[0];if(!ic)return;var tx=scText(ic,epMap(chItems())),okc=function(){say('대본을 복사했습니다. 붙여 넣으시면 됩니다.',2500)};
       if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(tx).then(okc,function(){note('복사하지 못했습니다. 인쇄를 써 주세요.')});
       else{var tar=document.createElement('textarea');tar.value=tx;document.body.appendChild(tar);tar.select();try{document.execCommand('copy');okc()}catch(x){note('복사하지 못했습니다.')}document.body.removeChild(tar)}return;
-    case 'scFill':var isf=S.items.filter(function(i){return i.id===d.id})[0];if(!isf||S.ro)return;var hadS=scFilled(isf).length>0;if(hadS&&!d.force)return;
-      var rows=tplRows(isf),gs=SUBG[cForm(isf.corner)],tpf=tplFor(isf).t,dd={scenes:rows};if(hadS)dd.scenesPrev=isf.scenes;
-      var prv=chItems().filter(function(i){return i.id!==isf.id&&isf.corner&&i.corner===isf.corner&&i.bgm}).sort(byOrder).pop();
-      if(!isf.subStyle){if(tpf.subStyle)dd.subStyle=tpf.subStyle;else if(gs)dd.subStyle=gs.sub}if(!isf.bgm){if(prv)dd.bgm=prv.bgm;else if(tpf.bgm)dd.bgm=tpf.bgm;else if(gs)dd.bgm=gs.bgm}if(grp(isf.stage)===0)dd.stage='대본';
-      upd('items',isf.id,dd).then(function(){S.open=isf.id;S.fxEdit=false;render();window.scrollTo(0,0)});return;
-    case 'scBack':var ib=S.items.filter(function(i){return i.id===d.id})[0];if(!ib||S.ro||!(ib.scenesPrev&&ib.scenesPrev.length))return;upd('items',ib.id,{scenes:ib.scenesPrev,scenesPrev:ib.scenes||[]});note('이전 대본으로 되돌렸습니다.');setTimeout(function(){note('')},2500);return;
+    case 'smode':S.smode=d.v||'';S.sed=false;render();window.scrollTo(0,0);return;
+    case 'swhy':S.swhy=!S.swhy;return render();
+    case 'hs':S.hs=+d.v||0;render();window.scrollTo(0,0);return;
+    case 'scEdit':if(S.ro)return;S.sed=true;render();return;
+    case 'scDone':var rd=readScenes(),ide=eid();clearTimeout(timers.sc);S.sed=false;
+      if(ide&&!S.ro)upd('items',ide,{scenes:rd}).then(function(){sceneDirty=false;render()});else render();window.scrollTo(0,0);return;
+    case 'scMake':var mi=itemBy(d.id);if(!mi||S.ro)return;
+      var an=Object.assign({},mi.ans||{},(MK[mi.id]||{}).ans||{});[].forEach.call(app.querySelectorAll('[data-mk]'),function(x){an[x.dataset.mk]=x.value.trim()});
+      var mte=document.getElementById('mkTitle'),mt=mte?mte.value.trim():(mi.title||''),mce=document.getElementById('mkCorner'),mc2=mi.corner||(mce?mce.value:''),hadM=scFilled(mi).length>0,tvn=(+mi.tv||0)+(hadM?1:0);
+      var mi2=Object.assign({},mi,{title:mt,corner:mc2,ans:an,tv:tvn}),mrows=tplRows(mi2,an),mtp=tplFor(mi2).t,mgs=SUBG[cForm(mc2)],dm={scenes:mrows,ans:an,tv:tvn,title:mt};
+      if(mc2!==(mi.corner||''))dm.corner=mc2;if(hadM)dm.scenesPrev=mi.scenes;
+      var mpv=chItems().filter(function(i){return i.id!==mi.id&&mc2&&i.corner===mc2&&i.bgm}).sort(byOrder).pop();
+      if(!mi.subStyle){if(mtp.subStyle)dm.subStyle=mtp.subStyle;else if(mgs)dm.subStyle=mgs.sub}
+      if(!mi.bgm){if(mpv)dm.bgm=mpv.bgm;else if(mtp.bgm)dm.bgm=mtp.bgm;else if(mgs)dm.bgm=mgs.bgm}
+      if(grp(mi.stage)===0)dm.stage='대본';
+      clearTimeout(timers.title);clearTimeout(timers.mk);delete MK[mi.id];S.smode='';S.sed=false;
+      upd('items',mi.id,dm).then(function(){render();window.scrollTo(0,0)});
+      say(hadM?'대본을 다시 만들었습니다. 이전 대본은 보관했습니다.':'대본을 만들었습니다.',3500);return;
+    case 'scBack':var ib=itemBy(d.id);if(!ib||S.ro||!(ib.scenesPrev&&ib.scenesPrev.length))return;S.sed=false;S.smode='';
+      upd('items',ib.id,{scenes:ib.scenesPrev,scenesPrev:ib.scenes||[]}).then(function(){render()});say('이전 대본으로 되돌렸습니다.',2500);return;
     case 'scReq':var iq=S.items.filter(function(i){return i.id===d.id})[0];if(!iq||S.ro)return;var rn=document.getElementById('rqNote'),ar=db.collection('asks').doc();
-      write('ask'+ar.id,function(){return ar.set({ch:S.ch,kind:'script',item:iq.id,corner:iq.corner||'',title:iq.title||'',text:rn?(rn.value||'').trim():'',status:'req',reqAt:Date.now(),at:Date.now(),by:S.me})});note('요청했습니다. Claude가 켜지면 대본을 써서 여기에 올립니다.');setTimeout(function(){note('')},3500);return;
-    case 'scUse':var au=S.asks.filter(function(x){return x.id===d.id})[0];if(!au||S.ro||!(au.res&&au.res.scenes))return;var iu=S.items.filter(function(i){return i.id===au.item})[0];if(!iu)return;
-      var du={scenes:au.res.scenes.map(function(x){var r={};['k','sec','shot','screen','line','sub','sfx','why'].forEach(function(f){r[f]=String(x[f]==null?'':x[f])});return r})};if(scFilled(iu).length)du.scenesPrev=iu.scenes;if(au.res.bgm)du.bgm=au.res.bgm;if(au.res.subStyle)du.subStyle=au.res.subStyle;if(grp(iu.stage)===0)du.stage='대본';
-      upd('items',iu.id,du);upd('asks',au.id,{used:Date.now()});note('대본에 넣었습니다. 이전 대본은 보관했습니다.');setTimeout(function(){note('')},3000);return;
+      write('ask'+ar.id,function(){return ar.set({ch:S.ch,kind:'script',item:iq.id,corner:iq.corner||'',title:iq.title||'',text:rn?(rn.value||'').trim():'',status:'req',reqAt:Date.now(),at:Date.now(),by:S.me})}).then(function(){render()});say('맡겼습니다. Claude가 켜지면 대본을 써서 여기에 올립니다.',3500);return;
+    case 'scUse':var au=S.asks.filter(function(x){return x.id===d.id})[0];if(!au||S.ro||!(au.res&&au.res.scenes))return;var iu=itemBy(au.item);if(!iu)return;
+      var hadU=scFilled(iu).length>0,du={scenes:au.res.scenes.map(function(x){var r={};['k','sec','shot','screen','line','sub','sfx','why','ex'].forEach(function(f){r[f]=String(x[f]==null?'':x[f])});return r})};
+      if(hadU)du.scenesPrev=iu.scenes;if(au.res.bgm)du.bgm=au.res.bgm;if(au.res.subStyle)du.subStyle=au.res.subStyle;if(!iu.title&&au.res.title)du.title=au.res.title;if(grp(iu.stage)===0)du.stage='대본';
+      S.smode='';S.sed=false;upd('asks',au.id,{used:Date.now()});upd('items',iu.id,du).then(function(){render();window.scrollTo(0,0)});
+      say(hadU?'이 대본으로 바꿨습니다. 이전 대본은 보관했습니다.':'이 대본으로 시작했습니다. "고치기"를 눌러 내 말로 바꿀 수 있습니다.',4000);return;
     case 'qAsk':var qi=document.getElementById('qIn'),qt=qi?(qi.value||'').trim():'';if(!qt||S.ro)return;var aq=db.collection('asks').doc();
       write('ask'+aq.id,function(){return aq.set({ch:S.ch,kind:'q',text:qt,status:'req',reqAt:Date.now(),at:Date.now(),by:S.me})});return;
     case 'fdAsk':var fi=document.getElementById('fdIn'),af=db.collection('asks').doc(),ft=fi?(fi.value||'').trim():'';if(S.ro)return;if(S.asks.some(function(a){return a.ch===S.ch&&a.kind==='find'&&a.status!=='done'&&(a.text||'')===ft})){note('같은 요청이 이미 기다리는 중입니다.');setTimeout(function(){note('')},3000);return}
       write('ask'+af.id,function(){return af.set({ch:S.ch,kind:'find',text:fi?(fi.value||'').trim():'',status:'req',reqAt:Date.now(),at:Date.now(),by:S.me})});note('요청했습니다. 찾으면 이 목록에 넣습니다.');setTimeout(function(){note('')},3000);return;
-    case 'sm':S.sm=d.v==='g'?'g':'s';if(d.go)return setTab('script');return render();
-    case 'newItem':var ir=db.collection('items').doc(),cn=d.corner||'';
-      write('items'+ir.id,function(){return ir.set({ch:S.ch,corner:cn,title:'',stage:'기획',who:'',due:'',intent:'',story:'',refs:'',point:'',script:'',by:S.me,at:Date.now(),order:Date.now()})}).then(function(){if(!S.ro){S.open=ir.id;S.step=0;render();var t=app.querySelector('[data-f="title"]');if(t)t.focus()}});return;
+    case 'newItem':var ir=db.collection('items').doc(),cn=d.corner||'',toS=d.to==='script';
+      write('items'+ir.id,function(){return ir.set({ch:S.ch,corner:cn,title:'',stage:'기획',who:'',due:'',intent:'',story:'',refs:'',point:'',script:'',by:S.me,at:Date.now(),order:Date.now()})}).then(function(){if(S.ro)return;
+        if(toS){S.sid=ir.id;S.smode='';S.sed=false;S.open=null;if(S.tab!=='script')setTab('script');else render();window.scrollTo(0,0);var mt0=document.getElementById('mkTitle');if(mt0)mt0.focus()}
+        else{S.open=ir.id;S.step=0;render();var t=app.querySelector('[data-f="title"]');if(t)t.focus()}});return;
     case 'del':var id=S.open;S.open=null;upd('items',id,{deleted:true});toast('콘텐츠를 지웠습니다',{col:'items',id:id});return render();
     case 'undo':if(S.undo){var u=S.undo;upd(u.col,u.id,{deleted:false});S.undo=null;document.getElementById('toast').style.display='none'}return;
-    case 'scAdd':var ra=readScenes();ra.push({k:'',screen:'',line:'',sec:''});saveScenes(ra,true).then(function(){render()});return;
+    case 'scAdd':var ra=readScenes();ra.push({k:'',sec:'',shot:'',screen:'',line:'',sub:'',sfx:'',why:'',ex:''});saveScenes(ra,true).then(function(){render()});return;
     case 'cmAdd':var ti=document.getElementById('cmIn'),tx=(ti.value||'').trim();if(!tx)return;ti.value='';var item=S.open;
       write('cmnew',function(){return db.collection('comments').add({item:item,text:tx,by:S.me,at:Date.now()})});return;
     case 'pass':S.pass=!S.pass;return render();
