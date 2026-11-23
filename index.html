@@ -110,22 +110,26 @@ summary{cursor:pointer;font-weight:700;color:var(--acc);font-size:16px;min-heigh
 .prow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--line);padding:12px 0}.prow b{font-size:19px}.prow span{color:var(--sub)}.prow .me{color:var(--acc);font-weight:700}.prow .pnpw{flex:1 1 180px;width:auto}
 .pnew input{flex:1 1 160px;width:auto}.pnew select{flex:0 1 150px;width:auto}
 .who{display:flex;gap:6px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}.pgh{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.pgh h3{margin:0;font-size:22px;flex:1 1 auto}
+.pgst{display:flex;flex-wrap:wrap;gap:6px}.pgst span{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:15px;color:var(--sub)}.pgst span.on{border-color:var(--acc);color:var(--acc);font-weight:700}
+.pgn{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.pgn small{display:block;color:var(--sub);font-size:14px}.pgn b{font-size:20px}.pgn b.warn{color:var(--warn)}
+.prow select{flex:0 1 220px;width:auto}
 @media(max-width:700px){header{gap:8px;padding-top:8px;padding-bottom:8px}header .brand{font-size:19px;order:1;flex:1 1 auto}.who{order:2}.who .btn{min-height:40px;padding:4px 10px}header select{order:3;flex:1 1 0;max-width:none;min-height:42px}header [data-act=addCh]{order:4}.tabs{order:5;width:100%;margin-left:0}.tabs .btn{flex:1 1 0;padding:8px 4px;min-height:44px}}
 </style>
 
 <header>
   <div class="brand" id="brand">인스타그램 기획</div>
   <select id="chSel" aria-label="크리에이터"></select>
-  <button class="btn sm" data-act="addCh">크리에이터 추가</button>
+  <button class="btn sm pdonly" data-act="addCh">크리에이터 추가</button>
   <div class="tabs">
     <button class="btn" data-tab="concept">크리에이터</button>
     <button class="btn" data-tab="board">진행판</button>
     <button class="btn" data-tab="refs">인플루언서</button>
   </div>
-  <div class="who"><button class="btn sm pdonly" data-tab="people">사람</button>
+  <div class="who"><button class="btn sm pdonly" data-tab="people">관리</button>
   <button class="btn sm" data-act="logout" title="로그아웃"><span id="meName"></span> · 나가기</button></div>
 </header>
-<div id="login" hidden><form id="lgForm" class="lgbox"><h1 id="lgTitle">인스타그램 기획</h1><p id="lgSet" hidden>처음 시작합니다. 쓰실 이름과 비밀번호를 지금 정해 주세요. 이 사람이 PD 가 됩니다.</p><label>이름<input id="lgName" autocomplete="username" required></label><label><span id="lgPwL">비밀번호</span><input id="lgPw" type="password" autocomplete="current-password" required></label><label id="lgPw2L" hidden>비밀번호 한 번 더<input id="lgPw2" type="password" autocomplete="new-password"></label><p id="lgErr" role="alert"></p><button class="btn pri" id="lgBtn">들어가기</button></form></div>
+<div id="login" hidden><form id="lgForm" class="lgbox"><h1 id="lgTitle">인스타그램 기획</h1><p id="lgSet" hidden>처음 시작합니다. 쓰실 이름과 비밀번호를 지금 정해 주세요. 이 사람이 관리자가 됩니다.</p><label>이름<input id="lgName" autocomplete="username" required></label><label><span id="lgPwL">비밀번호</span><input id="lgPw" type="password" autocomplete="current-password" required></label><label id="lgPw2L" hidden>비밀번호 한 번 더<input id="lgPw2" type="password" autocomplete="new-password"></label><p id="lgErr" role="alert"></p><button class="btn pri" id="lgBtn">들어가기</button></form></div>
 <div class="wrap"><div id="msg"></div><div id="toast"><span id="toastT"></span><button data-act="undo">되돌리기</button></div><div id="app"><div class="empty" style="margin-top:24px">불러오는 중입니다</div></div></div>
 
 <script>
@@ -184,7 +188,7 @@ function render(soft){
   if(soft&&document.activeElement&&app.contains(document.activeElement)&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){softSync();return}
   if(S.tab==='people'){app.innerHTML=peopleHtml();return}
   if(S.addCh){app.innerHTML=chForm();return}
-  if(!S.channels.length){app.innerHTML='<div class="empty" style="margin-top:24px">아직 크리에이터가 없습니다.<br><br><button class="btn pri" data-act="addCh">첫 크리에이터 만들기</button></div>';return}
+  if(!S.channels.length){app.innerHTML=S.role==='pd'?'<div class="empty" style="margin-top:24px">아직 크리에이터가 없습니다.<br><br><button class="btn pri" data-act="addCh">첫 크리에이터 만들기</button></div>':'<div class="empty" style="margin-top:24px">아직 이 계정에 연결된 크리에이터가 없습니다.<br>관리자에게 연결해 달라고 말해 주세요.</div>';return}
   if(S.open){var it=S.items.filter(function(i){return i.id===S.open})[0];if(it){app.innerHTML=editor(it);return}S.open=null}
   if(S.refEdit){app.innerHTML=refForm();return}
   app.innerHTML=S.tab==='people'?peopleHtml():S.tab==='refs'?refs():S.tab==='concept'?concept():board();
@@ -407,6 +411,7 @@ document.addEventListener('input',function(e){var el=e.target;
 });
 document.addEventListener('change',function(e){var el=e.target;
   if(el.id==='chSel'){S.ch=el.value;try{localStorage.setItem('ws-ch',S.ch)}catch(x){}S.open=null;S.refEdit=null;S.stage='all';render()}
+  if(el.dataset&&el.dataset.own){var uid=el.dataset.own;if(el.value)own(el.value,uid);else S.channels.forEach(function(c){if(c.owner===uid)upd('channels',c.id,{owner:''})});note('맡은 크리에이터를 바꿨습니다.');setTimeout(function(){render()},50)}
   if(el.id==='pick'&&el.value){var it=S.items.filter(function(i){return i.id===S.open})[0];if(it){var ids=(it.refIds||[]).concat([el.value]);upd('items',it.id,{refIds:ids}).then(function(){render()})}el.blur()}
 });
 document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.dataset&&e.target.dataset.open){e.preventDefault();e.target.click()}});
@@ -423,7 +428,7 @@ document.addEventListener('click',function(e){
   if(d.refedit){S.refEdit=d.refedit;return render()}
   if(d.open){S.open=d.open;S.del=false;S.step=0;render();window.scrollTo(0,0);return}
   if(/^t(Add|Say|Ok|Re)$/.test(d.act||''))return talkAct(d.act,d);
-  if(/^p(Add|Off|Pw|PwGo)$/.test(d.act||''))return peopleAct(d.act,d);
+  if(/^p(Add|Off|Pw|PwGo|Role|Open)$/.test(d.act||''))return peopleAct(d.act,d);
   switch(d.act){
     case 'logout':sess(null);location.reload();return;
     case 'back':S.open=null;S.del=false;return render();
@@ -490,25 +495,53 @@ function talkAct(a,d){
       else if(t.scope.indexOf('i:')===0){var o2={};o2[t.target]=v2;upd('items',t.scope.slice(2),o2)}}
     return}
 }
-/* ---------- 사람 (PD만) ---------- */
+/* ---------- 관리 (관리자만): 크리에이터별 진행 상황 + 계정 ---------- */
 var PEOPLE=null;
+function lastAct(cid){var t=0,its={};S.items.forEach(function(i){if(i.ch===cid){its[i.id]=1;t=Math.max(t,i.updatedAt||0,i.at||0)}});
+  (S.talks||[]).forEach(function(x){if(x.ch===cid){its[x.id]=1;t=Math.max(t,x.at||0,x.decidedAt||0)}});
+  S.comments.forEach(function(c){if(its[c.item]||its[c.talk])t=Math.max(t,c.at||0)});
+  var c=S.concepts.filter(function(x){return x.id===cid})[0];if(c)t=Math.max(t,c.updatedAt||0);return t}
+function ago(t){if(!t)return '기록 없음';var d=Math.floor((Date.now()-t)/864e5);return d<=0?'오늘':d===1?'어제':d+'일 전'}
+function progCard(c){
+  var its=S.items.filter(function(i){return i.ch===c.id}),cnt={};its.forEach(function(i){cnt[i.stage]=(cnt[i.stage]||0)+1});
+  var open=(S.talks||[]).filter(function(t){return t.ch===c.id&&!t.decided}).length,cc=S.concepts.filter(function(x){return x.id===c.id})[0]||{};
+  var posted=its.filter(function(i){return num(i.views)>0}),best=posted.reduce(function(m,i){return Math.max(m,num(i.views))},0);
+  var la=lastAct(c.id),old=la&&Date.now()-la>7*864e5;
+  var h='<div class="card pg"><div class="pgh"><h3>'+esc(c.name)+'</h3><span class="badge'+(c.owner?' acc':'')+'">'+(c.owner?esc(who(c.owner))+' 계정':'계정 연결 안 됨')+'</span></div>';
+  h+='<div class="pgst">'+STAGES.map(function(s){return '<span'+(cnt[s]?' class="on"':'')+'>'+s+' <b>'+(cnt[s]||0)+'</b></span>'}).join('')+'</div>';
+  h+='<div class="pgn"><div><small>콘텐츠</small><b>'+its.length+'</b></div><div><small>올린 영상</small><b>'+posted.length+'</b></div><div><small>최고 조회</small><b>'+(best?fmt(best):'-')+'</b></div><div><small>팔로워</small><b>'+(cc.folNow?fmt(num(cc.folNow)):'-')+(cc.folGoal?' / '+fmt(num(cc.folGoal)):'')+'</b></div><div><small>정할 것</small><b'+(open?' class="warn"':'')+'>'+open+'</b></div><div><small>마지막 작업</small><b'+(old?' class="warn"':'')+'>'+ago(la)+'</b></div></div>';
+  return h+'<button class="btn" data-act="pOpen" data-id="'+esc(c.id)+'">들어가서 보기</button></div>';
+}
 function peopleHtml(){
   if(PEOPLE===null){call('/users').then(function(j){PEOPLE=j.users||[];render()});return '<div class="empty">불러오는 중입니다</div>'}
-  var h='<div class="bar"><h2 class="h1">같이 쓰는 사람</h2></div><div class="panel"><p class="guide">이름과 비밀번호를 정해 카톡으로 이 주소와 함께 따로 보내 주세요. 비밀번호는 6자 이상.</p>';
-  PEOPLE.forEach(function(u){h+='<div class="prow"><b>'+esc(u.name)+'</b><span>'+(u.role==='pd'?'PD':'크리에이터')+(u.off?' · 멈춤':'')+'</span>'+(u.id===S.me?'<span class="me">나</span>':'<button class="btn sm" data-act="pPw" data-id="'+esc(u.id)+'">비밀번호 바꾸기</button><button class="btn sm'+(u.off?'':' bad')+'" data-act="pOff" data-id="'+esc(u.id)+'" data-off="'+(u.off?0:1)+'">'+(u.off?'다시 쓰게':'못 들어오게')+'</button>')+'</div>'});
-  h+='<div class="pnew"><input id="pName" placeholder="이름"><select id="pRole"><option value="creator">크리에이터</option><option value="pd">PD</option></select><input id="pPwIn" placeholder="비밀번호 (6자 이상)"><button class="btn pri" data-act="pAdd">사람 더하기</button></div><p id="pMsg" class="guide"></p>';
-  h+='<div class="prow"><b>내 비밀번호</b><span></span><button class="btn sm" data-act="pPw" data-id="'+esc(S.me)+'">바꾸기</button></div></div>';
+  var chs=S.channels.slice().sort(byOrder);
+  var h='<div class="bar"><h2 class="h1">크리에이터 진행 상황</h2></div>';
+  h+=chs.length?'<div class="pgrid">'+chs.map(progCard).join('')+'</div>':'<div class="empty">아직 크리에이터가 없습니다.</div>';
+  h+='<div class="sec"><h2 class="h1">계정</h2></div><div class="panel"><p class="guide">크리에이터 계정은 연결한 크리에이터만 보고 씁니다. 관리자는 전부 봅니다. 이름과 비밀번호는 이 주소와 함께 따로 보내 주세요.</p>';
+  PEOPLE.forEach(function(u){var mine=chs.filter(function(c){return c.owner===u.id});
+    h+='<div class="prow"><b>'+esc(u.name)+'</b><span>'+(u.role==='pd'?'관리자':'크리에이터')+(u.off?' · 멈춤':'')+'</span>'+(u.id===S.me?'<span class="me">나</span>':'');
+    if(u.role!=='pd')h+='<select data-own="'+esc(u.id)+'" aria-label="맡은 크리에이터"><option value="">맡은 크리에이터 고르기</option>'+chs.map(function(c){return '<option value="'+esc(c.id)+'"'+(c.owner===u.id?' selected':'')+'>'+esc(c.name)+(c.owner&&c.owner!==u.id?' ('+esc(who(c.owner))+')':'')+'</option>'}).join('')+'</select>'+(mine.length>1?'<span>외 '+(mine.length-1)+'곳</span>':'');
+    h+='<button class="btn sm" data-act="pPw" data-id="'+esc(u.id)+'">비밀번호 바꾸기</button>';
+    if(u.id!==S.me)h+='<button class="btn sm" data-act="pRole" data-id="'+esc(u.id)+'" data-role="'+(u.role==='pd'?'creator':'pd')+'">'+(u.role==='pd'?'크리에이터로':'관리자로')+'</button><button class="btn sm'+(u.off?'':' bad')+'" data-act="pOff" data-id="'+esc(u.id)+'" data-off="'+(u.off?0:1)+'">'+(u.off?'다시 쓰게':'못 들어오게')+'</button>';
+    h+='</div>'});
+  h+='<div class="pnew"><input id="pName" placeholder="이름 (아이디)"><select id="pRole"><option value="creator">크리에이터</option><option value="pd">관리자</option></select><select id="pCh"><option value="">맡을 크리에이터 (나중에)</option><option value="+new">이 이름으로 새로 만들기</option>'+chs.filter(function(c){return !c.owner}).map(function(c){return '<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>'}).join('')+'</select><input id="pPwIn" type="password" autocomplete="new-password" placeholder="비밀번호 (6자 이상)"><button class="btn pri" data-act="pAdd">계정 더하기</button></div><p id="pMsg" class="guide"></p></div>';
   return h;
 }
-var PERR={dup:'같은 이름이 이미 있습니다.',pw:'비밀번호는 6자 이상으로 해 주세요.',name:'이름을 20자 안으로 적어 주세요.',forbidden:'PD만 할 수 있습니다.'};
+var PERR={dup:'같은 이름이 이미 있습니다.',pw:'비밀번호는 6자 이상으로 해 주세요.',name:'이름을 20자 안으로 적어 주세요.',forbidden:'관리자만 할 수 있습니다.',lastpd:'관리자가 한 명은 있어야 합니다.'};
+function own(chId,uid){var c=S.channels.filter(function(x){return x.id===chId})[0];if(!c)return;upd('channels',chId,{owner:uid})}
 function peopleAct(a,d){
   var m=document.getElementById('pMsg');
-  if(a==='pAdd'){var n=document.getElementById('pName').value.trim(),p=document.getElementById('pPwIn').value,r=document.getElementById('pRole').value;
-    call('/users/add',{name:n,role:r,pw:p}).then(function(j){if(j.ok){PEOPLE=null;render();note(n+' 님을 더했습니다. 이름과 비밀번호를 따로 보내 주세요.')}else if(m)m.textContent=PERR[j.err]||'더하지 못했습니다.'});return}
+  if(a==='pOpen'){S.ch=d.id;try{localStorage.setItem('ws-ch',d.id)}catch(e){}return setTab('concept')}
+  if(a==='pAdd'){var n=document.getElementById('pName').value.trim(),p=document.getElementById('pPwIn').value,r=document.getElementById('pRole').value,cv=document.getElementById('pCh').value;
+    call('/users/add',{name:n,role:r,pw:p}).then(function(j){if(j.ok){
+      if(r==='creator'&&cv==='+new'){var ref=db.collection('channels').doc();write('ch'+ref.id,function(){return ref.set({name:n,order:Date.now(),at:Date.now(),by:S.me,owner:j.id})})}
+      else if(r==='creator'&&cv)own(cv,j.id);
+      PEOPLE=null;render();note(n+' 계정을 만들었습니다. 이름과 비밀번호를 따로 보내 주세요.')}else if(m)m.textContent=PERR[j.err]||'만들지 못했습니다.'});return}
   if(a==='pOff'){call('/users/set',{id:d.id,off:d.off==='1'}).then(function(){PEOPLE=null;render()});return}
-  if(a==='pPw'){var row=app.querySelector('[data-act="pPw"][data-id="'+d.id+'"]').parentNode;if(row.querySelector('input'))return;
-    row.insertAdjacentHTML('beforeend','<input class="pnpw" placeholder="새 비밀번호"><button class="btn sm pri" data-act="pPwGo" data-id="'+esc(d.id)+'">저장</button>');row.querySelector('input').focus();return}
-  if(a==='pPwGo'){var row2=app.querySelector('[data-act="pPwGo"][data-id="'+d.id+'"]').parentNode,v=row2.querySelector('input').value;
+  if(a==='pRole'){call('/users/set',{id:d.id,role:d.role}).then(function(j){if(j.ok){PEOPLE=null;render()}else note(PERR[j.err]||'바꾸지 못했습니다.')});return}
+  if(a==='pPw'){var row=app.querySelector('[data-act="pPw"][data-id="'+d.id+'"]').parentNode;if(row.querySelector('.pnpw'))return;
+    row.insertAdjacentHTML('beforeend','<input class="pnpw" type="password" autocomplete="new-password" placeholder="새 비밀번호"><button class="btn sm pri" data-act="pPwGo" data-id="'+esc(d.id)+'">저장</button>');row.querySelector('.pnpw').focus();return}
+  if(a==='pPwGo'){var row2=app.querySelector('[data-act="pPwGo"][data-id="'+d.id+'"]').parentNode,v=row2.querySelector('.pnpw').value;
     call('/users/set',{id:d.id,pw:v}).then(function(j){if(j.ok){if(d.id===S.me){sess(null);showLogin('비밀번호를 바꿨습니다. 새 비밀번호로 들어와 주세요.')}else{PEOPLE=null;render();note('비밀번호를 바꿨습니다.')}}else note(PERR[j.err]||'바꾸지 못했습니다.')});return}
 }
 /* ---------- 저장 서버 연결 (계정 없이 이름 + 비밀번호) ---------- */
@@ -519,7 +552,7 @@ function call(path,body){var s=sess();return fetch(API+path,{method:'POST',heade
 var CACHE={},SUBS={},SINCE=0,PULLING=false;
 function emit(col){var m=CACHE[col]||{};var docs=Object.keys(m).map(function(id){return {id:id,data:function(){return m[id]}}});(SUBS[col]||[]).forEach(function(f){f({docs:docs,metadata:{fromCache:false}})})}
 function pull(){if(PULLING)return Promise.resolve();PULLING=true;return call('/pull',{since:SINCE}).then(function(j){PULLING=false;if(!j||j.err){if(j&&j.err==='net')note('서버에 닿지 않습니다. 인터넷 연결을 확인해 주세요.');return}
-  Object.assign(S.names,j.names||{});var ch={};(j.docs||[]).forEach(function(d){(CACHE[d.col]=CACHE[d.col]||{})[d.id]=d.data;ch[d.col]=1;if(d.upd>SINCE)SINCE=d.upd});
+  Object.assign(S.names,j.names||{});var ch={};(j.docs||[]).forEach(function(d){(CACHE[d.col]=CACHE[d.col]||{})[d.id]=d.data;ch[d.col]=1;if(d.upd>SINCE)SINCE=d.upd});if(j.last>SINCE)SINCE=j.last;if(j.more)setTimeout(pull,50);
   ['channels','items','refs','comments','concepts','talks'].forEach(function(c){if(ch[c]||!S.loaded[c])emit(c)})}).catch(function(){PULLING=false;note('서버에 닿지 않습니다. 인터넷 연결을 확인해 주세요.')})}
 function send(col,id,op,data){(CACHE[col]=CACHE[col]||{});CACHE[col][id]=op==='update'?Object.assign({},CACHE[col][id],data):data;emit(col);
   return call('/write',{list:[{col:col,id:id,op:op,data:data}]}).then(function(j){var o=j&&j.out&&j.out[0];if(!o||!o.ok){var e=new Error('save');e.code=j&&j.err;throw e}})}
@@ -530,7 +563,7 @@ var db={collection:function(col){return {
   onSnapshot:function(f){(SUBS[col]=SUBS[col]||[]).push(f)}}}};
 var user=null;
 function showLogin(why){var g=document.getElementById('login');g.hidden=false;checkSetup();document.getElementById('lgErr').textContent=why||'';var n=document.getElementById('lgName');(n.value?document.getElementById('lgPw'):n).focus()}
-function started(me){S.me=me.id;S.role=me.role;S.names[me.id]=me.name;document.getElementById('login').hidden=true;document.getElementById('meName').textContent=me.name+(me.role==='pd'?' · PD':' · 크리에이터');document.body.classList.toggle('is-pd',me.role==='pd');
+function started(me){S.me=me.id;S.role=me.role;S.names[me.id]=me.name;document.getElementById('login').hidden=true;document.getElementById('meName').textContent=me.name+(me.role==='pd'?' · 관리자':' · 크리에이터');document.body.classList.toggle('is-pd',me.role==='pd');
   sub('channels','channels');sub('items','items');sub('refs','refs');sub('comments','comments');sub('concepts','concepts');sub('talks','talks');
   pull();setInterval(function(){if(!document.hidden)pull()},4000);document.addEventListener('visibilitychange',function(){if(!document.hidden)pull()})}
 var SETUP=false;
