@@ -114,6 +114,11 @@ summary{cursor:pointer;font-weight:700;color:var(--acc);font-size:16px;min-heigh
 .pgst{display:flex;flex-wrap:wrap;gap:6px}.pgst span{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:15px;color:var(--sub)}.pgst span.on{border-color:var(--acc);color:var(--acc);font-weight:700}
 .pgn{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.pgn small{display:block;color:var(--sub);font-size:14px}.pgn b{font-size:20px}.pgn b.warn{color:var(--warn)}
 .prow select{flex:0 1 220px;width:auto}
+body.home #chSel,body.home .tabs,body.home header [data-act=addCh]{display:none!important}
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:6px 0 8px}.sum div{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 16px}.sum small{display:block;color:var(--sub);font-size:15px}.sum b{font-size:30px;font-weight:900}.sum b.warn{color:var(--warn)}
+.card.pg{cursor:pointer}.card.pg:hover{border-color:var(--acc)}.pgo{color:var(--acc);font-weight:700;font-size:17px}
+.plink{background:none;border:0;padding:0;font:inherit;font-size:19px;font-weight:700;color:var(--acc);text-decoration:underline;cursor:pointer;min-height:40px}
+.nowch{font-weight:900;font-size:19px}
 @media(max-width:700px){header{gap:8px;padding-top:8px;padding-bottom:8px}header .brand{font-size:19px;order:1;flex:1 1 auto}.who{order:2}.who .btn{min-height:40px;padding:4px 10px}header select{order:3;flex:1 1 0;max-width:none;min-height:42px}header [data-act=addCh]{order:4}.tabs{order:5;width:100%;margin-left:0}.tabs .btn{flex:1 1 0;padding:8px 4px;min-height:44px}}
 </style>
 
@@ -126,7 +131,7 @@ summary{cursor:pointer;font-weight:700;color:var(--acc);font-size:16px;min-heigh
     <button class="btn" data-tab="board">진행판</button>
     <button class="btn" data-tab="refs">인플루언서</button>
   </div>
-  <div class="who"><button class="btn sm pdonly" data-tab="people">관리</button>
+  <div class="who"><button class="btn sm pdonly" data-tab="people" id="homeBtn">관리 화면</button>
   <button class="btn sm" data-act="logout" title="로그아웃"><span id="meName"></span> · 나가기</button></div>
 </header>
 <div id="login" hidden><form id="lgForm" class="lgbox"><h1 id="lgTitle">인스타그램 기획</h1><p id="lgSet" hidden>처음 시작합니다. 쓰실 이름과 비밀번호를 지금 정해 주세요. 이 사람이 관리자가 됩니다.</p><label id="lgNameL">이름<input id="lgName" autocomplete="username" required></label><label><span id="lgPwL">비밀번호</span><input id="lgPw" type="password" autocomplete="current-password" required></label><label id="lgPw2L" hidden>비밀번호 한 번 더<input id="lgPw2" type="password" autocomplete="new-password"></label><p id="lgErr" role="alert"></p><button class="btn pri" id="lgBtn">들어가기</button><button type="button" class="btn" id="lgMode">관리자로 들어가기</button></form></div>
@@ -180,14 +185,16 @@ function head(){
   var sel=document.getElementById('chSel');
   sel.innerHTML=S.channels.slice().sort(byOrder).map(function(c){return '<option value="'+esc(c.id)+'"'+(c.id===S.ch?' selected':'')+'>'+esc(c.name)+'</option>'}).join('')||'<option>크리에이터 없음</option>';
   [].forEach.call(document.querySelectorAll('[data-tab]'),function(b){b.classList.toggle('on',b.dataset.tab===S.tab&&!S.open)});
+  var home=S.role==='pd'&&(S.tab==='people'||S.addCh);document.body.classList.toggle('home',home);
+  var hb=document.getElementById('homeBtn');if(hb)hb.textContent=home?'관리 화면':'← 관리 화면';
 }
 function render(soft){
   head();
   var ready=S.loaded.channels&&S.loaded.items&&S.loaded.refs;
   if(!ready)return;
   if(soft&&document.activeElement&&app.contains(document.activeElement)&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){softSync();return}
-  if(S.tab==='people'){app.innerHTML=peopleHtml();return}
   if(S.addCh){app.innerHTML=chForm();return}
+  if(S.tab==='people'){app.innerHTML=peopleHtml();return}
   if(!S.channels.length){app.innerHTML=S.role==='pd'?'<div class="empty" style="margin-top:24px">아직 크리에이터가 없습니다.<br><br><button class="btn pri" data-act="addCh">첫 크리에이터 만들기</button></div>':'<div class="empty" style="margin-top:24px">아직 이 계정에 연결된 크리에이터가 없습니다.<br>관리자에게 연결해 달라고 말해 주세요.</div>';return}
   if(S.open){var it=S.items.filter(function(i){return i.id===S.open})[0];if(it){app.innerHTML=editor(it);return}S.open=null}
   if(S.refEdit){app.innerHTML=refForm();return}
@@ -434,7 +441,7 @@ document.addEventListener('click',function(e){
     case 'back':S.open=null;S.del=false;return render();
     case 'addCh':S.addCh=true;S.open=null;S.refEdit=null;return render();
     case 'chCancel':S.addCh=false;return render();
-    case 'chSave':var n=(document.getElementById('chName').value||'').trim();if(!n)return;var ref=db.collection('channels').doc();S.ch=ref.id;S.addCh=false;
+    case 'chSave':var n=(document.getElementById('chName').value||'').trim();if(!n)return;var ref=db.collection('channels').doc();S.ch=ref.id;S.addCh=false;if(S.tab==='people'){S.tab='concept';try{sessionStorage.setItem('ws-tab','concept')}catch(x){}}
       write('ch'+ref.id,function(){return ref.set({name:n,order:Date.now(),at:Date.now(),by:S.me})});return render();
     case 'newItem':var ir=db.collection('items').doc(),cn=d.corner||'';
       write('items'+ir.id,function(){return ir.set({ch:S.ch,corner:cn,title:'',stage:S.stage==='all'?'기획':S.stage,who:'',due:'',intent:'',story:'',refs:'',point:'',script:'',by:S.me,at:Date.now(),order:Date.now()})}).then(function(){if(!S.ro){S.open=ir.id;S.step=0;render();var t=app.querySelector('[data-f="title"]');if(t)t.focus()}});return;
@@ -507,20 +514,23 @@ function progCard(c){
   var open=(S.talks||[]).filter(function(t){return t.ch===c.id&&!t.decided}).length,cc=S.concepts.filter(function(x){return x.id===c.id})[0]||{};
   var posted=its.filter(function(i){return num(i.views)>0}),best=posted.reduce(function(m,i){return Math.max(m,num(i.views))},0);
   var la=lastAct(c.id),old=la&&Date.now()-la>7*864e5;
-  var h='<div class="card pg"><div class="pgh"><h3>'+esc(c.name)+'</h3><span class="badge'+(c.owner?' acc':'')+'">'+(c.owner?esc(who(c.owner))+' 계정':'계정 연결 안 됨')+'</span></div>';
+  var h='<div class="card pg" data-act="pOpen" data-id="'+esc(c.id)+'" tabindex="0" role="button"><div class="pgh"><h3>'+esc(c.name)+'</h3><span class="badge'+(c.owner?' acc':'')+'">'+(c.owner?esc(who(c.owner))+' 계정':'계정 연결 안 됨')+'</span></div>';
   h+='<div class="pgst">'+STAGES.map(function(s){return '<span'+(cnt[s]?' class="on"':'')+'>'+s+' <b>'+(cnt[s]||0)+'</b></span>'}).join('')+'</div>';
   h+='<div class="pgn"><div><small>콘텐츠</small><b>'+its.length+'</b></div><div><small>올린 영상</small><b>'+posted.length+'</b></div><div><small>최고 조회</small><b>'+(best?fmt(best):'-')+'</b></div><div><small>팔로워</small><b>'+(cc.folNow?fmt(num(cc.folNow)):'-')+(cc.folGoal?' / '+fmt(num(cc.folGoal)):'')+'</b></div><div><small>정할 것</small><b'+(open?' class="warn"':'')+'>'+open+'</b></div><div><small>마지막 작업</small><b'+(old?' class="warn"':'')+'>'+ago(la)+'</b></div></div>';
-  return h+'<button class="btn" data-act="pOpen" data-id="'+esc(c.id)+'">들어가서 보기</button></div>';
+  return h+'<div class="pgo">눌러서 작업 화면 보기 →</div></div>';
 }
 function peopleHtml(){
   if(PEOPLE===null){call('/users').then(function(j){PEOPLE=j.users||[];render()});return '<div class="empty">불러오는 중입니다</div>'}
   var chs=S.channels.slice().sort(byOrder);
-  var h='<div class="bar"><h2 class="h1">크리에이터 진행 상황</h2></div>';
+  var allIt=S.items,openT=(S.talks||[]).filter(function(t){return !t.decided}).length,idle=chs.filter(function(c){var la=lastAct(c.id);return !la||Date.now()-la>7*864e5}).length,crs=PEOPLE.filter(function(u){return u.role!=='pd'&&!u.off}).length;
+  var h='<div class="bar"><h2 class="h1">관리</h2><span class="sp" style="flex:1"></span><button class="btn pri" data-act="addCh">크리에이터 추가</button></div>';
+  h+='<div class="sum"><div><small>크리에이터</small><b>'+chs.length+'</b></div><div><small>크리에이터 계정</small><b>'+crs+'</b></div><div><small>콘텐츠</small><b>'+allIt.length+'</b></div><div><small>올린 영상</small><b>'+allIt.filter(function(i){return num(i.views)>0}).length+'</b></div><div><small>정할 것</small><b'+(openT?' class="warn"':'')+'>'+openT+'</b></div><div><small>7일 넘게 쉼</small><b'+(idle?' class="warn"':'')+'>'+idle+'</b></div></div>';
+  h+='<div class="sec"><h2 class="h1">크리에이터별 진행</h2></div><p class="guide">카드를 누르면 그 크리에이터의 작업 화면으로 들어갑니다.</p>';
   if(!PEOPLE.some(function(u){return u.name===ADMIN_NAME&&u.role==='pd'}))h='<div class="talk"><h2 style="margin:0 0 6px">관리자 계정 만들기</h2><p class="guide">관리자는 비밀번호만 넣고 들어갑니다. 만들면 지금 계정('+esc(who(S.me))+')은 크리에이터 계정으로 바뀌고, 다시 들어와야 합니다.</p><div class="pnew"><input id="aPw" type="password" autocomplete="new-password" placeholder="관리자 비밀번호 (6자 이상)"><input id="aPw2" type="password" autocomplete="new-password" placeholder="한 번 더"><button class="btn pri" data-act="aMake">만들기</button></div><p id="aMsg" class="guide"></p></div>'+h;
   h+=chs.length?'<div class="pgrid">'+chs.map(progCard).join('')+'</div>':'<div class="empty">아직 크리에이터가 없습니다.</div>';
   h+='<div class="sec"><h2 class="h1">계정</h2></div><div class="panel"><p class="guide">크리에이터 계정은 연결한 크리에이터만 보고 씁니다. 관리자는 전부 봅니다. 이름과 비밀번호는 이 주소와 함께 따로 보내 주세요.</p>';
   PEOPLE.forEach(function(u){var mine=chs.filter(function(c){return c.owner===u.id});
-    h+='<div class="prow"><b>'+esc(u.name)+'</b><span>'+(u.role==='pd'?'관리자':'크리에이터')+(u.off?' · 멈춤':'')+'</span>'+(u.id===S.me?'<span class="me">나</span>':'');
+    h+='<div class="prow">'+(mine.length?'<button class="plink" data-act="pOpen" data-id="'+esc(mine[0].id)+'">'+esc(u.name)+'</button>':'<b>'+esc(u.name)+'</b>')+'<span>'+(u.role==='pd'?'관리자':'크리에이터')+(u.off?' · 멈춤':'')+'</span>'+(u.id===S.me?'<span class="me">나</span>':'');
     if(u.role!=='pd')h+='<select data-own="'+esc(u.id)+'" aria-label="맡은 크리에이터"><option value="">맡은 크리에이터 고르기</option>'+chs.map(function(c){return '<option value="'+esc(c.id)+'"'+(c.owner===u.id?' selected':'')+'>'+esc(c.name)+(c.owner&&c.owner!==u.id?' ('+esc(who(c.owner))+')':'')+'</option>'}).join('')+'</select>'+(mine.length>1?'<span>외 '+(mine.length-1)+'곳</span>':'');
     h+='<button class="btn sm" data-act="pPw" data-id="'+esc(u.id)+'">비밀번호 바꾸기</button>';
     if(u.id!==S.me)h+='<button class="btn sm" data-act="pRole" data-id="'+esc(u.id)+'" data-role="'+(u.role==='pd'?'creator':'pd')+'">'+(u.role==='pd'?'크리에이터로':'관리자로')+'</button><button class="btn sm'+(u.off?'':' bad')+'" data-act="pOff" data-id="'+esc(u.id)+'" data-off="'+(u.off?0:1)+'">'+(u.off?'다시 쓰게':'못 들어오게')+'</button>';
@@ -541,7 +551,7 @@ function peopleAct(a,d){
   if(a==='aMake'){var am=document.getElementById('aMsg'),p1=document.getElementById('aPw').value,p2=document.getElementById('aPw2').value;
     if(p1.length<6){am.textContent='비밀번호는 6자 이상으로 해 주세요.';return}if(p1!==p2){am.textContent='두 비밀번호가 다릅니다.';return}
     call('/users/add',{name:ADMIN_NAME,role:'pd',pw:p1}).then(function(j){if(!j.ok){am.textContent=PERR[j.err]||'만들지 못했습니다.';return}
-      call('/users/set',{id:S.me,role:'creator'}).then(function(){sess(null);admMode(true);showLogin('관리자 계정을 만들었습니다. 관리자 비밀번호로 들어와 주세요.')})});return}
+      call('/users/set',{id:S.me,role:'creator'}).then(function(){sess(null);HASADM=true;admMode(true);showLogin('관리자 계정을 만들었습니다. 관리자 비밀번호로 들어와 주세요.')})});return}
   if(a==='pOff'){call('/users/set',{id:d.id,off:d.off==='1'}).then(function(){PEOPLE=null;render()});return}
   if(a==='pRole'){call('/users/set',{id:d.id,role:d.role}).then(function(j){if(j.ok){PEOPLE=null;render()}else note(PERR[j.err]||'바꾸지 못했습니다.')});return}
   if(a==='pPw'){var row=app.querySelector('[data-act="pPw"][data-id="'+d.id+'"]').parentNode;if(row.querySelector('.pnpw'))return;
@@ -551,7 +561,8 @@ function peopleAct(a,d){
 }
 /* ---------- 저장 서버 연결 (계정 없이 이름 + 비밀번호) ---------- */
 var API=(window.APP_CFG&&APP_CFG.api)||'';
-var SK='ip_session';
+var ADMIN_PAGE=/\/admin\/?(index\.html)?$/.test(location.pathname);
+var SK=ADMIN_PAGE?'ip_session_adm':'ip_session';
 function sess(v){try{if(v===undefined)return JSON.parse(localStorage.getItem(SK)||'null');if(v===null)localStorage.removeItem(SK);else localStorage.setItem(SK,JSON.stringify(v))}catch(e){return null}}
 function call(path,body){var s=sess();return fetch(API+path,{method:'POST',headers:Object.assign({'content-type':'application/json'},s&&s.token?{authorization:'Bearer '+s.token}:{}),body:JSON.stringify(body||{})}).then(function(r){return r.json().catch(function(){return {err:'net'}}).then(function(j){if(r.status===401){sess(null);showLogin('로그인이 풀렸습니다. 다시 들어와 주세요.')}return j})})}
 var CACHE={},SUBS={},SINCE=0,PULLING=false;
@@ -568,25 +579,28 @@ var db={collection:function(col){return {
   onSnapshot:function(f){(SUBS[col]=SUBS[col]||[]).push(f)}}}};
 var user=null;
 function showLogin(why){var g=document.getElementById('login');g.hidden=false;checkSetup();document.getElementById('lgErr').textContent=why||'';var n=document.getElementById('lgName');(n.value||ADM?document.getElementById('lgPw'):n).focus()}
-function started(me){PEOPLE=null;S.me=me.id;S.role=me.role;S.names[me.id]=me.name;document.getElementById('login').hidden=true;document.getElementById('meName').textContent=me.name+(me.role==='pd'?' · 관리자':' · 크리에이터');document.body.classList.toggle('is-pd',me.role==='pd');
+function started(me){
+  if(ADMIN_PAGE&&me.role!=='pd'){sess(null);showLogin('이 주소는 관리자만 들어옵니다. 크리에이터는 크리에이터 주소로 들어와 주세요.');return}
+  if(!ADMIN_PAGE&&me.role==='pd'){try{localStorage.setItem('ip_session_adm',localStorage.getItem('ip_session'));localStorage.removeItem('ip_session')}catch(e){}location.replace('admin/');return}
+  PEOPLE=null;if(ADMIN_PAGE){var st=null;try{st=sessionStorage.getItem('ws-tab')}catch(e){}if(!st)S.tab='people'}S.me=me.id;S.role=me.role;S.names[me.id]=me.name;document.getElementById('login').hidden=true;document.getElementById('meName').textContent=(me.name===ADMIN_NAME?me.name:me.name+(me.role==='pd'?' · 관리자':' · 크리에이터'));document.body.classList.toggle('is-pd',me.role==='pd');
   sub('channels','channels');sub('items','items');sub('refs','refs');sub('comments','comments');sub('concepts','concepts');sub('talks','talks');
   pull();if(!started.on){started.on=1;setInterval(function(){if(!document.hidden)pull()},4000);document.addEventListener('visibilitychange',function(){if(!document.hidden)pull()})}}
-var SETUP=false,ADM=false,ADMIN_NAME='관리자';
+var SETUP=false,ADM=false,HASADM=false,ADMIN_NAME='관리자';
 function admMode(on){ADM=!!on;try{localStorage.setItem('ip_adm',ADM?'1':'')}catch(e){}var nl=document.getElementById('lgNameL'),n=document.getElementById('lgName');nl.hidden=ADM&&!SETUP;n.required=!(ADM&&!SETUP);
-  document.getElementById('lgMode').hidden=SETUP;document.getElementById('lgMode').textContent=ADM?'크리에이터로 들어가기':'관리자로 들어가기';document.getElementById('lgPwL').textContent=SETUP?'비밀번호 정하기 (6자 이상)':ADM?'관리자 비밀번호':'비밀번호'}
+  document.getElementById('lgMode').hidden=true;document.getElementById('lgMode').textContent=ADM?'크리에이터로 들어가기':'관리자로 들어가기';document.getElementById('lgPwL').textContent=SETUP?'비밀번호 정하기 (6자 이상)':ADM?'관리자 비밀번호':'비밀번호'}
 document.getElementById('lgMode').addEventListener('click',function(){admMode(!ADM);document.getElementById('lgErr').textContent='';document.getElementById(ADM?'lgPw':'lgName').focus()});
 function setupMode(on){SETUP=on;document.getElementById('lgSet').hidden=!on;document.getElementById('lgPw2L').hidden=!on;document.getElementById('lgPwL').textContent=on?'비밀번호 정하기 (6자 이상)':'비밀번호';document.getElementById('lgBtn').textContent=on?'시작하기':'들어가기';admMode(on?false:ADM);document.getElementById('lgPw').autocomplete=on?'new-password':'current-password'}
-function checkSetup(){call('/state',{}).then(function(j){setupMode(!!(j&&j.setup))})}
+function checkSetup(){call('/state',{}).then(function(j){HASADM=!!(j&&j.admin);ADM=ADMIN_PAGE&&HASADM;setupMode(!!(j&&j.setup));if(ADMIN_PAGE&&!HASADM&&!SETUP&&!document.getElementById('lgErr').textContent)document.getElementById('lgErr').textContent='관리자 계정이 아직 없습니다. 지금 관리자 권한이 있는 계정의 이름과 비밀번호로 들어와 관리자 계정을 만들어 주세요.'})}
 document.getElementById('lgForm').addEventListener('submit',function(e){e.preventDefault();var b=document.getElementById('lgBtn');
   if(SETUP){var p1=document.getElementById('lgPw').value,p2=document.getElementById('lgPw2').value;if(p1.length<6){document.getElementById('lgErr').textContent='비밀번호는 6자 이상으로 정해 주세요.';return}if(p1!==p2){document.getElementById('lgErr').textContent='두 비밀번호가 다릅니다. 같게 넣어 주세요.';return}}
   b.disabled=true;
   call('/login',{name:ADM&&!SETUP?ADMIN_NAME:document.getElementById('lgName').value,pw:document.getElementById('lgPw').value}).then(function(j){b.disabled=false;
-    if(j&&j.token){sess({token:j.token,me:j.me});document.getElementById('lgPw').value='';document.getElementById('lgPw2').value='';setupMode(false);started(j.me)}
+    if(j&&j.token){sess({token:j.token,me:j.me});if(S.me){location.reload();return}document.getElementById('lgPw').value='';document.getElementById('lgPw2').value='';setupMode(false);started(j.me)}
     else document.getElementById('lgErr').textContent=j&&j.err==='locked'?'여러 번 틀려 잠시 잠겼습니다. '+(j.wait||15)+'분 뒤 다시 해 주세요.':j&&j.err==='net'?'서버에 닿지 않습니다.':(ADM?'관리자 비밀번호가 맞지 않습니다.':'이름 또는 비밀번호가 맞지 않습니다.')})});
-try{ADM=localStorage.getItem('ip_adm')==='1'}catch(e){}
+
 /* ---------- 시작 ---------- */
 head();
-document.getElementById('brand').textContent=document.title=(window.APP_CFG&&APP_CFG.name)||'인스타그램 기획';document.getElementById('lgTitle').textContent=document.title;
+document.getElementById('brand').textContent=document.title=((window.APP_CFG&&APP_CFG.name)||'인스타그램 기획')+(ADMIN_PAGE?' · 관리자':'');document.getElementById('lgTitle').textContent=document.title;
 var S0=sess();if(S0&&S0.token){started(S0.me);call('/me').then(function(j){if(j&&j.me){sess({token:S0.token,me:j.me});S.role=j.me.role;document.body.classList.toggle('is-pd',j.me.role==='pd')}})}else showLogin();
 })();
 </script>
