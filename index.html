@@ -97,7 +97,7 @@ summary{cursor:pointer;font-weight:700;color:var(--acc);font-size:16px;min-heigh
 .bar+.sec{border-top:0;padding-top:0;margin-top:8px}
 #login[hidden]{display:none}#login{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;padding:16px}
 .lgbox{width:100%;max-width:400px;display:grid;gap:14px}.lgbox h1{font-size:28px;margin:0 0 6px}.lgbox label{display:grid;gap:6px;font-weight:700}
-#lgErr{color:var(--bad);min-height:1.5em;margin:0;font-weight:700}.lgbox .btn{min-height:54px;font-size:19px}
+#login [hidden]{display:none!important}#lgSet{margin:0;color:var(--sub)}#lgErr{color:var(--bad);min-height:1.5em;margin:0;font-weight:700}.lgbox .btn{min-height:54px;font-size:19px}
 .pdonly{display:none}body.is-pd .pdonly{display:inline-block}
 .talk{background:var(--paper);border:2px solid var(--acc);border-radius:18px;padding:16px;margin:14px 0}
 .talkh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.talkh h2{margin:0;font-size:21px}.talkh span{color:var(--sub);font-size:16px}
@@ -125,7 +125,7 @@ summary{cursor:pointer;font-weight:700;color:var(--acc);font-size:16px;min-heigh
   <div class="who"><button class="btn sm pdonly" data-tab="people">사람</button>
   <button class="btn sm" data-act="logout" title="로그아웃"><span id="meName"></span> · 나가기</button></div>
 </header>
-<div id="login" hidden><form id="lgForm" class="lgbox"><h1 id="lgTitle">인스타그램 기획</h1><label>이름<input id="lgName" autocomplete="username" required></label><label>비밀번호<input id="lgPw" type="password" autocomplete="current-password" required></label><p id="lgErr" role="alert"></p><button class="btn pri" id="lgBtn">들어가기</button></form></div>
+<div id="login" hidden><form id="lgForm" class="lgbox"><h1 id="lgTitle">인스타그램 기획</h1><p id="lgSet" hidden>처음 시작합니다. 쓰실 이름과 비밀번호를 지금 정해 주세요. 이 사람이 PD 가 됩니다.</p><label>이름<input id="lgName" autocomplete="username" required></label><label><span id="lgPwL">비밀번호</span><input id="lgPw" type="password" autocomplete="current-password" required></label><label id="lgPw2L" hidden>비밀번호 한 번 더<input id="lgPw2" type="password" autocomplete="new-password"></label><p id="lgErr" role="alert"></p><button class="btn pri" id="lgBtn">들어가기</button></form></div>
 <div class="wrap"><div id="msg"></div><div id="toast"><span id="toastT"></span><button data-act="undo">되돌리기</button></div><div id="app"><div class="empty" style="margin-top:24px">불러오는 중입니다</div></div></div>
 
 <script>
@@ -529,13 +529,18 @@ var db={collection:function(col){return {
   add:function(d){return send(col,newId(),'set',d)},
   onSnapshot:function(f){(SUBS[col]=SUBS[col]||[]).push(f)}}}};
 var user=null;
-function showLogin(why){var g=document.getElementById('login');g.hidden=false;document.getElementById('lgErr').textContent=why||'';var n=document.getElementById('lgName');(n.value?document.getElementById('lgPw'):n).focus()}
+function showLogin(why){var g=document.getElementById('login');g.hidden=false;checkSetup();document.getElementById('lgErr').textContent=why||'';var n=document.getElementById('lgName');(n.value?document.getElementById('lgPw'):n).focus()}
 function started(me){S.me=me.id;S.role=me.role;S.names[me.id]=me.name;document.getElementById('login').hidden=true;document.getElementById('meName').textContent=me.name+(me.role==='pd'?' · PD':' · 크리에이터');document.body.classList.toggle('is-pd',me.role==='pd');
   sub('channels','channels');sub('items','items');sub('refs','refs');sub('comments','comments');sub('concepts','concepts');sub('talks','talks');
   pull();setInterval(function(){if(!document.hidden)pull()},4000);document.addEventListener('visibilitychange',function(){if(!document.hidden)pull()})}
-document.getElementById('lgForm').addEventListener('submit',function(e){e.preventDefault();var b=document.getElementById('lgBtn');b.disabled=true;
+var SETUP=false;
+function setupMode(on){SETUP=on;document.getElementById('lgSet').hidden=!on;document.getElementById('lgPw2L').hidden=!on;document.getElementById('lgPwL').textContent=on?'비밀번호 정하기 (6자 이상)':'비밀번호';document.getElementById('lgBtn').textContent=on?'시작하기':'들어가기';document.getElementById('lgPw').autocomplete=on?'new-password':'current-password'}
+function checkSetup(){call('/state',{}).then(function(j){setupMode(!!(j&&j.setup))})}
+document.getElementById('lgForm').addEventListener('submit',function(e){e.preventDefault();var b=document.getElementById('lgBtn');
+  if(SETUP){var p1=document.getElementById('lgPw').value,p2=document.getElementById('lgPw2').value;if(p1.length<6){document.getElementById('lgErr').textContent='비밀번호는 6자 이상으로 정해 주세요.';return}if(p1!==p2){document.getElementById('lgErr').textContent='두 비밀번호가 다릅니다. 같게 넣어 주세요.';return}}
+  b.disabled=true;
   call('/login',{name:document.getElementById('lgName').value,pw:document.getElementById('lgPw').value}).then(function(j){b.disabled=false;
-    if(j&&j.token){sess({token:j.token,me:j.me});document.getElementById('lgPw').value='';started(j.me)}
+    if(j&&j.token){sess({token:j.token,me:j.me});document.getElementById('lgPw').value='';document.getElementById('lgPw2').value='';setupMode(false);started(j.me)}
     else document.getElementById('lgErr').textContent=j&&j.err==='locked'?'여러 번 틀려 잠시 잠겼습니다. '+(j.wait||15)+'분 뒤 다시 해 주세요.':j&&j.err==='net'?'서버에 닿지 않습니다.':'이름 또는 비밀번호가 맞지 않습니다.'})});
 /* ---------- 시작 ---------- */
 head();
