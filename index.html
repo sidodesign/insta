@@ -348,6 +348,7 @@ body.askon #askFab{display:none}
 .sgc .sgt{font-size:19px;line-height:1.5}.sgc .bar{margin:0}
 .sgq textarea{min-height:64px}.sgq select{max-width:320px}
 .mypw{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:200;padding:16px}.mypwin{background:#fff;border-radius:16px;padding:24px;width:100%;max-width:420px;display:flex;flex-direction:column;gap:12px}.mypwin h2{margin:0;font-size:22px}.mypwin input{font-size:18px;padding:12px;border:1px solid #ccc;border-radius:10px}.mypwin p{margin:0;color:#c0392b;min-height:1em}
+.ver{color:var(--sub);font-size:14px;text-align:center;padding:4px 16px 18px}@media print{.ver,.newv{display:none}}
 .newv{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:300;background:var(--paper);border:2px solid var(--acc);border-radius:14px;padding:10px 16px;font-size:18px;font-weight:600;display:flex;gap:12px;align-items:center;box-shadow:0 6px 24px rgba(0,0,0,.15)}
 </style>
 
@@ -370,6 +371,7 @@ body.askon #askFab{display:none}
 </header>
 <div id="login" hidden><form id="lgForm" class="lgbox"><h1 id="lgTitle">인스타그램 기획</h1><p id="lgSet" hidden>처음 시작합니다. 쓰실 이름과 비밀번호를 지금 정해 주세요. 이 사람이 관리자가 됩니다.</p><label id="lgNameL">이름<input id="lgName" autocomplete="username" required></label><label><span id="lgPwL">비밀번호</span><input id="lgPw" type="password" autocomplete="current-password" required></label><label id="lgPw2L" hidden>비밀번호 한 번 더<input id="lgPw2" type="password" autocomplete="new-password"></label><label class="lgkeep"><input type="checkbox" id="lgKeep"><span>이 기기에서 로그인 유지 (30일)</span></label><p class="lghint">체크하지 않으면 창을 닫을 때 로그아웃됩니다. 여럿이 쓰는 컴퓨터에서는 체크하지 마세요.</p><p id="lgErr" role="alert"></p><button class="btn pri" id="lgBtn">들어가기</button><button type="button" class="btn" id="lgMode">관리자로 들어가기</button></form></div>
 <div class="wrap"><div id="msg"></div><div id="toast"><span id="toastT"></span><button data-act="undo">되돌리기</button></div><div id="app"><div class="empty" style="margin-top:24px">불러오는 중입니다</div></div></div>
+<footer class="ver" id="ver" data-v="1127-0221">판 11/27 02:21</footer>
 <button id="askFab" data-act="askOpen">물어보기</button><div id="ask" hidden role="dialog" aria-label="물어보기"></div>
 
 <script>
@@ -1760,11 +1762,17 @@ document.getElementById('brand').textContent=document.title=((window.APP_CFG&&AP
 var S0=sess();if(S0&&S0.token){started(S0.me);call('/me').then(function(j){if(j&&j.me){sess({token:S0.token,me:j.me,keep:!!S0.keep});S.role=j.me.role;document.body.classList.toggle('is-pd',j.me.role==='pd')}})}else showLogin();
 })();
 
-/* 새 판 알림: 브라우저가 예전 화면을 들고 있으면 위에 "새로 고침"을 띄운다 */
-var ME_SRC=document.currentScript?document.currentScript.textContent:'';
-function chkNew(){if(!ME_SRC||document.getElementById('newv')||!window.fetch)return;
-  fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){
-    var a=t.lastIndexOf('<'+'script>'),b=t.lastIndexOf('</'+'script>');if(a<0||b<a)return;var src=t.slice(a+8,b);
-    if(src.length>1000&&src!==ME_SRC)document.body.insertAdjacentHTML('beforeend','<div id="newv" class="newv">앱이 새로 바뀌었어요 <button class="btn pri sm" onclick="location.reload()">새로 고침</button></div>')}).catch(function(){})}
-setTimeout(chkNew,3000);setInterval(chkNew,600000);document.addEventListener('visibilitychange',function(){if(!document.hidden)chkNew()});
+/* 새 판 확인: ver.txt(몇 글자)를 저장본 없이 받아 화면 아래의 "판"과 다르면,
+   막 열었을 때는 한 번 스스로 새로 받고(같은 판을 두 번 시도하지 않음), 쓰는 중이면 위에 "새로 고침"을 띄운다 */
+var VER=(document.getElementById('ver')||{dataset:{}}).dataset.v||'';
+try{if(/[?&]v=/.test(location.search)&&history.replaceState)history.replaceState(null,'',location.pathname+location.hash)}catch(e){}
+function verGo(t){location.replace(location.pathname+'?v='+encodeURIComponent(t)+'-'+Date.now())}
+function chkNew(first){if(!VER||!window.fetch||document.getElementById('newv'))return;
+  fetch((/\/admin\/?(index\.html)?$/.test(location.pathname)?'../':'')+'ver.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){
+    t=String(t).trim();if(!/^[0-9]{4}-[0-9]{4}$/.test(t)||t===VER)return;
+    var tried='x';try{tried=sessionStorage.getItem('ip_ver_try')||'';sessionStorage.setItem('ip_ver_try',t)}catch(e){tried='x'}
+    if(first===true&&tried!=='x'&&tried!==t)return verGo(t);
+    document.body.insertAdjacentHTML('beforeend','<div id="newv" class="newv">앱이 새로 바뀌었어요 <button class="btn pri sm" id="newvB">새로 고침</button></div>');
+    document.getElementById('newvB').onclick=function(){verGo(t)}}).catch(function(){})}
+chkNew(true);setInterval(chkNew,600000);document.addEventListener('visibilitychange',function(){if(!document.hidden)chkNew()});
 </script>
