@@ -317,6 +317,33 @@ ol.how{margin:0;padding-left:26px;display:grid;gap:8px;font-size:18px}
 .fdptr{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:18px}.fdptr>div{flex:1 1 280px}
 @media(max-width:1100px){.fdw{grid-template-columns:1fr}.fdbox{position:static}}
 @media screen and (min-width:2300px){body{zoom:1.2}.wrap,header{padding-left:calc((100vw/1.2 - 1840px)/2);padding-right:calc((100vw/1.2 - 1840px)/2)}}
+/* ---- 물어보기 ---- */
+.askhb{border-color:var(--acc)!important;color:var(--acc);font-weight:700}
+#askFab{display:none;position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:8;background:var(--acc);color:var(--paper);border:0;border-radius:999px;padding:0 22px;min-height:56px;font:inherit;font-size:19px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.18);cursor:pointer}
+@media(max-width:800px){.askhb{display:none!important}#askFab{display:block}.wrap{padding-bottom:104px}}
+body.askon #askFab{display:none}
+#ask[hidden]{display:none}
+#ask{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);z-index:30;background:var(--paper);border-left:1px solid var(--line);box-shadow:-6px 0 24px rgba(0,0,0,.12);display:grid;grid-template-rows:auto minmax(0,1fr) auto;font-size:19px}
+.askh{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.askh b{font-size:22px}.askh span{color:var(--sub);font-size:15px;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.askb{overflow-y:auto;overflow-x:hidden;padding:16px 18px;display:grid;gap:16px;align-content:start}
+.asknow{background:var(--accbg);border-radius:14px;padding:12px 14px;display:grid;gap:8px}
+.asknow small{color:var(--acc);font-weight:700;font-size:15px}.asknow b{font-size:19px;line-height:1.45}.asknow .btn{justify-self:start}
+.asksug{display:grid;gap:8px}.asksug>small,.askmine>summary{color:var(--sub);font-size:15px;font-weight:600}
+.asksug button{text-align:left;background:var(--paper);border:1px solid var(--line2);border-radius:12px;padding:10px 14px;min-height:52px;font:inherit;font-size:18px;cursor:pointer;color:var(--ink)}
+.asksug button:hover{border-color:var(--acc);color:var(--acc)}
+.aqm{justify-self:end;background:var(--soft);border-radius:14px 14px 4px 14px;padding:9px 14px;max-width:88%;overflow-wrap:anywhere}
+.aqa{display:grid;gap:10px;border-left:3px solid var(--acc);padding:2px 0 2px 14px}
+.aqa .aqt{font-size:19px;line-height:1.55}.aqa small{color:var(--sub);font-size:14px}
+.aqa .bar{margin:0;gap:8px}
+.aql{display:grid;gap:6px}.aql>div,.aql>a{background:var(--soft);border-radius:10px;padding:8px 12px;font-size:16px;color:var(--ink);text-decoration:none;display:flex;gap:10px;align-items:center;justify-content:space-between}.aql .btn{flex:none}
+.askmine{border-top:1px solid var(--line);padding-top:12px}.askmine .cm{margin-top:8px;font-size:16px}
+.askf{border-top:1px solid var(--line);padding:12px 18px max(14px,env(safe-area-inset-bottom,0px));display:grid;gap:8px}
+.askf textarea{min-height:56px;max-height:160px;field-sizing:content;font-size:18px}
+.askf .bar{margin:0;gap:8px}.askf .bar .btn{min-height:50px}
+.askf.sg textarea{border-color:var(--warn)}
+.sgc .sgt{font-size:19px;line-height:1.5}.sgc .bar{margin:0}
+.sgq textarea{min-height:64px}.sgq select{max-width:320px}
 </style>
 
 <header>
@@ -332,11 +359,12 @@ ol.how{margin:0;padding-left:26px;display:grid;gap:8px;font-size:18px}
     <button class="btn" data-tab="find">레퍼런스 찾기</button>
     <button class="btn" data-tab="refs">레퍼런스·분석</button>
   </div>
-  <div class="who"><button class="btn sm pdonly" data-tab="people" id="homeBtn">관리 화면</button>
+  <div class="who"><button class="btn sm askhb" data-act="askOpen">물어보기</button><button class="btn sm pdonly" data-tab="people" id="homeBtn">관리 화면</button>
   <button class="btn sm" data-act="logout" title="로그아웃"><span id="meName"></span> · 나가기</button></div>
 </header>
 <div id="login" hidden><form id="lgForm" class="lgbox"><h1 id="lgTitle">인스타그램 기획</h1><p id="lgSet" hidden>처음 시작합니다. 쓰실 이름과 비밀번호를 지금 정해 주세요. 이 사람이 관리자가 됩니다.</p><label id="lgNameL">이름<input id="lgName" autocomplete="username" required></label><label><span id="lgPwL">비밀번호</span><input id="lgPw" type="password" autocomplete="current-password" required></label><label id="lgPw2L" hidden>비밀번호 한 번 더<input id="lgPw2" type="password" autocomplete="new-password"></label><label class="lgkeep"><input type="checkbox" id="lgKeep"><span>이 기기에서 로그인 유지 (30일)</span></label><p class="lghint">체크하지 않으면 창을 닫을 때 로그아웃됩니다. 여럿이 쓰는 컴퓨터에서는 체크하지 마세요.</p><p id="lgErr" role="alert"></p><button class="btn pri" id="lgBtn">들어가기</button><button type="button" class="btn" id="lgMode">관리자로 들어가기</button></form></div>
 <div class="wrap"><div id="msg"></div><div id="toast"><span id="toastT"></span><button data-act="undo">되돌리기</button></div><div id="app"><div class="empty" style="margin-top:24px">불러오는 중입니다</div></div></div>
+<button id="askFab" data-act="askOpen">물어보기</button><div id="ask" hidden role="dialog" aria-label="물어보기"></div>
 
 <script>
 (function(){
@@ -344,7 +372,7 @@ var STAGES=['방향성','채널명','기획','대본','영상작업','편집','�
 var FORMS=['썰','정보 정리','브이로그','검증','개그','기타'];
 var S={accts:[],asks:[],tpls:[],sid:null,smode:'',sed:false,swhy:false,hs:0,fxEdit:false,rchs:[],rv:'ch',rc:null,rcEdit:null,talks:[],role:'',ch:null,sec:-1,sv:null,tab:'home',stage:'all',open:null,refEdit:null,pass:false,form:'all',q:'',channels:[],refs:[],items:[],comments:[],concepts:[],group:true,step:0,undo:null,me:null,names:{},loaded:{},ro:false,addCh:false,del:false};
 var db=null,user=null,app=document.getElementById('app'),msg=document.getElementById('msg');
-try{var t=sessionStorage.getItem('ws-tab');if(t&&/^(home|board|script|how|concept|find|refs|acct|people)$/.test(t))S.tab=t;S.ch=localStorage.getItem('ws-ch')||null}catch(e){}
+try{var t=sessionStorage.getItem('ws-tab');if(t&&/^(home|board|script|how|concept|find|refs|acct|people|sugg)$/.test(t))S.tab=t;S.ch=localStorage.getItem('ws-ch')||null}catch(e){}
 
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function num(v){if(typeof v==='number')return v;var s=String(v||'').replace(/[, ]/g,'');if(!s)return 0;var m=parseFloat(s);if(isNaN(m))return 0;if(/만/.test(s))m*=10000;else if(/천/.test(s))m*=1000;else if(/k$/i.test(s))m*=1000;return Math.round(m)}
@@ -379,6 +407,7 @@ function names(){
 function onData(key){
   if(key==='channels'){if(S.channels.length&&!S.channels.some(function(c){return c.id===S.ch}))S.ch=S.channels.slice().sort(byOrder)[0].id;head()}
   render(true);
+  if(AQ.open&&/^(sugg|qlog|faq)$/.test(key)){var am=document.getElementById('askMine');if(am)am.innerHTML=askMine()}
 }
 function byOrder(a,b){return (a.order||0)-(b.order||0)||(a.at||0)-(b.at||0)}
 
@@ -387,7 +416,7 @@ function head(){
   var sel=document.getElementById('chSel');
   sel.innerHTML=S.channels.slice().sort(byOrder).map(function(c){return '<option value="'+esc(c.id)+'"'+(c.id===S.ch?' selected':'')+'>'+esc(c.name)+'</option>'}).join('')||'<option>크리에이터 없음</option>';
   [].forEach.call(document.querySelectorAll('[data-tab]'),function(b){b.classList.toggle('on',(b.dataset.tab===S.tab||(b.dataset.tab==='refs'&&S.tab==='acct'))&&!S.open)});
-  var home=S.role==='pd'&&(S.tab==='people'||S.addCh);document.body.classList.toggle('home',home);
+  var home=S.role==='pd'&&(S.tab==='people'||S.tab==='sugg'||S.addCh);document.body.classList.toggle('home',home);
   var hb=document.getElementById('homeBtn');if(hb)hb.textContent=home?'관리 화면':'← 관리 화면';
 }
 function render(soft){
@@ -397,6 +426,7 @@ function render(soft){
   if(soft&&document.activeElement&&app.contains(document.activeElement)&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){softSync();return}
   if(S.addCh){app.innerHTML=chForm();return}
   if(S.tab==='people'){app.innerHTML=peopleHtml();return}
+  if(S.tab==='sugg'){if(S.role==='pd'){app.innerHTML=suggBox();return}S.tab='home'}
   if(!S.channels.length){app.innerHTML=S.role==='pd'?'<div class="empty" style="margin-top:24px">아직 크리에이터가 없습니다.<br><br><button class="btn pri" data-act="addCh">첫 크리에이터 만들기</button></div>':'<div class="empty" style="margin-top:24px">아직 이 계정에 연결된 크리에이터가 없습니다.<br>관리자에게 연결해 달라고 말해 주세요.</div>';return}
   if(S.open){var it=S.items.filter(function(i){return i.id===S.open})[0];if(it){app.innerHTML=editor(it);return}S.open=null}
   if(S.refEdit){app.innerHTML=refForm();return}
@@ -470,7 +500,7 @@ function home(){
   return h+'</div></div>';
 }
 
-function startCard(items,c){
+function startSteps(items,c){
   var mine=S.accts.some(function(a){return a.ch===S.ch&&a.kind==='mine'}),rc=S.rchs.filter(function(r){return r.ch===S.ch}).length;
   var st=[['크리에이터 한 장 채우기','누구인지, 무엇을 보여 주는지 적습니다',!!(c.one&&c.speaker),'data-tab="concept"'],
     ['내 인스타 아이디 올리기','올리면 잘된 점과 아쉬운 점을 분석해 드립니다',mine,'data-sub="acct"'],
@@ -480,6 +510,8 @@ function startCard(items,c){
     ['대본 만들기','대본 탭에서 버튼 한 번이면 나옵니다',items.some(function(i){return scFilled(i).length>0}),'data-tab="script"'],
     ['찍고 편집하기','"찍는 법"을 보고 따라 합니다',items.some(function(i){return grp(i.stage)>=2}),'data-tab="how"'],
     ['올리고 성과 적기','7일 뒤 숫자와 배운 점을 적습니다',items.some(function(i){return i.posted&&num(i.views)}),'data-tab="board"']];
+  return st}
+function startCard(items,c){var st=startSteps(items,c);
   var dn=st.filter(function(x){return x[2]}).length;if(dn===st.length)return '';var nx=-1;st.forEach(function(x,i){if(nx<0&&!x[2])nx=i});
   return '<details class="panel stc"'+(dn<5?' open':'')+'><summary><b>처음이라면 이 순서로</b> <span class="badge '+(dn?'ok':'')+'">'+dn+' / '+st.length+'</span><span class="nxt">다음: '+st[nx][0]+'</span></summary><div class="stg">'+st.map(function(x,i){return '<button class="sti'+(x[2]?' d':'')+(i===nx?' nx':'')+'" '+x[3]+'><i>'+(x[2]?'✓':(i+1))+'</i><span><b>'+x[0]+'</b><small>'+x[1]+'</small></span></button>'}).join('')+'</div></details>';
 }
@@ -491,10 +523,10 @@ function findPanel(){
 }
 function findSug(){var o=[];corners().slice(0,4).forEach(function(x){x=x.replace(/\(.*?\)/g,'').trim();if(x)o.push(x+' 잘하는 계정')});o.push('팔로워는 적은데 조회수가 높은 계정','얼굴 없이 찍는 계정');return o.slice(0,6)}
 function findCard(a,cs,cm){
-  var r=a.res||{},done=a.status==='done',t=a.text||'',q=encodeURIComponent(t||curConcept().l3||curConcept().one||'');
+  var r=a.res||{},done=a.status==='done',tl=String(a.text||'').split('\n'),t=tl[0],tc=tl.slice(1).join(' / '),q=encodeURIComponent(t||curConcept().l3||curConcept().one||'');
   var fc=cs.filter(function(c){return c.from===a.id}),fv=S.refs.filter(function(v){return v.ch===S.ch&&v.from===a.id});
   var h='<div class="panel fdr'+(done?'':' wait')+'"><div class="meta">'+(done?'<span class="badge ok">찾았습니다'+(fc.length||fv.length?' · 채널 '+fc.length+' · 영상 '+fv.length:'')+'</span>':'<span class="badge warn">찾는 중</span>')+'<span>'+day(a.reqAt||a.at)+' 요청'+(a.by&&S.names[a.by]?' · '+esc(S.names[a.by]):'')+'</span>'+(done&&r.at?'<span>· '+day(r.at)+' 찾음</span>':'')+'</div>';
-  h+='<div class="fdq">'+esc(t||'이 크리에이터에 맞는 채널')+'</div>';
+  h+='<div class="fdq">'+esc(t||'이 크리에이터에 맞는 채널')+'</div>'+(tc?'<div class="hs">'+esc(tc)+'</div>':'');
   if(done){
     if(r.a)h+='<div class="fda">'+esc(r.a)+'</div>';
     if(fc.length)h+='<h3>찾은 채널</h3><div class="grid">'+fc.map(rcCard).join('')+'</div>';
@@ -1213,6 +1245,7 @@ document.addEventListener('click',function(e){
   if(d.next){e.stopPropagation();var it=S.items.filter(function(i){return i.id===d.next})[0];if(it){var g=grp(it.stage);if(g<3)upd('items',it.id,{stage:GSTAGE[g+1]})}return}
   if(d.refedit){S.refEdit=d.refedit;return render()}
   if(d.open){S.open=d.open;S.del=false;S.step=0;S.fxEdit=false;render();window.scrollTo(0,0);return}
+  if(/^ask[A-Z]/.test(d.act||''))return askAct(d.act,d,b);
   if(/^t(Add|Say|Ok|Re)$/.test(d.act||''))return talkAct(d.act,d);
   if(/^p(Add|Off|Pw|PwGo|Role|Open)$|^aMake$/.test(d.act||''))return peopleAct(d.act,d);
   if(/^(rv|rc[A-Z]\w*)$/.test(d.act||''))return rcAct(d.act,d);
@@ -1367,8 +1400,9 @@ function peopleHtml(){
   if(PEOPLE===null){call('/users').then(function(j){PEOPLE=j.users||[];render()});return '<div class="empty">불러오는 중입니다</div>'}
   var chs=S.channels.slice().sort(byOrder);
   var allIt=S.items,openT=(S.talks||[]).filter(function(t){return !t.decided}).length,idle=chs.filter(function(c){var la=lastAct(c.id);return !la||Date.now()-la>7*864e5}).length,crs=PEOPLE.filter(function(u){return u.role!=='pd'&&!u.off}).length;
-  var h='<div class="bar"><h2 class="h1">관리</h2><span class="sp" style="flex:1"></span><button class="btn pri" data-act="addCh">크리에이터 추가</button></div>';
-  h+='<div class="sum"><div><small>크리에이터</small><b>'+chs.length+'</b></div><div><small>크리에이터 계정</small><b>'+crs+'</b></div><div><small>콘텐츠</small><b>'+allIt.length+'</b></div><div><small>올린 영상</small><b>'+allIt.filter(function(i){return num(i.views)>0}).length+'</b></div><div><small>정할 것</small><b'+(openT?' class="warn"':'')+'>'+openT+'</b></div><div><small>7일 넘게 쉼</small><b'+(idle?' class="warn"':'')+'>'+idle+'</b></div></div>';
+  var sgN=S.sugg.filter(function(x){return x.status==='new'}).length,qlN=S.qlog.filter(function(x){return x.status==='new'}).length;
+  var h='<div class="bar"><h2 class="h1">관리</h2><span class="sp" style="flex:1"></span><button class="btn" data-tab="sugg">건의함'+(sgN+qlN?' <span class="badge warn">'+(sgN+qlN)+'</span>':'')+'</button><button class="btn pri" data-act="addCh">크리에이터 추가</button></div>';
+  h+='<div class="sum"><div><small>크리에이터</small><b>'+chs.length+'</b></div><div><small>크리에이터 계정</small><b>'+crs+'</b></div><div><small>콘텐츠</small><b>'+allIt.length+'</b></div><div><small>올린 영상</small><b>'+allIt.filter(function(i){return num(i.views)>0}).length+'</b></div><div><small>정할 것</small><b'+(openT?' class="warn"':'')+'>'+openT+'</b></div><div><small>7일 넘게 쉼</small><b'+(idle?' class="warn"':'')+'>'+idle+'</b></div><div><small>새 건의</small><b'+(sgN?' class="warn"':'')+' id="sgNew">'+sgN+'</b></div><div><small>못 답한 질문</small><b'+(qlN?' class="warn"':'')+'>'+qlN+'</b></div></div>';
   h+='<div class="sec"><h2 class="h1">크리에이터별 진행</h2></div><p class="guide">카드를 누르면 그 크리에이터의 작업 화면으로 들어갑니다.</p>';
   if(!PEOPLE.some(function(u){return u.name===ADMIN_NAME&&u.role==='pd'}))h='<div class="talk"><h2 style="margin:0 0 6px">관리자 계정 만들기</h2><p class="guide">관리자는 비밀번호만 넣고 들어갑니다. 만들면 지금 계정('+esc(who(S.me))+')은 크리에이터 계정으로 바뀌고, 다시 들어와야 합니다.</p><div class="pnew"><input id="aPw" type="password" autocomplete="new-password" placeholder="관리자 비밀번호 (6자 이상)"><input id="aPw2" type="password" autocomplete="new-password" placeholder="한 번 더"><button class="btn pri" data-act="aMake">만들기</button></div><p id="aMsg" class="guide"></p></div>'+h;
   h+=chs.length?'<div class="pgrid">'+chs.map(progCard).join('')+'</div>':'<div class="empty">아직 크리에이터가 없습니다.</div>';
@@ -1403,6 +1437,255 @@ function peopleAct(a,d){
   if(a==='pPwGo'){var row2=app.querySelector('[data-act="pPwGo"][data-id="'+d.id+'"]').parentNode,v=row2.querySelector('.pnpw').value;
     call('/users/set',{id:d.id,pw:v}).then(function(j){if(j.ok){if(d.id===S.me){sess(null);showLogin('비밀번호를 바꿨습니다. 새 비밀번호로 들어와 주세요.')}else{PEOPLE=null;render();note('비밀번호를 바꿨습니다.')}}else note(PERR[j.err]||'바꾸지 못했습니다.')});return}
 }
+
+/* ---------- 물어보기: 준비된 답이 먼저, 없으면 무료 자동 답(대본과 같은 하루 횟수), 그것도 안 되면 PD에게. 불편한 점은 건의로 ---------- */
+S.sugg=[];S.qlog=[];S.faq=[];
+var AQ={open:false,log:[],mode:'',busy:false};
+var SG_ST={'new':'접수','doing':'확인 중','done':'반영됨','hold':'보류'},SG_C={'new':'warn','doing':'acc','done':'ok','hold':''};
+/* 준비된 답: [번호, 찾는 말(쉼표), 질문, 답(한두 줄), 갈 곳]. 갈 곳 = 탭 또는 탭:칸 (찍는 법:HOWS 번호, 크리에이터:칸 번호) */
+var FAQ=[
+ ['f1','할 일,뭐 해야,뭐부터,다음 단계,처음,순서','지금 뭐 해야 해요?','오늘 화면 맨 위 "지금 할 일"이 다음 단계예요. 처음이면 "처음이라면 이 순서로"를 따라가면 됩니다.','home'],
+ ['f2','몇 편,목표 편,이번 주 목표,남은 편','한 주에 몇 편 올려야 해요?','크리에이터 화면에서 "한 주에 몇 편"을 정하면 오늘 화면에 남은 편수가 나와요.','concept:2'],
+ ['f3','새 콘텐츠,새 편,1편,편 만들,콘텐츠 만들,콘텐츠 추가','새 콘텐츠는 어떻게 만들어요?','콘텐츠 탭에서 코너 옆 "＋ 1편 만들기"를 누르면 됩니다.','board'],
+ ['f4','단계,넘기,넘어가,진행','단계는 어떻게 넘겨요?','콘텐츠를 열고 위쪽 단계(기획, 대본, 촬영·편집, 올림)를 누르면 넘어가요.','board'],
+ ['f5','지웠,삭제,실수로,살리','콘텐츠를 잘못 지웠어요','지운 바로 뒤 아래에 뜨는 "되돌리기"를 누르면 살아나요. 지나갔으면 PD에게 말해 주세요. 지운 것도 보관돼요.','board'],
+ ['f6','대본 만들,대본 쓰,대본은 어떻게,대본 어떻게','대본은 어떻게 만들어요?','대본 탭에서 편을 고르고 제목만 적은 뒤 "대본 만들기"를 누르면 장면, 말, 자막, 구도가 한 번에 나와요.','script'],
+ ['f7','제목,추천,안 떠올,아이디어','제목이 안 떠올라요','대본 탭의 "제목 추천 받기"를 누르면 제목 5개를 골라 줘요.','script'],
+ ['f8','노란,표시,예시 문장,확인 필요','노란 표시는 뭐예요?','예시 문장이거나 사실 확인이 필요한 곳이에요. "고치기"를 눌러 내 말로 바꿔 주세요.','script'],
+ ['f9','고치,수정,내 말로','대본을 고치고 싶어요','대본 아래 "고치기"를 누르면 칸마다 바로 고칠 수 있고 저절로 저장돼요.','script'],
+ ['f10','되돌,이전 대본,예전 대본','예전 대본으로 돌아갈 수 있어요?','다시 만들어도 이전 대본은 보관돼요. 대본 화면의 "이전 대본으로 되돌리기"를 누르세요.','script'],
+ ['f11','인쇄,복사,출력,뽑','대본을 인쇄하거나 복사하려면?','대본 탭 왼쪽 아래 "쓴 대본 모두 보기 · 인쇄"를 누르세요. 한 편은 "복사"로 붙여 넣을 수 있어요.','script'],
+ ['f12','맡기,꼼꼼','Claude에게 대본을 맡기려면?','대본 화면 오른쪽 "Claude에게 이 편 대본 맡기기"에 적으면 PC의 Claude가 켜질 때 써서 올려요.','script'],
+ ['f13','몇 번,횟수,한도,자동 초안','자동 초안은 몇 번 쓸 수 있어요?','하루에 한 사람 30번, 모두 합쳐 40번까지예요. 다 쓰면 예시 문장 틀로 만들어요.','script'],
+ ['f14','한 장,소개,콘셉트,한 줄 소개','크리에이터 한 장은 뭐예요?','누구인지, 무엇을 보여 주는지 적는 곳이에요. 칸을 누르면 그 칸만 열려요.','concept'],
+ ['f15','코너,묶음,시리즈','코너는 어떻게 정해요?','이어서 올릴 묶음을 2~3개 정해요. 크리에이터 화면의 "코너"를 누르세요.','concept:2'],
+ ['f16','이름표,첫 문장','"모든 영상 첫 문장"은 뭐예요?','모든 영상을 여는 한 문장이에요. 정해 두고 첫 3초에 씁니다.','concept:0'],
+ ['f17','팔로워,목표 팔로워,숫자 적','팔로워 숫자는 어디에 적어요?','크리에이터 화면 "숫자"에 지금 팔로워와 목표 팔로워를 적어요.','concept:3'],
+ ['f18','레퍼런스 찾기,찾아 달라,참고 채널','레퍼런스 찾기는 어떻게 해요?','레퍼런스 찾기 탭에 키워드를 적고 "찾아 달라고 하기"를 누르면 Claude가 찾아서 올려요.','find'],
+ ['f19','10배,통과,미달,배수','"10배 통과"는 뭐예요?','평균 조회가 팔로워의 10배를 넘는 곳이에요. 작은 계정인데 내용 덕에 잘된 곳이라 따라 하기 좋아요.','find'],
+ ['f20','언제,기다,찾는 중','찾아 달라고 하면 언제 와요?','PC의 Claude가 켜질 때 찾아요. '+ASK_WHEN+'에 확인합니다.','find'],
+ ['f21','레퍼런스 넣,직접 넣,레퍼런스 추가,인플루언서 추가','레퍼런스는 어떻게 넣어요?','레퍼런스 탭에서 "콘텐츠 추가"나 "인플루언서 추가"로 링크와 숫자를 넣어요.','refs'],
+ ['f22','내 계정,계정 분석,분석','내 계정 분석은 어떻게 받아요?','계정 분석에 내 인스타 아이디를 올리면 잘된 점과 아쉬운 점을 분석해 드려요.','acct'],
+ ['f23','레퍼런스 고르,참고 영상 고르','콘텐츠에 참고 영상을 붙이려면?','콘텐츠를 열고 "레퍼런스 고르기"에서 비슷한 영상을 골라 두면 대본에 배울 점이 들어가요.','board'],
+ ['f24','성과,조회수 적,7일,숫자를 적','성과는 언제 적어요?','올리고 7일 뒤 조회, 저장, 공유 숫자와 배운 점을 그 콘텐츠에 적어요.','board'],
+ ['f25','같이 정할,정할 것,의견','PD와 같이 정할 것은 어디서 봐요?','오늘 화면의 "같이 정할 것"에서 의견을 남기면 돼요.','home'],
+ ['f26','로그인,자꾸 나가,유지','자꾸 로그아웃돼요','들어갈 때 "이 기기에서 로그인 유지"를 체크하면 30일 동안 그대로예요.','none'],
+ ['f27','휴대폰,폰에서,모바일','휴대폰에서도 써요?','같은 주소를 휴대폰에서 열면 그대로 써요. 내용은 PD와 같이 보여요.','none'],
+ ['f28','기획,소재,무엇을 찍,뭘 찍','콘텐츠 기획은 어떻게 해요?','코너 하나를 고르고, 잘된 레퍼런스의 첫 3초를 본 뒤, 내 이야기 한 가지로 제목을 정해요.','board'],
+ ['f29','타깃,누가 보,시청자','누가 볼지 어떻게 정해요?','가장 좁힌 한 사람을 정해요. 크리에이터 화면 "누가 보나"에 적어요.','concept:1'],
+ ['f30','잘되는,인기,조회수 높,터지','잘되는 주제는 어떻게 알아요?','레퍼런스에서 팔로워의 10배를 넘은 영상의 첫 3초와 주제를 따라 해 보세요.','refs'],
+ ['f31','자주,주기,몇 번 올','얼마나 자주 올려요?','처음에는 한 주 2~3편을 꾸준히가 좋아요. 정한 숫자는 크리에이터 화면에 적어요.','concept:2'],
+ ['f32','구도,앵글,각도','구도는 어떻게 잡아요?','구도는 7가지만 쓰면 돼요. 대본 장면마다 어떤 구도인지 적혀 있어요.','how:1'],
+ ['f33','조명,밝게,어둡,빛,그림자','어둡게 나와요. 조명은요?','창가에서 창을 옆에 두고 찍어요. 형광등 바로 아래는 피해요.','how:2'],
+ ['f34','소리,녹음,목소리,울림,마이크','목소리 녹음은 어떻게 해요?','옷장 앞이나 이불 가까이에서, 폰을 입에서 한 뼘 떼고 한 문장씩 녹음해요.','how:5'],
+ ['f35','얼굴,손만,뒷모습','얼굴 없이 어떻게 찍어요?','손, 물건, 뒷모습으로 보여 주고, 거울과 창에 얼굴이 비치는지 봐요.','how:4'],
+ ['f36','장비,삼각대,카메라','장비가 필요한가요?','폰 하나면 됩니다. 세워 둘 때는 컵이나 책에 기대면 돼요.','how:9'],
+ ['f37','세로,비율,9:16,흔들,뿌옇','화면이 뿌옇거나 흔들려요','세로(9:16)로 찍고, 렌즈를 옷으로 한 번 닦고, 격자선을 켜요.','how:2'],
+ ['f38','대본대로,컷,순서대로 찍,촬영 목록','대본대로 찍으려면?','말 한 문장이 컷 하나예요. 같은 자리끼리 묶어 찍고, 컷마다 5초씩 넉넉히 찍어요.','how:3'],
+ ['f39','가리,개인정보,병원 이름,번호','개인정보는 어떻게 가려요?','병원 이름, 내 이름, 접수 번호는 찍기 전에 손가락이나 스티커로 가려요.','how:4'],
+ ['f40','첫 3초,처음 3초,시작,훅','첫 3초는 어떻게 해요?','제목과 같은 말로 시작하고, 자막도 크게 한 줄(15자 안쪽) 띄워요.','how:6'],
+ ['f41','자막,글씨','자막은 어떻게 넣어요?','말하는 대로 한 줄씩, 12~16자로 넣어요. 중요한 낱말 하나만 색을 다르게 해요.','how:6'],
+ ['f42','마무리,끝에,끝날,저장 부탁,댓글 부탁','마무리는 어떻게 해요?','저장, 댓글, 다음 편 가운데 하나만 크게 부탁하고 2초 넘게 멈춰요.','how:6'],
+ ['f43','몇 초,길이,몇 분','몇 초로 만들어요?','처음에는 20~30초로 짧게 만들어요. 대본 위에 장면 초를 더한 숫자가 나와요.','script'],
+ ['f44','배경음악,음악,효과음,브금','배경음악과 효과음은요?','배경음악은 목소리가 또렷이 들릴 만큼 작게, 효과음은 대본에 적은 곳만 넣어요.','how:6'],
+ ['f45','말 없이,목소리 없이,자막만','말을 꼭 넣어야 하나요?','아니요. 개그나 브이로그는 자막만으로도 돼요. 대본의 말 칸을 비우고 자막만 채우세요.','how:9'],
+ ['f46','편집,컷 자르','편집은 어떤 순서로 해요?','쓸 컷 고르기, 대본 순서로 놓기, 목소리, 자막, 효과음, 음악 순서예요.','how:7'],
+ ['f47','편집 앱,무슨 앱,캡컷,프로그램','편집은 무엇으로 해요?','인스타그램 안 편집이나 무료 편집 앱이면 충분해요. 자막과 컷 자르기만 되면 돼요.','how:9'],
+ ['f48','표지,썸네일,커버','표지는 어떻게 해요?','표지에 제목을 크게 넣어요.','how:7'],
+ ['f49','해시태그','해시태그는 몇 개 달아요?','3~5개만, 주제에 딱 맞는 것으로 달아요.','how:8'],
+ ['f50','캡션,글 첫 줄,본문','올릴 때 글은 어떻게 써요?','글 첫 줄에 저장하거나 공유할 이유를 써요.','how:8'],
+ ['f51','올린 뒤,올리고 나서,댓글 답','올린 뒤에는 뭐 해요?','올리고 한 시간 동안 댓글에 답하고, 7일 뒤 숫자와 배운 점을 적어요.','how:8'],
+ ['f52','몇 시,시간대,요일','언제 올리면 좋아요?','정한 요일과 시간을 크리에이터 화면 "요일과 시간"에 적고 지켜요.','concept:2'],
+ ['f53','효능,건강 효과,임신 효과,임신,착상,영양제,건강,몸에 좋,병원,호르몬,배란','건강이나 임신 효과를 말해도 돼요?','건강·임신·의학 효과는 여기서 단정하지 않아요. "제가 해 봤어요"처럼 겪은 일로 말하고, 사실은 확인한 출처만 넣어 주세요.','none'],
+ ['f54','건의함,건의 확인,들어온 건의','건의는 어디서 봐요?','관리 화면의 "건의함"에서 건의와 못 답한 질문을 봐요.','sugg'],
+ ['f55','크리에이터 추가,계정 만들,계정 더하기','크리에이터는 어떻게 추가해요?','관리 화면의 "크리에이터 추가"를 누르고 아이디와 비밀번호를 정해요.','people'],
+ ['f56','비밀번호','비밀번호는 어떻게 바꿔요?','관리 화면 "계정"에서 "비밀번호 바꾸기"를 눌러요. 크리에이터는 PD에게 말해 주세요.','people'],
+ ['f57','굳히기,준비된 답','준비된 답은 어떻게 늘려요?','건의함의 못 답한 질문에 답을 적고 "준비된 답으로 굳히기"를 누르면 다음부터 그 답이 먼저 나와요.','sugg']
+];
+var SUGQ={home:['@week','f1','f28','f3'],board:['@week','f3','f4','f24'],script:['@shots','f6','f7','f40'],how:['@shots','f32','f33','f34'],concept:['f14','f15','f29','f16'],find:['@find','f18','f19','f20'],refs:['@find','f21','f19','f30'],acct:['f22','f30','f24','f31'],item:['@shots','f23','f6','f24'],people:['f54','f55','f56','f57'],sugg:['f57','f54','f55','f56']};
+var GOT={home:'오늘',board:'콘텐츠',script:'대본',how:'찍는 법',concept:'크리에이터',find:'레퍼런스 찾기',refs:'레퍼런스',acct:'계정 분석',people:'관리 화면',sugg:'건의함'};
+var FIND_COND='조건: 서로 다른 계정 10곳 이상 · 10배 기준(릴스 12편 가운데 값이 팔로워의 10배 이상) 통과와 미달을 나눠 표시 · 이미 있는 계정 제외 · 하나마다 "우리 채널에 쓰는 법" 한 줄';
+function faqBy(id){return FAQ.filter(function(f){return f[0]===id})[0]}
+function nz(s){return String(s||'').toLowerCase().replace(/[\s.,!?~'"“”‘’()·「」\-]/g,'')}
+function toks(s){return String(s||'').split(/[\s,.?!~]+/).map(function(w){return nz(w).replace(/(으로|에서|이랑|하고|해요|하나요|나요|은|는|이|가|을|를|도|에|로|요|게|만)$/,'')}).filter(function(w){return w.length>=2})}
+function cut1(s,n){s=String(s||'').replace(/\s+/g,' ').trim();return s.length>n?s.slice(0,n)+'…':s}
+function askKey(){if(S.addCh||S.tab==='people')return 'people';if(S.tab==='sugg')return 'sugg';if(S.open)return 'item';if(S.refEdit)return 'refs';return S.tab||'home'}
+function askScreen(){var k=askKey(),it;
+  if(k==='item'){it=itemBy(S.open);return '콘텐츠 안'+(it&&it.title?' · '+cut1(it.title,20):'')}
+  if(k==='how')return '찍는 법 · '+HOWS[Math.max(0,Math.min(HOWS.length-1,+S.hs||0))];
+  if(k==='script'){it=S.sid&&S.sid!=='all'?itemBy(S.sid):null;return '대본'+(it&&it.title?' · '+cut1(it.title,20):'')}
+  return GOT[k]||k}
+function askCur(){var it=S.open?itemBy(S.open):(S.tab==='script'&&S.sid&&S.sid!=='all'?itemBy(S.sid):null);return it&&it.ch===S.ch?it:null}
+function gAttr(g){return 'data-act="askGo" data-g="'+esc(g)+'"'}
+function gName(g){var p=String(g||'').split(':');if(p[0]==='how'&&p[1])return '찍는 법 · '+HOWS[+p[1]];if(p[0]==='concept'&&p[1]!=null)return '크리에이터 화면';return GOT[p[0]]||''}
+function gOk(g){var t=String(g||'').split(':')[0];return !!GOT[t]&&((t!=='people'&&t!=='sugg')||S.role==='pd')}
+/* 지금 할 일: 처음 순서에서 아직 안 한 첫 칸, 다 했으면 지금 하던 콘텐츠의 다음 일 */
+function askNow(){
+  if(S.role==='pd'&&(askKey()==='people'||askKey()==='sugg'||!S.ch)){var n=S.sugg.filter(function(x){return x.status==='new'}).length+S.qlog.filter(function(x){return x.status==='new'}).length;return {t:n?'새 건의와 질문 '+n+'개를 확인할 차례입니다':'새로 들어온 건의가 없습니다',at:gAttr('sugg'),l:'건의함 열기'}}
+  if(!S.ch||!S.channels.length)return null;
+  var items=chItems(),st=startSteps(items,curConcept()),nx=st.filter(function(x){return !x[2]})[0];
+  if(nx)return {t:nx[0],s:nx[1],at:nx[3],l:'바로 가기'};
+  var it=nowItem(items);if(!it)return null;var ep=epMap(items);
+  return {t:epName(it,ep)+' · '+nextAct(it),at:grp(it.stage)===1?'data-act="svOpen" data-id="'+esc(it.id)+'"':'data-open="'+esc(it.id)+'"',l:'열기'}}
+function askSugs(){var l=SUGQ[askKey()]||SUGQ.home,out=[];
+  l.forEach(function(id){
+    if(id==='@week'){if(S.ch)out.push(['','이번 주 뭐 찍지?'])}
+    else if(id==='@shots'){var it=askCur();if(it&&scFilled(it).length)out.push(['','이 대본 어떻게 찍어요?'])}
+    else if(id==='@find'){if(S.ch&&!S.ro){var c=curConcept(),k=(corners()[0]||c.l3||'').replace(/\(.*?\)/g,'').trim().split(/\s+/)[0]||'';out.push(['','레퍼런스 찾아 줘 '+k])}}
+    else{var f=faqBy(id);if(f&&gOk(f[4])||f&&f[4]==='none')out.push([f[0],f[2]])}});
+  if(out.length<3)['f1','f6','f32'].forEach(function(id){if(out.length<4&&!out.some(function(o){return o[0]===id}))out.push([id,faqBy(id)[2]])});
+  return out.slice(0,4)}
+
+function askHtml(){
+  var n=askNow(),h='<div class="askh"><b>물어보기</b><span>'+esc(askScreen())+'</span><button class="btn sm" data-act="askClose">닫기</button></div><div class="askb" id="askB">';
+  if(n)h+='<div class="asknow"><small>지금 할 일</small><b>'+esc(n.t)+'</b><button class="btn pri sm" '+n.at+'>'+esc(n.l)+'</button></div>';
+  h+='<div class="asksug"><small>누르기만 하면 답이 나옵니다</small>'+askSugs().map(function(s){return '<button data-act="askQ" data-id="'+esc(s[0])+'" data-q="'+esc(s[1])+'">'+esc(s[1])+'</button>'}).join('')+'</div>';
+  h+='<div id="askLog" style="display:grid;gap:14px">'+AQ.log.map(askItem).join('')+'</div>';
+  h+='<details class="askmine" id="askMine"'+(AQ.mineOpen?' open':'')+'>'+askMine()+'</details></div>';
+  var sg=AQ.mode==='sugg';
+  h+='<div class="askf'+(sg?' sg':'')+'"><textarea id="askIn" rows="1" placeholder="'+(sg?'불편한 점이나 바꾸고 싶은 것을 적어 주세요':'궁금한 것을 적어 주세요. 예: 자막은 몇 글자?')+'">'+esc(AQ.draft||'')+'</textarea><div class="bar"><button class="btn pri" data-act="askSend">'+(sg?'건의 보내기':'묻기')+'</button><button class="btn" data-act="askMode">'+(sg?'질문으로 돌아가기':'불편한 점 말하기')+'</button></div></div>';
+  return h}
+function askItem(m){
+  if(m.me)return '<div class="aqm">'+esc(m.me)+'</div>';
+  if(m.wait)return '<div class="aqa"><div class="aqt"><span class="spin" style="margin-right:8px"></span>'+esc(m.wait)+'</div></div>';
+  var h='<div class="aqa"><div class="aqt">'+esc(m.a)+'</div>';
+  if(m.list&&m.list.length)h+='<div class="aql">'+m.list.join('')+'</div>';
+  var bs=(m.btns||[]).map(function(b){return '<button class="btn'+(b.pri?' pri':'')+'" '+b.at+'>'+esc(b.l)+'</button>'}).join('');
+  if(m.go&&gOk(m.go))bs='<button class="btn pri" '+gAttr(m.go)+'>'+esc(gName(m.go))+' 열기</button>'+bs;
+  if(bs)h+='<div class="bar">'+bs+'</div>';
+  if(m.src)h+='<small>'+esc(m.src)+'</small>';
+  return h+'</div>'}
+function askMine(){
+  var sg=S.sugg.filter(function(x){return x.by===S.me}).sort(function(a,b){return (b.at||0)-(a.at||0)}),ql=S.qlog.filter(function(x){return x.by===S.me&&x.status!=='skip'}).sort(function(a,b){return (b.at||0)-(a.at||0)});
+  var h='<summary>내 건의와 물은 것 '+(sg.length+ql.length)+'</summary>';
+  if(!sg.length&&!ql.length)return h+'<div class="hs" style="margin-top:8px">아직 없습니다. 불편한 점은 "불편한 점 말하기"로 보내 주세요.</div>';
+  sg.slice(0,8).forEach(function(x){h+='<div class="cm" data-sg="'+esc(x.id)+'"><small>건의 · '+day(x.at)+' · '+esc(x.screen||'')+'</small>'+esc(x.text)+' <span class="badge '+(SG_C[x.status]||'')+'">'+(SG_ST[x.status]||'접수')+'</span></div>'});
+  ql.slice(0,8).forEach(function(x){h+='<div class="cm"><small>물은 것 · '+day(x.at)+'</small><b>'+esc(x.q)+'</b><br>'+(x.status==='done'&&x.ans?'PD 답: '+esc(x.ans):'<span style="color:var(--warn)">PD 확인 전</span>'+(x.ai?' · 자동 답: '+esc(cut1(x.ai,60)):''))+'</div>'});
+  return h}
+function askDraw(keep){var p=document.getElementById('ask');if(!p||!AQ.open)return;var i0=document.getElementById('askIn');if(i0)AQ.draft=i0.value;
+  var b0=document.getElementById('askB'),st=b0?b0.scrollTop:0;p.innerHTML=askHtml();var b1=document.getElementById('askB');if(b1)b1.scrollTop=keep?st:b1.scrollHeight}
+function askOpen(){AQ.open=true;var p=document.getElementById('ask');p.hidden=false;document.body.classList.add('askon');askDraw();var b=document.getElementById('askB');if(b)b.scrollTop=0}
+function askClose(){AQ.open=false;var i0=document.getElementById('askIn');if(i0)AQ.draft=i0.value;document.getElementById('ask').hidden=true;document.body.classList.remove('askon')}
+function askSay(m){AQ.log.push(m);if(AQ.log.length>40)AQ.log=AQ.log.slice(-40);askDraw()}
+function askGo(g){var p=String(g||'').split(':'),t=p[0],v=p[1];askClose();
+  if(t==='how'){S.hs=+v||0;setTab('how')}
+  else if(t==='concept'){setTab('concept');if(v!=null){S.sec=+v;render()}}
+  else if(t==='sid'){S.sid=v;S.smode='';S.sed=false;setTab('script')}
+  else if(GOT[t])setTab(t);
+  window.scrollTo(0,0)}
+function sgSet(col,d){if(S.ro){askSay({a:'지금은 저장할 수 없습니다.'});return false}if(!S.ch&&S.role!=='pd'){askSay({a:'아직 이 계정에 연결된 크리에이터가 없어 저장하지 못했습니다. PD에게 말해 주세요.'});return false}
+  var r=db.collection(col).doc();write(col+r.id,function(){return r.set(Object.assign({ch:S.ch||'',by:S.me,screen:askScreen(),at:Date.now(),status:'new'},d))});return true}
+
+/* 말을 보고 할 일을 고른다 */
+var SUGG_RE=/불편|건의|안 ?돼|안 ?되(요|네|는데|더라)|오류|에러|버그|이상해|느려|바꿔 ?주|고쳐 ?주|있었으면|생겼으면|추가해 ?주|좋겠|헷갈려/;
+var FIND_RE=/((레퍼런스|참고|계정|채널|영상).*(찾|추천))|찾아 ?(줘|주세요|줄래|봐)/;
+function askSend(t){t=String(t||'').trim();if(!t||AQ.busy)return;AQ.draft='';askSay({me:t});
+  if(AQ.mode==='sugg'||SUGG_RE.test(t)){AQ.mode='';if(sgSet('sugg',{text:t.slice(0,600)})){AQ.mineOpen=true;askSay({a:'건의로 받았습니다. PD가 확인하면 아래 "내 건의"의 상태가 바뀝니다.',src:'보고 있던 화면: '+askScreen()})}return}
+  if(FIND_RE.test(t))return askFind(t);
+  if(/대본/.test(t)&&/(써|쓰|만들어) ?(줘|주세요|줄래|달라)/.test(t))return askScript(t);
+  if(/(이번 ?주|오늘|다음).*(뭐|무엇|무슨).*(찍|올리|만들)|뭐 ?찍지|뭐 ?찍을까|뭐 ?올리지/.test(t))return askWeek();
+  if(/어떻게 ?찍|찍는 ?법|찍어요|찍지\?/.test(t)&&askCur()&&scFilled(askCur()).length)return askShots(askCur());
+  var m=faqMatch(t);if(m){askSay({a:m.a,go:m.go,src:m.src});return}
+  askAi(t)}
+function faqMatch(t){var n=nz(t),best=null,bs=0;
+  S.faq.filter(function(f){return !f.off&&f.a}).forEach(function(f){var s=0;if(nz(f.q)===n)s=1000;else{var tk=(f.k&&f.k.length?f.k:toks(f.q)),h=tk.filter(function(k){return n.indexOf(nz(k))>=0}).length;if(tk.length&&h/tk.length>=0.6)s=100+h}if(s>bs){bs=s;best={a:f.a,go:f.go,src:'PD가 준비한 답'}}});
+  if(best)return best;
+  FAQ.forEach(function(f){var s=0;if(nz(f[2])===n)s=1000;else f[1].split(',').forEach(function(k){k=nz(k);if(k.length>=2&&n.indexOf(k)>=0)s+=k.length});if(s>bs){bs=s;best={a:f[3],go:f[4]}}});
+  return bs>=2?best:null}
+function askAi(t){
+  if(S.ro){askSay({a:'준비된 답이 없습니다. PD에게 직접 물어봐 주세요.'});return}
+  AQ.busy=true;askSay({wait:'준비된 답이 없어 자동으로 답을 찾는 중입니다'});
+  call('/ai',{kind:'chat',q:t.slice(0,200),screen:askScreen()}).then(function(j){return j},function(){return {err:'net'}}).then(function(j){AQ.busy=false;AQ.log=AQ.log.filter(function(m){return !m.wait});
+    if(j&&j.left!=null)S.aiLeft=j.left;else if(j&&j.err==='limit')S.aiLeft=0;
+    var o=j&&j.ok&&j.out;
+    if(o&&o.a&&!/PD에게 물어볼게요/.test(o.a)){sgSet('qlog',{q:t.slice(0,300),ai:o.a,go:o.go||''});askSay({a:o.a,go:o.go&&o.go!=='none'?o.go:'',src:'자동 답입니다. PD가 확인하면 준비된 답으로 바뀝니다.'});return}
+    sgSet('qlog',{q:t.slice(0,300),ai:'',pd:1});AQ.mineOpen=true;
+    askSay({a:'PD에게 물어볼게요. 답이 오면 아래 "내 건의와 물은 것"에 보입니다.',src:j&&j.err==='limit'?'오늘 자동으로 답할 수 있는 횟수를 다 써서 PD에게 넘겼습니다.':''})})}
+/* 레퍼런스 찾아 줘: 이미 있는 것 중 맞는 것을 먼저 보여 주고, 새로 찾기를 접수한다 (레퍼런스 찾기 탭과 같은 모양) */
+function askFind(t){
+  var kw=t.replace(/레퍼런스|참고할?|비슷한|계정|채널|영상|찾아 ?(줘|주세요|줄래|봐|달라)?|찾기|추천해? ?(줘|주세요)?|좀|해 ?줘/g,' ').replace(/(으로|를|을)(?=\s|$)/g,' ').replace(/\s+/g,' ').trim();
+  if(!kw)kw=(curConcept().l3||corners()[0]||'').replace(/\(.*?\)/g,'').trim();
+  var tk=toks(kw).concat(nz(kw).length>=2?[nz(kw)]:[]),hit=function(o){var s=nz([o.account,o.take,o.concept,o.tone,o.learn,o.hook,o.video,o.form,o.psy,o.strong,o.note,o.tags].join(' '));return tk.some(function(k){return k.length>=2&&s.indexOf(k)>=0})};
+  var rc=S.rchs.filter(function(r){return r.ch===S.ch&&hit(r)}).sort(function(a,b){return mult(b)-mult(a)}),rv=S.refs.filter(function(r){return r.ch===S.ch&&hit(r)}).sort(function(a,b){return (b.views||0)-(a.views||0)});
+  var li=[];rc.slice(0,3).forEach(function(r){var x=mult(r);li.push('<div><span>@'+esc(r.account)+(x?' · 팔로워의 '+x+'배'+(x>=10?' (10배 통과)':' (미달)'):'')+'</span><button class="btn sm" '+gAttr('refs')+'>보기</button></div>')});
+  rv.slice(0,5-Math.min(3,rc.length)).forEach(function(r){var u=safeUrl(r.url);li.push((u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">':'<div>')+'<span>@'+esc(r.account||'')+' · '+esc(cut1(r.video||r.hook||r.learn||'',26))+(r.views?' · '+fmt(r.views):'')+'</span>'+(u?'<span class="btn sm">열기</span></a>':'<button class="btn sm" '+gAttr('refs')+'>보기</button></div>'))});
+  var have={};S.rchs.concat(S.refs).forEach(function(r){if(r.ch===S.ch&&r.account)have['@'+String(r.account).replace(/^@/,'')]=1});
+  var ex=Object.keys(have).slice(0,40),text=kw+'\n'+FIND_COND+(ex.length?'\n이미 있는 계정: '+ex.join(', '):'');
+  var dup=S.asks.some(function(a){return a.ch===S.ch&&a.kind==='find'&&a.status==='req'&&String(a.text||'').split('\n')[0]===kw}),ok=false;
+  if(!S.ro&&S.ch&&!dup){var af=db.collection('asks').doc();write('ask'+af.id,function(){return af.set({ch:S.ch,kind:'find',text:text,status:'req',reqAt:Date.now(),at:Date.now(),by:S.me,via:'ask'})});ok=true}
+  askSay({a:(li.length?'이미 있는 것 중 "'+kw+'"에 맞는 것 '+(rc.length+rv.length)+'개입니다. ':'이미 있는 것 중에는 "'+kw+'"에 맞는 것이 없습니다. ')+(ok?'새로 10곳 이상 찾아 달라고 접수했습니다. PC의 Claude가 켜졌을 때 채워져요.':dup?'같은 찾기 요청이 이미 기다리는 중입니다. PC의 Claude가 켜졌을 때 채워져요.':''),list:li,go:'find'})}
+/* 대본 써 줘 ○○: 새 편을 그 제목으로 만들고 바로 자동 초안(대본 만들기와 같은 길, 같은 하루 횟수). 기존 편은 건드리지 않는다 */
+function askScript(t){
+  var m=/[「“"'‘](.+?)[」”"'’]/.exec(t),ti='';
+  if(m)ti=m[1];
+  else if((m=/제목(?:은|을|이|:)?\s*(.+?)\s*(?:으?로|라고)\s*(?:된\s*)?대본/.exec(t)))ti=m[1];
+  else if((m=/대본\s*(?:좀\s*)?(?:써|만들어)\s*(?:줘|주세요|줄래|달라)?\s*[:：,]?\s*(.+)$/.exec(t)))ti=m[1];
+  else if((m=/^(.+?)\s*(?:으로|로|라는|이라는)?\s*대본/.exec(t)))ti=m[1];
+  ti=ti.replace(/^제목(?:은|을|이|:)?\s*/,'').replace(/[.!?]+$/,'').trim().slice(0,60);
+  if(!ti){var f=faqBy('f6');askSay({a:f[3],go:'script'});return}
+  if(S.ro||!S.ch){askSay({a:'지금은 대본을 만들 수 없습니다.'});return}
+  var cur=askCur(),cn=(cur&&cur.corner)||corners()[0]||'',ref=db.collection('items').doc(),id=ref.id,now=Date.now();
+  var mi={id:id,ch:S.ch,corner:cn,title:ti,stage:'기획',who:'',due:'',intent:'',story:'',refs:'',point:'',script:'',by:S.me,at:now,order:now};
+  write('items'+id,function(){var d=Object.assign({},mi);delete d.id;return ref.set(d)});
+  var an={},mtp=tplFor(mi).t,mgs=SUBG[cForm(cn)]||{},mpv=chItems().filter(function(i){return cn&&i.corner===cn&&i.bgm}).sort(byOrder).pop();
+  var pre={sub:mtp.subStyle||mgs.sub||'',bgm:(mpv&&mpv.bgm)||mtp.bgm||mgs.bgm||''};
+  AIB[id]='script';
+  askSay({a:'「'+ti+'」 새 편을 만들고 대본을 쓰는 중입니다. 10~30초 걸려요. 지금 있는 대본은 그대로 둡니다.',btns:[{l:'대본 화면으로 가기',at:gAttr('sid:'+id),pri:1}]});
+  call('/ai',aiCtx(mi,an,'script')).then(function(j){return j},function(){return {err:'net'}}).then(function(j){mkAuto(id,j,an,ti,cn,pre);
+    askSay({a:j&&j.ok?'「'+ti+'」 대본을 다 썼습니다. 읽어 보고 "고치기"로 내 말로 바꿔 주세요.':'자동으로 못 써서 예시 문장 틀로 만들었습니다. 노란 표시를 내 말로 바꿔 주세요.',btns:[{l:'대본 보기',at:gAttr('sid:'+id),pri:1}]})})}
+/* 이번 주 뭐 찍지: 코너마다 다음 편 + 참고할 영상 (앱 자료로만 계산) */
+function askWeek(){
+  if(!S.ch){askSay({a:'크리에이터를 먼저 골라 주세요.'});return}
+  var items=chItems(),cs=corners(),rv=S.refs.filter(function(r){return r.ch===S.ch&&(r.hook||r.learn||r.video)}).sort(function(a,b){return (b.views||0)-(a.views||0)}),rc=S.rchs.filter(function(r){return r.ch===S.ch}).sort(function(a,b){return mult(b)-mult(a)}),li=[],k=0;
+  cs.slice(0,3).forEach(function(cn){var n=items.filter(function(i){return i.corner===cn&&i.title}).length+1,r=rv[k++];
+    li.push('<div><span><b>'+esc(cn)+' '+n+'편</b>'+(r?' · 참고: @'+esc(r.account||'')+' '+esc(cut1(r.learn||r.hook||r.video,28)):'')+'</span>'+(S.ro?'':'<button class="btn sm" data-act="newItem" data-corner="'+esc(cn)+'" data-to="script">만들기</button>')+'</div>')});
+  rc.slice(0,3-li.length).forEach(function(r){li.push('<div><span>@'+esc(r.account)+'처럼: '+esc(cut1(r.take||r.concept||r.strong||'잘된 첫 3초 따라 하기',30))+'</span><button class="btn sm" '+gAttr('refs')+'>보기</button></div>')});
+  if(!li.length){askSay({a:'코너를 먼저 정하면 코너마다 찍을 것을 골라 드립니다.',go:'concept:2'});return}
+  askSay({a:'이번 주에는 이 '+li.length+'가지를 권합니다.',list:li})}
+/* 어떻게 찍어: 고른 대본의 장면별 구도 */
+function askShots(it){var sc=scFilled(it).slice(0,8);
+  askSay({a:'「'+cut1(it.title||'이 편',20)+'」 장면별 구도입니다. 구도 그림은 찍는 법에 있어요.',list:sc.map(function(x,i){return '<div><span><b>'+(i+1)+'. '+esc(x.k||'장면')+'</b> · '+esc(x.shot||'구도 없음')+(x.screen?' · '+esc(cut1(x.screen,30)):'')+'</span></div>'}),go:'how:1',btns:[{l:'대본 보기',at:gAttr('sid:'+it.id)}]})}
+
+function askAct(a,d,b){
+  if(a==='askOpen')return askOpen();
+  if(a==='askClose')return askClose();
+  if(a==='askGo')return askGo(d.g);
+  if(a==='askMode'){var i0=document.getElementById('askIn');if(i0)AQ.draft=i0.value;AQ.mode=AQ.mode==='sugg'?'':'sugg';askDraw(true);var i1=document.getElementById('askIn');if(i1)i1.focus();return}
+  if(a==='askSend'){var el=document.getElementById('askIn');return askSend(el?el.value:'')}
+  if(a==='askQ'){if(d.id){var f=faqBy(d.id);if(f){askSay({me:f[2]});askSay({a:f[3],go:f[4]});return}}return askSend(d.q)}
+  if(a==='askSt'){if(S.role!=='pd')return;upd('sugg',d.id,{status:d.v,stAt:Date.now(),stBy:S.me}).then(function(){render()});say('건의 상태를 바꿨습니다: '+SG_ST[d.v],2500);return}
+  if(a==='askFix'){if(S.role!=='pd')return;var q=S.qlog.filter(function(x){return x.id===d.id})[0],ta=document.getElementById('qa_'+d.id),gs=document.getElementById('qg_'+d.id),av=ta?ta.value.trim():'';if(!q)return;
+    if(!av){note('답을 적어 주세요.');return}note('');
+    var fr=db.collection('faq').doc();write('faq'+fr.id,function(){return fr.set({q:q.q,k:toks(q.q),a:av.slice(0,300),go:gs?gs.value:'',at:Date.now(),by:S.me,from:q.id})});
+    upd('qlog',q.id,{status:'done',ans:av.slice(0,300),faq:fr.id}).then(function(){render()});say('준비된 답으로 굳혔습니다. 다음부터 이 답이 먼저 나옵니다.',3500);return}
+  if(a==='askSkip'){if(S.role!=='pd')return;upd('qlog',d.id,{status:'skip'}).then(function(){render()});return}
+  if(a==='askOff'){if(S.role!=='pd')return;var fo=S.faq.filter(function(x){return x.id===d.id})[0];if(fo)upd('faq',fo.id,{off:!fo.off}).then(function(){render()});return}
+}
+/* 관리자 건의함 */
+function chNm(id){var c=S.channels.filter(function(c){return c.id===id})[0];return c?c.name:''}
+function suggBox(){
+  var sg=S.sugg.slice().sort(function(a,b){return (b.at||0)-(a.at||0)}),ql=S.qlog.filter(function(x){return x.status!=='done'&&x.status!=='skip'}).sort(function(a,b){return (b.at||0)-(a.at||0)});
+  var nw=sg.filter(function(x){return x.status==='new'}).length,dg=sg.filter(function(x){return x.status==='doing'}).length,fq=S.faq.filter(function(x){return !x.off}).length;
+  var h='<div class="bar"><h2 class="h1">건의함</h2><span class="hs">물어보기에서 들어온 건의와 준비된 답이 없던 질문</span><span class="sp"></span><button class="btn" data-tab="people">관리 화면</button></div>';
+  h+='<div class="sum"><div><small>새 건의</small><b'+(nw?' class="warn"':'')+'>'+nw+'</b></div><div><small>확인 중</small><b>'+dg+'</b></div><div><small>못 답한 질문</small><b'+(ql.length?' class="warn"':'')+'>'+ql.length+'</b></div><div><small>준비된 답 (PD)</small><b>'+fq+'</b></div></div>';
+  var card=function(x){var st=x.status||'new',bt='';
+    if(st==='new')bt+='<button class="btn pri sm" data-act="askSt" data-id="'+esc(x.id)+'" data-v="doing">승인 (확인 중)</button>';
+    if(st!=='done')bt+='<button class="btn ok sm" data-act="askSt" data-id="'+esc(x.id)+'" data-v="done">반영됨</button>';
+    if(st!=='hold'&&st!=='done')bt+='<button class="btn sm" data-act="askSt" data-id="'+esc(x.id)+'" data-v="hold">보류</button>';
+    if(st==='hold'||st==='done')bt+='<button class="btn sm" data-act="askSt" data-id="'+esc(x.id)+'" data-v="doing">다시 확인 중으로</button>';
+    return '<div class="panel sgc" data-sg="'+esc(x.id)+'"><div class="meta"><span class="badge '+(SG_C[st]||'')+'">'+(SG_ST[st]||st)+'</span><span>'+esc(who(x.by)||'')+(chNm(x.ch)?' · '+esc(chNm(x.ch)):'')+' · '+esc(x.screen||'')+' · '+day(x.at)+'</span></div><div class="sgt">'+esc(x.text)+'</div><div class="bar">'+bt+'</div></div>'};
+  var op=sg.filter(function(x){return x.status==='new'||x.status==='doing'||!x.status}),cl=sg.filter(function(x){return x.status==='done'||x.status==='hold'});
+  h+='<div class="sec"><h2 class="h1">건의</h2></div>'+(op.length?'<div class="pgrid">'+op.map(card).join('')+'</div>':'<div class="empty">새 건의가 없습니다.</div>');
+  if(cl.length)h+='<details class="panel" style="margin-top:14px"><summary>반영됨 · 보류 '+cl.length+'</summary><div class="pgrid" style="margin-top:12px">'+cl.map(card).join('')+'</div></details>';
+  var gopt=function(sel){return '<option value="">갈 화면 없음</option>'+['home','board','script','how:1','how:2','how:3','how:4','how:5','how:6','how:7','how:8','concept:2','find','refs','acct'].map(function(g){return '<option value="'+g+'"'+(g===sel?' selected':'')+'>'+esc(gName(g))+'</option>'}).join('')};
+  h+='<div class="sec"><h2 class="h1">못 답한 질문</h2></div><p class="guide">답을 적고 굳히면 다음부터 같은 질문에 이 답이 먼저 나옵니다. 자동 답이 맞으면 그대로 굳혀도 됩니다.</p>';
+  h+=ql.length?'<div class="pgrid">'+ql.map(function(x){return '<div class="panel sgq" data-ql="'+esc(x.id)+'"><div class="meta"><span class="badge '+(x.pd?'warn':'')+'">'+(x.pd?'PD 답 기다림':'자동 답 나감')+'</span><span>'+esc(who(x.by)||'')+' · '+esc(x.screen||'')+' · '+day(x.at)+'</span></div><div class="sgt"><b>'+esc(x.q)+'</b></div><textarea id="qa_'+esc(x.id)+'" placeholder="답 (한두 줄)">'+esc(x.ai||'')+'</textarea><select id="qg_'+esc(x.id)+'" aria-label="갈 화면">'+gopt(x.go&&x.go!=='none'?x.go:'')+'</select><div class="bar" style="margin:0"><button class="btn pri sm" data-act="askFix" data-id="'+esc(x.id)+'">준비된 답으로 굳히기</button><button class="btn sm" data-act="askSkip" data-id="'+esc(x.id)+'">넘기기</button></div></div>'}).join('')+'</div>':'<div class="empty">못 답한 질문이 없습니다.</div>';
+  var fl=S.faq.slice().sort(function(a,b){return (b.at||0)-(a.at||0)});
+  if(fl.length)h+='<details class="panel" style="margin-top:14px"><summary>PD가 굳힌 답 '+fl.length+'</summary><div class="dbody">'+fl.map(function(f){return '<div class="cm"><small>'+day(f.at)+(f.off?' · 꺼 둠':'')+'</small><b>'+esc(f.q)+'</b><br>'+esc(f.a)+' <button class="lnk'+(f.off?'':' sub')+'" data-act="askOff" data-id="'+esc(f.id)+'">'+(f.off?'다시 켜기':'끄기')+'</button></div>'}).join('')+'</div></details>';
+  return h}
+document.addEventListener('click',function(e){if(!AQ.open)return;var b=e.target.closest('#ask [data-tab],#ask [data-sub],#ask [data-sec],#ask [data-open],#ask [data-act=newItem],#ask [data-act=svOpen]');if(b)askClose()},true);
+document.addEventListener('keydown',function(e){if(!AQ.open)return;if(e.key==='Escape'){askClose();return}if(e.key==='Enter'&&!e.shiftKey&&e.target&&e.target.id==='askIn'&&!e.isComposing){e.preventDefault();askSend(e.target.value)}});
+document.addEventListener('toggle',function(e){if(e.target&&e.target.id==='askMine')AQ.mineOpen=e.target.open},true);
 /* ---------- 저장 서버 연결 (계정 없이 이름 + 비밀번호) ---------- */
 var API=(window.APP_CFG&&APP_CFG.api)||'';
 var ADMIN_PAGE=/\/admin\/?(index\.html)?$/.test(location.pathname);
@@ -1417,7 +1700,7 @@ var CACHE={},SUBS={},SINCE=0,PULLING=false;
 function emit(col){var m=CACHE[col]||{};var docs=Object.keys(m).map(function(id){return {id:id,data:function(){return m[id]}}});(SUBS[col]||[]).forEach(function(f){f({docs:docs,metadata:{fromCache:false}})})}
 function pull(){if(PULLING||!sess())return Promise.resolve();PULLING=true;return call('/pull',{since:SINCE}).then(function(j){PULLING=false;if(!j||j.err){if(j&&j.err==='net')note('서버에 닿지 않습니다. 인터넷 연결을 확인해 주세요.');return}
   Object.assign(S.names,j.names||{});var ch={};(j.docs||[]).forEach(function(d){(CACHE[d.col]=CACHE[d.col]||{})[d.id]=d.data;ch[d.col]=1;if(d.upd>SINCE)SINCE=d.upd});if(j.last>SINCE)SINCE=j.last;if(j.more)setTimeout(pull,50);
-  ['channels','items','refs','comments','concepts','talks','accts','asks','tpls'].forEach(function(c){if(ch[c]||!S.loaded[c])emit(c)})}).catch(function(){PULLING=false;note('서버에 닿지 않습니다. 인터넷 연결을 확인해 주세요.')})}
+  ['channels','items','refs','comments','concepts','talks','accts','asks','tpls','sugg','qlog','faq'].forEach(function(c){if(ch[c]||!S.loaded[c])emit(c)})}).catch(function(){PULLING=false;note('서버에 닿지 않습니다. 인터넷 연결을 확인해 주세요.')})}
 function send(col,id,op,data){(CACHE[col]=CACHE[col]||{});CACHE[col][id]=op==='update'?Object.assign({},CACHE[col][id],data):data;emit(col);
   return call('/write',{list:[{col:col,id:id,op:op,data:data}]}).then(function(j){var o=j&&j.out&&j.out[0];if(!o||!o.ok){var e=new Error('save');e.code=j&&j.err;throw e}})}
 function newId(){var a=new Uint8Array(10);crypto.getRandomValues(a);return Array.prototype.map.call(a,function(x){return 'abcdefghijklmnopqrstuvwxyz0123456789'[x%36]}).join('')}
@@ -1431,7 +1714,7 @@ function started(me){
   if(ADMIN_PAGE&&me.role!=='pd'){sess(null);showLogin('이 주소는 관리자만 들어옵니다. 크리에이터는 크리에이터 주소로 들어와 주세요.');return}
   if(!ADMIN_PAGE&&me.role==='pd'){var s0=sess();sess(null);try{if(s0){sessionStorage.removeItem('ip_session_adm');localStorage.removeItem('ip_session_adm');(s0.keep?localStorage:sessionStorage).setItem('ip_session_adm',JSON.stringify(s0))}}catch(e){}location.replace('admin/');return}
   PEOPLE=null;if(ADMIN_PAGE){var st=null;try{st=sessionStorage.getItem('ws-tab')}catch(e){}if(!st)S.tab='people'}S.me=me.id;S.role=me.role;S.names[me.id]=me.name;document.getElementById('login').hidden=true;document.getElementById('meName').textContent=(me.name===ADMIN_NAME?me.name:me.name+(me.role==='pd'?' · 관리자':' · 크리에이터'));document.body.classList.toggle('is-pd',me.role==='pd');
-  sub('channels','channels');sub('items','items');sub('refs','refs');sub('comments','comments');sub('concepts','concepts');sub('talks','talks');sub('accts','accts');sub('asks','asks');sub('tpls','tpls');
+  sub('channels','channels');sub('items','items');sub('refs','refs');sub('comments','comments');sub('concepts','concepts');sub('talks','talks');sub('accts','accts');sub('asks','asks');sub('tpls','tpls');sub('sugg','sugg');sub('qlog','qlog');sub('faq','faq');
   pull();if(!started.on){started.on=1;setInterval(function(){if(!document.hidden)pull()},4000);document.addEventListener('visibilitychange',function(){if(!document.hidden)pull()})}}
 var SETUP=false,ADM=false,HASADM=false,ADMIN_NAME='관리자';
 function admMode(on){ADM=!!on;try{localStorage.setItem('ip_adm',ADM?'1':'')}catch(e){}var nl=document.getElementById('lgNameL'),n=document.getElementById('lgName');nl.hidden=ADM&&!SETUP;n.required=!(ADM&&!SETUP);
