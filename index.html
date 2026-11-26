@@ -98,8 +98,8 @@ a.btn{text-decoration:none;color:var(--ink);display:inline-flex;align-items:cent
 .cols.c2{grid-template-columns:1fr 1fr}
 .aadd{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}.aadd input{flex:1 1 220px;width:auto}
 .row.ag b{color:var(--ok)}.row.ab b{color:var(--warn)}
-.hm{display:grid;gap:18px}.hm .panel{margin-top:0}.hg2{display:grid;gap:18px}.hg3{display:grid;gap:18px}
-@media(min-width:1000px){.hg2{grid-template-columns:1.5fr 1fr;align-items:stretch}.hg3{grid-template-columns:repeat(3,1fr);align-items:stretch}}
+.hm{display:grid;gap:18px}.hg2.one{grid-template-columns:1fr!important}.hemp{display:flex;flex-wrap:wrap;gap:10px;align-items:center;color:var(--sub);font-size:16px}.hemp>span{margin-right:4px}.hm .panel{margin-top:0}.hg2{display:grid;gap:18px}.hg3{display:grid;gap:18px}
+@media(min-width:1000px){.hg2{grid-template-columns:1.5fr 1fr;align-items:stretch}.hg3{grid-template-columns:repeat(3,1fr);align-items:stretch}.hg3.n2{grid-template-columns:repeat(2,1fr)}.hg3.n1{grid-template-columns:1fr}}
 .panel.big{border-color:var(--acc);background:var(--accbg)}.bt{font-size:30px;font-weight:700;line-height:1.25}.bs{color:var(--sub);font-size:17px}.hs{color:var(--sub);font-size:16px;font-weight:500}
 .panel h2{margin:0;font-size:21px}.kvb{text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
 .wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}.wd{background:var(--soft);border-radius:12px;padding:10px;min-height:96px;display:grid;gap:6px;align-content:start;font-size:15px;min-width:0}.wd b{font-size:16px}.wd.td{outline:2px solid var(--acc)}.wd.up{background:var(--okbg)}
@@ -324,10 +324,12 @@ ol.how{margin:0;padding-left:26px;display:grid;gap:8px;font-size:18px}
 body.askon #askFab{display:none}
 @media(max-width:1800px){header>[data-act=addCh]{display:none!important}} /* 1700 폭에서 위 막대가 한 줄에 들도록. 크리에이터 추가는 관리 화면에 있다 */
 #ask[hidden]{display:none}
+@media screen and (min-width:1100px){body.askon{padding-right:520px}body.askon .wk{grid-template-columns:repeat(4,1fr)}body.askon .askhb,body.askon .who [data-act=myPw]{display:none}}
 #ask{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);z-index:30;background:var(--paper);border-left:1px solid var(--line);box-shadow:-6px 0 24px rgba(0,0,0,.12);display:grid;grid-template-rows:auto minmax(0,1fr) auto;font-size:19px}
 .askh{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line)}
 .askh b{font-size:22px}.askh span{color:var(--sub);font-size:15px;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .askb{overflow-y:auto;overflow-x:hidden;padding:16px 18px;display:grid;gap:16px;align-content:start}
+.asktop{display:grid;gap:8px}.asktop>small{color:var(--sub);font-size:15px;font-weight:600}.asktop details{border:1px solid var(--line);border-radius:12px;background:var(--paper)}.asktop summary{cursor:pointer;padding:12px 14px;font-size:18px;font-weight:600}.asktop summary span{color:var(--sub);font-weight:400;font-size:15px}.asktop details .asksug{padding:0 10px 10px}
 .asknow{background:var(--accbg);border-radius:14px;padding:12px 14px;display:grid;gap:8px}
 .asknow small{color:var(--acc);font-weight:700;font-size:15px}.asknow b{font-size:19px;line-height:1.45}.asknow .btn{justify-self:start}
 .asksug{display:grid;gap:8px}.asksug>small,.askmine>summary{color:var(--sub);font-size:15px;font-weight:600}
@@ -478,13 +480,13 @@ function home(){
   h+='</div>';
   /* 같이 정할 것 */
   var ts=(S.talks||[]).filter(function(t){return t.ch===S.ch&&!t.decided}).sort(function(a,b){return (b.at||0)-(a.at||0)});
-  h+='<div class="panel"><h2>같이 정할 것 '+(ts.length?'<span class="badge warn">'+ts.length+'</span>':'')+'</h2>';
-  if(!ts.length)h+='<div style="color:var(--sub)">지금 정할 것이 없습니다. 정할 것은 크리에이터 화면이나 콘텐츠 안에서 올립니다.</div>';
+  if(!ts.length)h=h.replace('<div class="hg2">','<div class="hg2 one">');
+  else h+='<div class="panel"><h2>같이 정할 것 <span class="badge warn">'+ts.length+'</span></h2>';
   ts.slice(0,5).forEach(function(t){var ms=(S.comments||[]).filter(function(m){return m.talk===t.id}).sort(function(a,b){return (a.at||0)-(b.at||0)}),l=ms[ms.length-1];
     var mine=l&&l.by===S.me,tg=!l?'<span class="badge">의견 없음</span>':mine?'<span class="badge">답 기다림</span>':'<span class="badge acc">내가 답할 차례</span>';
     h+='<button class="rowl" data-act="goTalk" data-scope="'+esc(t.scope||'')+'"><b>'+esc(t.q)+'</b>'+tg+'</button>'});
   if(ts.length>5)h+='<div style="color:var(--sub)">외 '+(ts.length-5)+'개</div>';
-  h+='</div></div>'+startCard(items,c);
+  h+=(ts.length?'</div>':'')+'</div>'+startCard(items,c);
   /* 이번 주 */
   var now=new Date(),mon=new Date(now.getFullYear(),now.getMonth(),now.getDate()-((now.getDay()+6)%7)),td=ymd(now),goal=parseInt(String(c.freq||'').replace(/[^0-9]/g,''),10)||0,up=0,days='';
   ['월','화','수','목','금','토','일'].forEach(function(n,k){var d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+k),s=ymd(d),x='',posted=false;
@@ -493,14 +495,20 @@ function home(){
     days+='<div class="wd'+(s===td?' td':'')+(posted?' up':'')+'"><b>'+n+' '+(d.getMonth()+1)+'/'+d.getDate()+(s===td?' · 오늘':'')+'</b>'+x+'</div>'});
   h+='<div class="panel"><h2>이번 주 <small class="hs">'+(goal?'목표 주 '+goal+'편 · 올림 '+up+' · 남은 '+Math.max(0,goal-up):'올림 '+up+'편 · 한 주에 몇 편 올릴지 정하면 남은 편수가 나옵니다')+'</small></h2><div class="wk">'+days+'</div><div class="guide">콘텐츠에 촬영 날짜와 게시한 날을 적으면 여기에 뜹니다.'+(goal?'':' <button class="btn sm" data-sec="2" data-go="concept">목표 정하기</button>')+'</div></div>';
   /* 세 가지 */
-  h+='<div class="hg3">';
+  var P3=[];
   var ls=items.filter(function(i){return i.lesson}).sort(function(a,b){return String(b.posted||'').localeCompare(String(a.posted||''))||(b.updatedAt||0)-(a.updatedAt||0)})[0];
-  h+='<div class="panel"><h2>지난 영상에서 배운 점</h2>'+(ls?'<div class="hs">'+esc(epName(ls,ep))+(im(ls)?' · 팔로워의 '+im(ls)+'배':'')+'</div><b>'+esc(ls.lesson)+'</b><button class="btn sm" style="justify-self:start" data-open="'+esc(ls.id)+'">열기</button>':'<div style="color:var(--sub)">영상을 올리고 성과와 배운 점을 적으면 여기에 뜹니다. 다음 편을 쓸 때도 같이 보입니다.</div>')+'</div>';
+  P3.push(ls?'<div class="panel"><h2>지난 영상에서 배운 점</h2>'+'<div class="hs">'+esc(epName(ls,ep))+(im(ls)?' · 팔로워의 '+im(ls)+'배':'')+'</div><b>'+esc(ls.lesson)+'</b><button class="btn sm" style="justify-self:start" data-open="'+esc(ls.id)+'">열기</button></div>':'');
   var ac=S.accts.filter(function(a){return a.ch===S.ch&&a.kind==='mine'}),ad=ac.filter(function(a){return a.status==='done'&&a.res}).sort(function(a,b){return ((b.res||{}).at||0)-((a.res||{}).at||0)})[0],aw=ac.filter(function(a){return a.status==='req'||a.status==='doing'}).length;
-  h+='<div class="panel"><h2>내 계정 분석</h2>'+(ad?'<div class="hs">@'+esc(ad.account)+' · '+day(ad.res.at)+' 분석</div><b>다음에 할 것: '+esc(ad.res.next||'-')+'</b>':aw?'<div style="color:var(--sub)">분석 요청 '+aw+'개가 기다리는 중입니다. '+ASK_WHEN+'.</div>':'<div style="color:var(--sub)">인스타 아이디를 올리면 잘된 이유, 아쉬운 이유, 다음에 할 것을 채워 드립니다.</div>')+'<button class="btn sm" style="justify-self:start" data-sub="acct">계정 분석 열기</button></div>';
+  P3.push(ad||aw?'<div class="panel"><h2>내 계정 분석</h2>'+(ad?'<div class="hs">@'+esc(ad.account)+' · '+day(ad.res.at)+' 분석</div><b>다음에 할 것: '+esc(ad.res.next||'-')+'</b>':aw?'<div style="color:var(--sub)">분석 요청 '+aw+'개가 기다리는 중입니다. '+ASK_WHEN+'.</div>':'')+'<button class="btn sm" style="justify-self:start" data-sub="acct">계정 분석 열기</button></div>':'');
   var rr=(it?recRefs(it):[])[0];if(!rr){var v=S.refs.filter(function(r){return r.ch===S.ch}).sort(function(a,b){return (b.views||0)-(a.views||0)})[0];if(v)rr={r:v}}
-  h+='<div class="panel"><h2>지금 참고할 영상</h2>'+(rr?'<div class="hs">@'+esc(rr.r.account)+(rr.r.views?' · '+fmt(rr.r.views):'')+(rr.r.form?' · '+esc(rr.r.form):'')+'</div><b>'+esc(rr.r.learn||rr.r.hook||rr.r.video||'')+'</b>'+(safeUrl(rr.r.url)?'<a class="btn sm" style="justify-self:start" href="'+esc(rr.r.url)+'" target="_blank" rel="noopener">영상 열기</a>':''):'<div style="color:var(--sub)">레퍼런스에 영상을 넣으면 지금 할 일에 맞는 것을 골라 드립니다.</div>')+'</div>';
-  return h+'</div></div>';
+  P3.push(rr?'<div class="panel"><h2>지금 참고할 영상</h2>'+'<div class="hs">@'+esc(rr.r.account)+(rr.r.views?' · '+fmt(rr.r.views):'')+(rr.r.form?' · '+esc(rr.r.form):'')+'</div><b>'+esc(rr.r.learn||rr.r.hook||rr.r.video||'')+'</b>'+(safeUrl(rr.r.url)?'<a class="btn sm" style="justify-self:start" href="'+esc(rr.r.url)+'" target="_blank" rel="noopener">영상 열기</a>':'')+'</div>':'');
+  var full=P3.filter(Boolean),emp=[];
+  if(!ls)emp.push('<button class="btn sm" data-tab="board">배운 점: 올린 뒤 적기</button>');
+  if(!(ad||aw))emp.push('<button class="btn sm" data-sub="acct">계정 분석: 아이디 올리기</button>');
+  if(!rr)emp.push('<button class="btn sm" data-tab="refs">참고 영상: 레퍼런스 넣기</button>');
+  if(full.length)h+='<div class="hg3 n'+full.length+'">'+full.join('')+'</div>';
+  if(emp.length)h+='<div class="hemp"><span>아직 비어 있는 칸</span>'+emp.join('')+'</div>';
+  return h+'</div>';
 }
 
 function startSteps(items,c){
@@ -1534,10 +1542,13 @@ function gOk(g){var t=String(g||'').split(':')[0];return !!GOT[t]&&((t!=='people
 function askNow(){
   if(S.role==='pd'&&(askKey()==='people'||askKey()==='sugg'||!S.ch)){var n=S.sugg.filter(function(x){return x.status==='new'}).length+S.qlog.filter(function(x){return x.status==='new'}).length;return {t:n?'새 건의와 질문 '+n+'개를 확인할 차례입니다':'새로 들어온 건의가 없습니다',at:gAttr('sugg'),l:'건의함 열기'}}
   if(!S.ch||!S.channels.length)return null;
-  var items=chItems(),st=startSteps(items,curConcept()),nx=st.filter(function(x){return !x[2]})[0];
-  if(nx)return {t:nx[0],s:nx[1],at:nx[3],l:'바로 가기'};
-  var it=nowItem(items);if(!it)return null;var ep=epMap(items);
-  return {t:epName(it,ep)+' · '+nextAct(it),at:grp(it.stage)===1?'data-act="svOpen" data-id="'+esc(it.id)+'"':'data-open="'+esc(it.id)+'"',l:'열기'}}
+  var items=chItems(),it=nowItem(items);
+  if(!it){var nx=startSteps(items,curConcept()).filter(function(x){return !x[2]})[0];return nx?{t:nx[0],s:nx[1],at:nx[3],l:'바로 가기'}:null}
+  var ep=epMap(items);
+  return {t:(it.corner?it.corner+' ':'')+(ep[it.id]?ep[it.id]+'편':(it.title||'제목 없음'))+' · '+GDO[grp(it.stage)],s:it.title||'',at:grp(it.stage)===1?'data-act="svOpen" data-id="'+esc(it.id)+'"':'data-open="'+esc(it.id)+'"',l:'열기'}}
+var TOPQ=[['앱 쓰는 법',['f1','f3','f4','f8','f12','f13','f18','f22','f25','f27']],['기획',['f28','f29','f30','f15','f2','f31','f7','f19']],['찍기',['f32','f33','f35','f34','f36','f37','f38','f39']],['대본 · 편집 · 올리기',['f6','f40','f41','f42','f43','f44','f46','f47','f48','f50','f49','f51','f52']]];
+function askTopics(){return '<div class="asktop"><small>주제별로 보기</small>'+TOPQ.map(function(g){var l=g[1].map(faqBy).filter(function(f){return f&&(f[4]==='none'||gOk(f[4]))});
+  return '<details><summary>'+esc(g[0])+' <span>'+l.length+'</span></summary><div class="asksug">'+l.map(function(f){return '<button data-act="askQ" data-id="'+esc(f[0])+'" data-q="'+esc(f[2])+'">'+esc(f[2])+'</button>'}).join('')+'</div></details>'}).join('')+'</div>'}
 function askSugs(){var l=SUGQ[askKey()]||SUGQ.home,out=[];
   l.forEach(function(id){
     if(id==='@week'){if(S.ch)out.push(['','이번 주 뭐 찍지?'])}
@@ -1549,9 +1560,9 @@ function askSugs(){var l=SUGQ[askKey()]||SUGQ.home,out=[];
 
 function askHtml(){
   var n=askNow(),h='<div class="askh"><b>물어보기</b><span>'+esc(askScreen())+'</span><button class="btn sm" data-act="askClose">닫기</button></div><div class="askb" id="askB">';
-  if(n)h+='<div class="asknow"><small>지금 할 일</small><b>'+esc(n.t)+'</b><button class="btn pri sm" '+n.at+'>'+esc(n.l)+'</button></div>';
+  if(n)h+='<div class="asknow"><small>지금 할 일</small><b>'+esc(n.t)+'</b>'+(n.s?'<span style="color:var(--sub);font-size:16px">'+esc(n.s)+'</span>':'')+'<button class="btn pri sm" '+n.at+'>'+esc(n.l)+'</button></div>';
   h+='<div class="asksug"><small>누르기만 하면 답이 나옵니다</small>'+askSugs().map(function(s){return '<button data-act="askQ" data-id="'+esc(s[0])+'" data-q="'+esc(s[1])+'">'+esc(s[1])+'</button>'}).join('')+'</div>';
-  h+='<div id="askLog" style="display:grid;gap:14px">'+AQ.log.map(askItem).join('')+'</div>';
+  h+='<div id="askLog" style="display:grid;gap:14px">'+AQ.log.map(askItem).join('')+'</div>'+askTopics();
   h+='<details class="askmine" id="askMine"'+(AQ.mineOpen?' open':'')+'>'+askMine()+'</details></div>';
   var sg=AQ.mode==='sugg';
   h+='<div class="askf'+(sg?' sg':'')+'"><textarea id="askIn" rows="1" placeholder="'+(sg?'불편한 점이나 바꾸고 싶은 것을 적어 주세요':'궁금한 것을 적어 주세요. 예: 자막은 몇 글자?')+'">'+esc(AQ.draft||'')+'</textarea><div class="bar"><button class="btn pri" data-act="askSend">'+(sg?'건의 보내기':'묻기')+'</button><button class="btn" data-act="askMode">'+(sg?'질문으로 돌아가기':'불편한 점 말하기')+'</button></div></div>';
