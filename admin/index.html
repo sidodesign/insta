@@ -348,6 +348,7 @@ body.askon #askFab{display:none}
 .sgc .sgt{font-size:19px;line-height:1.5}.sgc .bar{margin:0}
 .sgq textarea{min-height:64px}.sgq select{max-width:320px}
 .mypw{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:200;padding:16px}.mypwin{background:#fff;border-radius:16px;padding:24px;width:100%;max-width:420px;display:flex;flex-direction:column;gap:12px}.mypwin h2{margin:0;font-size:22px}.mypwin input{font-size:18px;padding:12px;border:1px solid #ccc;border-radius:10px}.mypwin p{margin:0;color:#c0392b;min-height:1em}
+.newv{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:300;background:var(--paper);border:2px solid var(--acc);border-radius:14px;padding:10px 16px;font-size:18px;font-weight:600;display:flex;gap:12px;align-items:center;box-shadow:0 6px 24px rgba(0,0,0,.15)}
 </style>
 
 <header>
@@ -1758,4 +1759,12 @@ head();
 document.getElementById('brand').textContent=document.title=((window.APP_CFG&&APP_CFG.name)||'인스타그램 기획')+(ADMIN_PAGE?' · 관리자':'');document.getElementById('lgTitle').textContent=document.title;
 var S0=sess();if(S0&&S0.token){started(S0.me);call('/me').then(function(j){if(j&&j.me){sess({token:S0.token,me:j.me,keep:!!S0.keep});S.role=j.me.role;document.body.classList.toggle('is-pd',j.me.role==='pd')}})}else showLogin();
 })();
+
+/* 새 판 알림: 브라우저가 예전 화면을 들고 있으면 위에 "새로 고침"을 띄운다 */
+var ME_SRC=document.currentScript?document.currentScript.textContent:'';
+function chkNew(){if(!ME_SRC||document.getElementById('newv')||!window.fetch)return;
+  fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){
+    var a=t.lastIndexOf('<'+'script>'),b=t.lastIndexOf('</'+'script>');if(a<0||b<a)return;var src=t.slice(a+8,b);
+    if(src.length>1000&&src!==ME_SRC)document.body.insertAdjacentHTML('beforeend','<div id="newv" class="newv">앱이 새로 바뀌었어요 <button class="btn pri sm" onclick="location.reload()">새로 고침</button></div>')}).catch(function(){})}
+setTimeout(chkNew,3000);setInterval(chkNew,600000);document.addEventListener('visibilitychange',function(){if(!document.hidden)chkNew()});
 </script>
