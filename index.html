@@ -345,6 +345,7 @@ body.askon #askFab{display:none}
 .askf.sg textarea{border-color:var(--warn)}
 .sgc .sgt{font-size:19px;line-height:1.5}.sgc .bar{margin:0}
 .sgq textarea{min-height:64px}.sgq select{max-width:320px}
+.mypw{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:200;padding:16px}.mypwin{background:#fff;border-radius:16px;padding:24px;width:100%;max-width:420px;display:flex;flex-direction:column;gap:12px}.mypwin h2{margin:0;font-size:22px}.mypwin input{font-size:18px;padding:12px;border:1px solid #ccc;border-radius:10px}.mypwin p{margin:0;color:#c0392b;min-height:1em}
 </style>
 
 <header>
@@ -361,6 +362,7 @@ body.askon #askFab{display:none}
     <button class="btn" data-tab="refs">레퍼런스·분석</button>
   </div>
   <div class="who"><button class="btn sm askhb" data-act="askOpen">물어보기</button><button class="btn sm pdonly" data-tab="people" id="homeBtn">관리 화면</button>
+  <button class="btn sm" data-act="myPw">비밀번호 바꾸기</button>
   <button class="btn sm" data-act="logout" title="로그아웃"><span id="meName"></span> · 나가기</button></div>
 </header>
 <div id="login" hidden><form id="lgForm" class="lgbox"><h1 id="lgTitle">인스타그램 기획</h1><p id="lgSet" hidden>처음 시작합니다. 쓰실 이름과 비밀번호를 지금 정해 주세요. 이 사람이 관리자가 됩니다.</p><label id="lgNameL">이름<input id="lgName" autocomplete="username" required></label><label><span id="lgPwL">비밀번호</span><input id="lgPw" type="password" autocomplete="current-password" required></label><label id="lgPw2L" hidden>비밀번호 한 번 더<input id="lgPw2" type="password" autocomplete="new-password"></label><label class="lgkeep"><input type="checkbox" id="lgKeep"><span>이 기기에서 로그인 유지 (30일)</span></label><p class="lghint">체크하지 않으면 창을 닫을 때 로그아웃됩니다. 여럿이 쓰는 컴퓨터에서는 체크하지 마세요.</p><p id="lgErr" role="alert"></p><button class="btn pri" id="lgBtn">들어가기</button><button type="button" class="btn" id="lgMode">관리자로 들어가기</button></form></div>
@@ -1253,6 +1255,11 @@ document.addEventListener('click',function(e){
   if(/^a(Add|Req|Del)$/.test(d.act||''))return acctAct(d.act,d);
   switch(d.act){
     case 'logout':sess(null);location.reload();return;
+    case 'myPw':if(document.getElementById('myPwBox'))return;document.body.insertAdjacentHTML('beforeend','<div id="myPwBox" class="mypw"><div class="mypwin"><h2>내 비밀번호 바꾸기</h2><input id="myPw1" type="password" autocomplete="new-password" placeholder="새 비밀번호 (6자 이상)"><input id="myPw2" type="password" autocomplete="new-password" placeholder="한 번 더"><p id="myPwMsg"></p><div><button class="btn pri" data-act="myPwGo">바꾸기</button> <button class="btn" data-act="myPwX">닫기</button></div></div></div>');document.getElementById('myPw1').focus();return;
+    case 'myPwX':var bx=document.getElementById('myPwBox');if(bx)bx.remove();return;
+    case 'myPwGo':var p1=document.getElementById('myPw1').value,p2=document.getElementById('myPw2').value,pm=document.getElementById('myPwMsg');
+      if(p1.length<6){pm.textContent='6자 이상으로 적어 주세요.';return}if(p1!==p2){pm.textContent='두 칸이 서로 다릅니다.';return}
+      call('/users/set',{id:S.me,pw:p1}).then(function(j){if(j&&j.ok){var b2=document.getElementById('myPwBox');if(b2)b2.remove();sess(null);showLogin('비밀번호를 바꿨습니다. 새 비밀번호로 들어와 주세요.')}else pm.textContent=PERR[j&&j.err]||'바꾸지 못했습니다.'});return;
     case 'back':S.open=null;S.del=false;S.fxEdit=false;return render();
     case 'pickRef':var ipk=S.items.filter(function(i){return i.id===S.open})[0];if(ipk&&(ipk.refIds||[]).indexOf(d.id)<0)upd('items',ipk.id,{refIds:(ipk.refIds||[]).concat([d.id])}).then(function(){render()});return;
     case 'fxEdit':S.fxEdit=true;return render();
@@ -1500,7 +1507,7 @@ var FAQ=[
  ['f53','효능,건강 효과,임신 효과,임신,착상,영양제,건강,몸에 좋,병원,호르몬,배란','건강이나 임신 효과를 말해도 돼요?','건강·임신·의학 효과는 여기서 단정하지 않아요. "제가 해 봤어요"처럼 겪은 일로 말하고, 사실은 확인한 출처만 넣어 주세요.','none'],
  ['f54','건의함,건의 확인,들어온 건의','건의는 어디서 봐요?','관리 화면의 "건의함"에서 건의와 못 답한 질문을 봐요.','sugg'],
  ['f55','크리에이터 추가,계정 만들,계정 더하기','크리에이터는 어떻게 추가해요?','관리 화면의 "크리에이터 추가"를 누르고 아이디와 비밀번호를 정해요.','people'],
- ['f56','비밀번호','비밀번호는 어떻게 바꿔요?','관리 화면 "계정"에서 "비밀번호 바꾸기"를 눌러요. 크리에이터는 PD에게 말해 주세요.','people'],
+ ['f56','비밀번호','비밀번호는 어떻게 바꿔요?','맨 위 오른쪽 "비밀번호 바꾸기"를 눌러요. 바꾸면 새 비밀번호로 다시 들어와요.','people'],
  ['f57','굳히기,준비된 답','준비된 답은 어떻게 늘려요?','건의함의 못 답한 질문에 답을 적고 "준비된 답으로 굳히기"를 누르면 다음부터 그 답이 먼저 나와요.','sugg']
 ];
 var SUGQ={home:['@week','f1','f28','f3'],board:['@week','f3','f4','f24'],script:['@shots','f6','f7','f40'],how:['@shots','f32','f33','f34'],concept:['f14','f15','f29','f16'],find:['@find','f18','f19','f20'],refs:['@find','f21','f19','f30'],acct:['f22','f30','f24','f31'],item:['@shots','f23','f6','f24'],people:['f54','f55','f56','f57'],sugg:['f57','f54','f55','f56']};
